@@ -1,11 +1,39 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import 'react-horizontal-scrolling-menu/dist/styles.css';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
+const LeftArrow = () => {
+  return <div>{'<'}</div>;
+};
+
+const RightArrow = () => {
+  return <div>{'>'}</div>;
+};
+
 const Index = () => {
   const router = useRouter();
+
+  const items = [
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 10 },
+    { id: 11 },
+    { id: 12 },
+    { id: 13 },
+  ];
 
   return (
     <Main
@@ -69,7 +97,7 @@ const Index = () => {
           />
         </div>
         <div className="my-12 ml-[-50px] max-w-md bg-gray-200">
-          <p>
+          <h1>
             <p>In the past few years I:</p>
             <ul className="mt-0 list-inside list-disc">
               <li className="my-1 ml-4">
@@ -145,8 +173,35 @@ const Index = () => {
                 </a>
               </li>
             </ul>
-          </p>
+          </h1>
         </div>
+      </div>
+      <div className="w-full">
+        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+          {items.map(({ id }) => {
+            if (id % 2 === 0) {
+              return (
+                <div className="w-64" key={id}>
+                  <div className="m-0.5">
+                    <img
+                      className="object-fill"
+                      src={`${router.basePath}/assets/gallery/${id}.jpeg`}
+                      alt={id.toString()}
+                    />
+                  </div>
+                  <div className="m-0.5">
+                    <img
+                      className="object-fill"
+                      src={`${router.basePath}/assets/gallery/${id + 1}.jpeg`}
+                      alt={id.toString()}
+                    />
+                  </div>
+                </div>
+              );
+            }
+            return <div key={id} />;
+          })}
+        </ScrollMenu>
       </div>
     </Main>
   );
