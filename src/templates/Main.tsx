@@ -62,7 +62,12 @@ const Main = (props: IMainProps) => (
 
       <footer className="border-t border-gray-300 py-8 text-center text-sm">
         <div className="pb-3">chrisozgo99@gmail.com</div>©
-        {new Date().getFullYear()} {AppConfig.title}. Made with ❤️.
+        {new Date().getFullYear()} {AppConfig.title}. Made with ❤️. Boilerplate
+        from{' '}
+        <a href="https://creativedesignsguru.com">
+          https://creativedesignsguru.com
+        </a>
+        .
       </footer>
     </div>
   </div>
