@@ -64,7 +64,7 @@ const Main = (props: IMainProps) => (
         <div className="pb-3">chrisozgo99@gmail.com</div>©
         {new Date().getFullYear()} {AppConfig.title}. Made with ❤️. Boilerplate
         from{' '}
-        <a href="'https://creativedesignsguru.com'">
+        <a href="https://creativedesignsguru.com">
           https://creativedesignsguru.com
         </a>
         .
