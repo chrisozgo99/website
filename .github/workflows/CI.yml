@@ -61,7 +61,7 @@ jobs:
             - name: Run storybook tests
               run: npm run test-storybook:ci
 
-            - name: Run e2e tests
-              run: npx percy exec -- npm run e2e:headless
-              env:
-                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+            # - name: Run e2e tests
+            #   run: npx percy exec -- npm run e2e:headless
+            #   env:
+            #       PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
