@@ -15,7 +15,7 @@ describe('Main template', () => {
     it('should have a link to support creativedesignsguru.com', () => {
       render(<Main meta={null}>{null}</Main>);
 
-      const copyrightSection = screen.getByText(/© Copyright/);
+      const copyrightSection = screen.getByText(/©/);
       const copyrightLink = within(copyrightSection).getByRole('link');
 
       /*
