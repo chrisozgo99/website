@@ -8,13 +8,21 @@ import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
-const LeftArrow = () => {
-  return <div>{'<'}</div>;
-};
+// const LeftArrow = () => {
+//   return (
+//     <div>
+//       <Image priority src={leftArrow} alt="Left arrrow" />
+//     </div>
+//   );
+// };
 
-const RightArrow = () => {
-  return <div>{'>'}</div>;
-};
+// const RightArrow = () => {
+//   return (
+//     <div>
+//       <Image priority src={rightArrow} alt="Right arrrow" />
+//     </div>
+//   );
+// };
 
 const Index = () => {
   const router = useRouter();
@@ -66,46 +74,49 @@ const Index = () => {
           />
         </div>
       </div>
-      <div className="flex flex-row justify-evenly">
-        <div>
+      <div className="mb-[60px] flex flex-row justify-evenly">
+        <div className="h-12 w-48">
           <Link href="/about/">
             <button
               type="button"
-              className="rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:bg-blue-700"
+              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
             >
               About
             </button>
           </Link>
         </div>
-        <div>
+        <div className="h-12 w-48">
           <Link href="/blog/">
             <button
               type="button"
-              className="rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:bg-blue-700"
+              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
             >
               Blog
             </button>
           </Link>
         </div>
       </div>
-      <div className="mx-6 border-b border-black" />
-      <div className="flex">
-        <div>
+      <div className="mx-6 mb-24 border-b border-black" />
+      <div className="flex justify-center">
+        <div className="mb-[76px]">
           <img
             src={`${router.basePath}/assets/images/chrisozgo2.png`}
             alt="Chris Ozgo at Zion National Park"
           />
         </div>
-        <div className="my-12 ml-[-50px] max-w-md bg-gray-200">
-          <h1>
-            <p>In the past few years I:</p>
+        <div className="mb-36 ml-[-160px] mt-20 max-w-[478px] bg-gray-200 pl-[26px] pr-7 pt-10">
+          <h1 className="font-avenir text-[0.94rem] leading-6">
+            <p className="pb-[26px] font-raleway text-[1.375rem] font-light">
+              In the past few years I:
+            </p>
             <ul className="mt-0 list-inside list-disc">
-              <li className="my-1 ml-4">
+              <li className="my-1 ml-8 list-outside">
                 Co-founded{' '}
                 <a
                   href="https://seedgatech.wixsite.com/home"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className=" underline"
                 >
                   SEED
                 </a>{' '}
@@ -114,60 +125,68 @@ const Index = () => {
                   href="https://www.instagram.com/gtseekdiscomfort/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className=" underline"
                 >
                   Seek Discomfort Club
                 </a>
               </li>
-              <li className="my-1 ml-4">
+              <li className="my-1 ml-8 list-outside">
                 Broke the Guinness World Record for the{' '}
                 <a
                   href="https://linktr.ee/seedgt"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className=" underline"
                 >
                   Longest Hopscotch Game
                 </a>
               </li>
-              <li className="my-1 ml-4">
-                <a href="https://chrisozgo.substack.com/">
+              <li className="my-1 ml-8 list-outside">
+                <a
+                  href="https://chrisozgo.substack.com/"
+                  className=" underline"
+                >
                   Solo traveled on 4 different continents
                 </a>
               </li>
-              <li className="my-1 ml-4">
+              <li className="my-1 ml-8 list-outside">
                 Gave the{' '}
                 <a
                   href="https://www.youtube.com/watch?v=IRyCNIOo_Po"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className=" underline"
                 >
                   keynote speech
                 </a>{' '}
                 to Georgia Tech{`'`}s freshman class
               </li>
-              <li className="my-1 ml-4">
+              <li className="my-1 ml-8 list-outside">
                 Played college basketball in Singapore and led the country in
                 scoring
               </li>
-              <li className="my-1 ml-4">
+              <li className="my-1 ml-8 list-outside">
                 Completed 4 marathons, 2 half-Ironmans and 1 Ironman
               </li>
-              <li className="my-1 ml-4">
+              <li className="my-1 ml-8 list-outside">
                 Built a{' '}
                 <a
                   href="https://linktr.ee/chrisozgoapps"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className=" underline"
                 >
                   few mobile apps
-                </a>
+                </a>{' '}
                 that made some money
               </li>
-              <li className="my-1 ml-4">
+              <li className="my-1 ml-8 list-outside">
                 Worked for some{' '}
                 <a
                   href="https://linktr.ee/chrisozgostartups"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className=" underline"
                 >
                   kickass startups
                 </a>
@@ -176,26 +195,58 @@ const Index = () => {
           </h1>
         </div>
       </div>
-      <div className="w-full">
-        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+      <div>
+        <ScrollMenu>
           {items.map(({ id }) => {
-            if (id % 2 === 0) {
+            if (id % 4 === 1) {
               return (
-                <div className="w-64" key={id}>
-                  <div className="m-0.5">
-                    <img
-                      className="object-fill"
-                      src={`${router.basePath}/assets/gallery/${id}.jpeg`}
-                      alt={id.toString()}
-                    />
-                  </div>
-                  <div className="m-0.5">
-                    <img
-                      className="object-fill"
-                      src={`${router.basePath}/assets/gallery/${id + 1}.jpeg`}
-                      alt={id.toString()}
-                    />
-                  </div>
+                <div className="max-h-[713px]" key={id}>
+                  <div
+                    className="m-0.5 h-[431px] w-[257px] bg-gray-400"
+                    style={{
+                      backgroundImage: `url(${router.basePath}/assets/gallery/${id}.jpeg)`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center center',
+                    }}
+                  />
+                  <div
+                    className="m-0.5 h-[287px] w-[257px] bg-gray-300"
+                    style={{
+                      backgroundImage: `url(${router.basePath}/assets/gallery/${
+                        id - 1
+                      }.jpeg)`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center center',
+                    }}
+                  />
+                </div>
+              );
+            }
+            if (id % 2 === 1) {
+              return (
+                <div className="max-h-[713px]" key={id}>
+                  <div
+                    className="m-0.5 h-[287px] w-[257px] bg-gray-400"
+                    style={{
+                      backgroundImage: `url(${router.basePath}/assets/gallery/${id}.jpeg)`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center center',
+                    }}
+                  />
+                  <div
+                    className="m-0.5 h-[431px] w-[257px] bg-gray-300"
+                    style={{
+                      backgroundImage: `url(${router.basePath}/assets/gallery/${
+                        id - 1
+                      }.jpeg)`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center center',
+                    }}
+                  />{' '}
                 </div>
               );
             }
