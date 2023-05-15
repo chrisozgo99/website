@@ -18,6 +18,7 @@ export default function Card(props: CardProps) {
           backgroundRepeat: 'no-repeat',
           backgroundColor: background,
           backgroundPositionY: background && 'center',
+          backgroundSize: !background ? 'cover' : '',
         }}
       />
       <div className="z-10 mt-[-25px] max-w-[315px] rounded-b-3xl bg-gray-400">
