@@ -20,6 +20,7 @@ module.exports = {
     fontFamily: {
       avenir: ['avenir', 'sans-serif'],
       raleway: ['raleway', 'sans-serif'],
+      helvetica: ['helvetica', 'sans-serif'],
     },
     extend: {
       colors: {
@@ -27,7 +28,7 @@ module.exports = {
           100: '#f7fafc',
           200: '#efefef',
           300: '#e2e8f0',
-          400: '#cbd5e0',
+          400: '#d6d6d6',
           500: '#a0aec0',
           600: '#718096',
           700: '#4a5568',
