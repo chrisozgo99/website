@@ -53,22 +53,22 @@ const About = () => {
           </p>
         </div>
       </div>
-      <div className="mt-16 flex flex-row justify-evenly">
-        <div>
-          <Link href="/about/">
+      <div className="mt-16 flex flex-row justify-evenly font-raleway text-base">
+        <div className="h-12 w-48">
+          <a href="mailto:chrisozgo99@gmail.com">
             <button
               type="button"
-              className="rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:bg-blue-700"
+              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white"
             >
               Contact
             </button>
-          </Link>
+          </a>
         </div>
-        <div>
+        <div className="h-12 w-48">
           <Link href="/blog/">
             <button
               type="button"
-              className="rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:bg-blue-700"
+              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
             >
               Blog
             </button>
