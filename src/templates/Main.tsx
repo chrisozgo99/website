@@ -36,12 +36,12 @@ const Main = (props: IMainProps) => (
                 </Link>
               </li>
               <li className="mr-6">
-                <a
+                <Link
+                  href="/projects/"
                   className="border-none font-avenir text-sm text-gray-700 hover:text-gray-900"
-                  href="https://github.com/ixartz/Next-js-Boilerplate"
                 >
                   Projects
-                </a>
+                </Link>
               </li>
               <li className="mr-6">
                 <Link
@@ -58,7 +58,7 @@ const Main = (props: IMainProps) => (
       </header>
       <div className="mx-6 border-b border-black" />
 
-      <main className="content py-5 text-xl">{props.children}</main>
+      <main className="py-5 text-xl">{props.children}</main>
 
       <footer className="border-t border-gray-300 py-8 text-center text-sm">
         <div className="pb-3">chrisozgo99@gmail.com</div>©
