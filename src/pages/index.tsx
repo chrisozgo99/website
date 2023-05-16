@@ -8,22 +8,6 @@ import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
-// const LeftArrow = () => {
-//   return (
-//     <div>
-//       <Image priority src={leftArrow} alt="Left arrrow" />
-//     </div>
-//   );
-// };
-
-// const RightArrow = () => {
-//   return (
-//     <div>
-//       <Image priority src={rightArrow} alt="Right arrrow" />
-//     </div>
-//   );
-// };
-
 const Index = () => {
   const router = useRouter();
 
