@@ -93,17 +93,17 @@ const Projects = () => {
     <Main meta={<Meta title="Projects" description="Projects" />}>
       <div className="w-full justify-center">
         <div className="">
-          <h1 className="text-center font-raleway text-4.5xl font-bold">
+          <h1 className="mb-8 text-center font-raleway text-3xl font-bold sm:text-4.5xl">
             Projects
           </h1>
         </div>
         <div>
-          <h1 className="my-12 text-center font-avenir text-[1.625rem]">
+          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             My Apps
           </h1>
-          <div className="flex justify-evenly">
+          <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {apps.map((app) => (
-              <div key={app.name}>
+              <div className="my-8" key={app.name}>
                 <Card
                   description={app.description}
                   name={app.name}
@@ -114,12 +114,12 @@ const Projects = () => {
           </div>
         </div>
         <div>
-          <h1 className="my-12 text-center font-avenir text-[1.625rem]">
+          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             Work Experience
           </h1>
-          <div className="flex justify-evenly">
+          <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {work.map((app) => (
-              <div key={app.name}>
+              <div className="my-8" key={app.name}>
                 <Card
                   description={app.description}
                   name={app.name}
@@ -130,12 +130,12 @@ const Projects = () => {
           </div>
         </div>
         <div>
-          <h1 className="my-12 text-center font-avenir text-[1.625rem]">
+          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             Seek Discomfort
           </h1>
-          <div className="flex justify-evenly">
+          <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {seekDiscomfort.map((app) => (
-              <div key={app.name}>
+              <div className="my-8" key={app.name}>
                 <Card
                   description={app.description}
                   name={app.name}
@@ -147,12 +147,12 @@ const Projects = () => {
           </div>
         </div>
         <div>
-          <h1 className="my-12 text-center font-avenir text-[1.625rem]">
+          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             Tank Brand
           </h1>
-          <div className="flex justify-evenly">
+          <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {tank.map((app) => (
-              <div key={app.name}>
+              <div className="my-8" key={app.name}>
                 <Card
                   description={app.description}
                   name={app.name}
