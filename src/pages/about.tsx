@@ -8,16 +8,18 @@ const About = () => {
   const router = useRouter();
   return (
     <Main meta={<Meta title="About" description="About Chris Ozgo" />}>
-      <div className="ml-8 flex flex-row">
-        <div className="h-[740px] w-[640px]">
+      <div className="mx-4 flex-row sm:ml-8 sm:flex">
+        <div className="sm:h-[740px] sm:w-[640px]">
           <img
             className="h-full w-full object-cover"
             src={`${router.basePath}/assets/images/chrisozgo3.png`}
             alt="Chris Ozgo smiling in graduation regalia"
           />
         </div>
-        <div className="mb-[-35px] ml-[-335px] mt-9 w-[650px] bg-gray-200 px-10 text-center font-avenir text-[0.94rem] leading-7">
-          <h1 className="my-9 font-raleway text-4.5xl font-light">About Me</h1>
+        <div className="px-4 text-center font-avenir text-[0.94rem] leading-7 sm:mb-[-35px] sm:ml-[-335px] sm:mt-9 sm:w-[650px] sm:bg-gray-200 sm:px-10">
+          <h1 className="my-4 font-raleway text-2xl font-light sm:my-9 sm:text-4.5xl">
+            About Me
+          </h1>
           <p className="mb-6">
             I love boiling down my entire life into just a few sentences.
           </p>
@@ -53,8 +55,8 @@ const About = () => {
           </p>
         </div>
       </div>
-      <div className="mt-16 flex flex-row justify-evenly font-raleway text-base">
-        <div className="h-12 w-48">
+      <div className="mt-6 flex-row justify-evenly font-raleway text-base sm:mt-16 sm:flex">
+        <div className="mx-24 mb-4 sm:h-12 sm:w-48">
           <a href="mailto:chrisozgo99@gmail.com">
             <button
               type="button"
@@ -64,7 +66,7 @@ const About = () => {
             </button>
           </a>
         </div>
-        <div className="h-12 w-48">
+        <div className="mx-24 sm:h-12 sm:w-48">
           <Link href="/blog/">
             <button
               type="button"

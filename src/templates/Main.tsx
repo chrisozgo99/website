@@ -12,14 +12,14 @@ const Main = (props: IMainProps) => (
   <div className="m-auto max-w-5xl overflow-x-auto antialiased">
     {props.meta}
     <div>
-      <header className="mt-11 pb-6">
-        <div className="flex flex-wrap items-center justify-between">
-          <h1 className="w-80 max-w-xs font-avenir text-4.5xl text-black">
+      <header className="pb-2 sm:mt-11 sm:pb-6">
+        <div className="flex-wrap items-center justify-between sm:flex">
+          <h1 className="w-full text-center font-avenir text-2xl text-black sm:w-80 sm:max-w-xs sm:text-4.5xl">
             {AppConfig.title.toUpperCase()}
           </h1>
           <nav>
-            <ul className="flex flex-wrap">
-              <li className="mr-6">
+            <ul className="flex flex-wrap justify-evenly">
+              <li className="sm:mr-6">
                 <Link
                   href="/"
                   className="border-none font-avenir text-sm text-gray-700 hover:text-gray-900"
@@ -27,7 +27,7 @@ const Main = (props: IMainProps) => (
                   Home
                 </Link>
               </li>
-              <li className="mr-6">
+              <li className="sm:mr-6">
                 <Link
                   href="/about/"
                   className="border-none font-avenir text-sm text-gray-700 hover:text-gray-900"
@@ -35,7 +35,7 @@ const Main = (props: IMainProps) => (
                   About
                 </Link>
               </li>
-              <li className="mr-6">
+              <li className="sm:mr-6">
                 <Link
                   href="/projects/"
                   className="border-none font-avenir text-sm text-gray-700 hover:text-gray-900"
@@ -43,7 +43,7 @@ const Main = (props: IMainProps) => (
                   Projects
                 </Link>
               </li>
-              <li className="mr-6">
+              <li className="sm:mr-6">
                 <Link
                   href="/blog/"
                   className="border-none font-avenir text-sm text-gray-700 hover:text-gray-900"
@@ -53,21 +53,23 @@ const Main = (props: IMainProps) => (
               </li>
             </ul>
           </nav>
-          <div className="w-80" />
+          <div className="sm:w-80" />
         </div>
       </header>
       <div className="mx-6 border-b border-black" />
 
-      <main className="py-5 text-xl">{props.children}</main>
+      <main className="py-4 text-xl sm:py-5">{props.children}</main>
 
       <footer className="border-t border-gray-300 py-8 text-center text-sm">
         <div className="pb-3">chrisozgo99@gmail.com</div>©
-        {new Date().getFullYear()} {AppConfig.title}. Made with ❤️. Boilerplate
-        from{' '}
-        <a href="https://creativedesignsguru.com">
-          https://creativedesignsguru.com
-        </a>
-        .
+        {new Date().getFullYear()} {AppConfig.title}. Made with ❤️.
+        <p>
+          Boilerplate from{' '}
+          <a href="https://creativedesignsguru.com">
+            https://creativedesignsguru.com
+          </a>
+          .
+        </p>
       </footer>
     </div>
   </div>
