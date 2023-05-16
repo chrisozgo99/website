@@ -55,8 +55,8 @@ jobs:
             - name: Type checking
               run: npm run check-types
 
-            # - name: Run unit tests
-            #   run: npm run test
+            - name: Run unit tests
+              run: npm run test
 
             - name: Run storybook tests
               run: npm run test-storybook:ci
