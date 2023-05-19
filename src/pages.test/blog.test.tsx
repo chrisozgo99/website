@@ -7,12 +7,12 @@ import Blog from '@/pages/blog';
 
 describe('Blog page', () => {
   describe('Render method', () => {
-    it('should display the Medium iFrame', () => {
+    it('should say THINK TANK', () => {
       render(<Blog />);
 
-      const iframe = screen.getByRole('iframe');
+      const heading = screen.getByText(/THINK TANK/);
 
-      expect(iframe).toBeInTheDocument();
+      expect(heading).toBeInTheDocument();
     });
   });
 });
