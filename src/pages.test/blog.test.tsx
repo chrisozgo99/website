@@ -7,14 +7,12 @@ import Blog from '@/pages/blog';
 
 describe('Blog page', () => {
   describe('Render method', () => {
-    it('should display the last 10 posts', () => {
+    it('should display the Medium iFrame', () => {
       render(<Blog />);
 
-      const link = screen.getAllByRole('link', {
-        name: /Blog -/,
-      });
+      const iframe = screen.getByRole('iframe');
 
-      expect(link).toHaveLength(10);
+      expect(iframe).toBeInTheDocument();
     });
   });
 });
