@@ -41,17 +41,15 @@ const Index = () => {
           <h3 className="text-center text-4xl sm:font-avenir sm:text-6.5xl">
             Hi, I{`'`}m Chris!
           </h3>
-          <p className="mt-2 font-avenir text-xl">
-            I{`'`}m passionate about
-            <ul className="mt-0 list-inside list-disc">
-              <li className="my-1 ml-4">startups</li>
-              <li className="my-1 ml-4">coding</li>
-              <li className="my-1 ml-4">foreign policy</li>
-              <li className="my-1 ml-4">travel</li>
-              <li className="my-1 ml-4">fitness</li>
-              <li className="my-1 ml-4">and plenty of other niche topics!</li>
-            </ul>
-          </p>
+          <p className="mt-2 font-avenir text-xl">I{`'`}m passionate about</p>
+          <ul className="mt-0 list-inside list-disc font-avenir">
+            <li className="my-1 ml-4">startups</li>
+            <li className="my-1 ml-4">coding</li>
+            <li className="my-1 ml-4">foreign policy</li>
+            <li className="my-1 ml-4">travel</li>
+            <li className="my-1 ml-4">fitness</li>
+            <li className="my-1 ml-4">and plenty of other niche topics!</li>
+          </ul>
         </div>
         <div className="mx-16 mt-4 sm:mr-16 sm:max-w-xs">
           <img

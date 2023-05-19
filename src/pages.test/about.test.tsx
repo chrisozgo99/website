@@ -7,12 +7,12 @@ import About from '@/pages/about';
 
 describe('About page', () => {
   describe('Render method', () => {
-    it('should have two paragraphs of `Lorem ipsum`', () => {
+    it('should say "About Me"`', () => {
       render(<About />);
 
-      const paragraph = screen.getAllByText(/Lorem ipsum/);
+      const paragraph = screen.getByText(/About Me/);
 
-      expect(paragraph).toHaveLength(2);
+      expect(paragraph).toBeInTheDocument();
     });
   });
 });

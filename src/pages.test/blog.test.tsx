@@ -7,14 +7,12 @@ import Blog from '@/pages/blog';
 
 describe('Blog page', () => {
   describe('Render method', () => {
-    it('should display the last 10 posts', () => {
+    it('should say THINK TANK', () => {
       render(<Blog />);
 
-      const link = screen.getAllByRole('link', {
-        name: /Blog -/,
-      });
+      const heading = screen.getByText(/THINK TANK/);
 
-      expect(link).toHaveLength(10);
+      expect(heading).toBeInTheDocument();
     });
   });
 });
