@@ -16,7 +16,6 @@ const Blog = () => {
   useEffect(() => {
     if (!gotPosts) {
       getPosts().then((res: any) => {
-        console.log(res);
         setPosts(res);
         setGotPosts(true);
       });
@@ -26,8 +25,22 @@ const Blog = () => {
   useEffect(() => {
     if (!gotTags) {
       getTags().then((res: any) => {
-        console.log(res);
-        setTags(res);
+        const sortedTags = [
+          'Startups',
+          'Coding',
+          'Travel',
+          'Fitness',
+          'Foreign Policy',
+        ];
+        const orderedTags = [];
+        for (const tag of sortedTags) {
+          for (const t of res) {
+            if (t.name === tag) {
+              orderedTags.push(t);
+            }
+          }
+        }
+        setTags(orderedTags?.length > 0 ? orderedTags : res);
         setGotTags(true);
       });
     }
