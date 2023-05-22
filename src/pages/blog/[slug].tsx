@@ -52,7 +52,7 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     )
     .replaceAll(
       '<img',
-      '<img class="mx-auto max-h-[36rem] w-[90%] object-cover"'
+      '<img class="mx-auto max-h-[36rem] w-[90%] my-4 object-cover"'
     )
     .replaceAll('<li>', '<li class="list-disc list-outside mb-3">');
 

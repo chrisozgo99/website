@@ -67,9 +67,9 @@ const Blog = (props: any) => {
       <div className="ml-4 flex flex-row">
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
           <div key={tag.id}>
-            <a href={`/blog/${tag.slug}`}>
-              <h1 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h1>
-            </a>
+            {/* <a href={`/blog/${tag.slug}`}> */}
+            <h1 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h1>
+            {/* </a> */}
           </div>
         ))}
       </div>
