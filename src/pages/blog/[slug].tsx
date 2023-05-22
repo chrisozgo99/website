@@ -70,7 +70,7 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             )}
           </div>
           <div>
-            <h1 className="mb-4 font-helvetica text-[32px] font-extrabold leading-8 sm:text-5xl">
+            <h1 className="mb-4 font-helvetica text-[32px] font-extrabold leading-8 sm:text-5xl sm:leading-none">
               {post.title}
             </h1>
           </div>
