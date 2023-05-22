@@ -24,7 +24,7 @@ export default function BlogPreview(props: BlogPreviewProps) {
     primary_tag,
   } = props;
   return (
-    <div className="w-[453px] border border-gray-500">
+    <div className="w-full border-gray-500 sm:w-[453px] sm:border">
       <div>
         <img
           className="h-[340px] w-[453px] object-cover"
@@ -70,7 +70,7 @@ export default function BlogPreview(props: BlogPreviewProps) {
             </div>
           )}
         </div>
-        <div className="mb-2 h-[78px] font-raleway text-[1.625rem] font-thin">
+        <div className="mb-2 line-clamp-2 h-[78px] font-raleway text-[1.625rem] font-thin">
           {title}
         </div>
         <div className="line-clamp-2 h-12 w-full font-avenir text-base font-thin">

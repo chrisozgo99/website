@@ -76,7 +76,7 @@ const Blog = (props: any) => {
       <div className="flex flex-wrap justify-between">
         {posts.map((post: any) => {
           return (
-            <div className="col-span-1 mx-7 mb-8 w-fit" key={post.id}>
+            <div className="col-span-1 mb-8 w-fit sm:mx-7" key={post.id}>
               <Link
                 className="w-fit"
                 href={{
