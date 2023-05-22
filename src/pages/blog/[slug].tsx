@@ -52,7 +52,7 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     )
     .replaceAll(
       '<img',
-      '<img class="mx-auto max-h-[36rem] w-[90%] my-4 object-cover"'
+      '<img class="w-full mx-auto max-h-[36rem] sm:w-[90%] my-4 object-cover"'
     )
     .replaceAll('<li>', '<li class="list-disc list-outside mb-3">');
 
@@ -61,16 +61,16 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       meta={<Meta title={post.title} description={post.meta_description} />}
     >
       <div>
-        <div className="mx-[15%] pb-14">
+        <div className="mx-[5%] pb-10 sm:mx-[15%] sm:pb-14">
           <div>
             {post.primary_tag && (
-              <h1 className="text-base font-bold text-[rgb(151,151,151)]">
+              <h1 className="mb-4 text-base font-bold text-[rgb(151,151,151)]">
                 {post.primary_tag.name}
               </h1>
             )}
           </div>
           <div>
-            <h1 className="font-helvetica text-5xl font-extrabold">
+            <h1 className="mb-4 font-helvetica text-[32px] font-extrabold leading-8 sm:text-5xl">
               {post.title}
             </h1>
           </div>
@@ -91,9 +91,10 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   {new Date(
                     0,
                     new Date(post.published_at).getMonth()
-                  ).toLocaleString('en', { month: 'long' })}{' '}
+                  ).toLocaleString('en', { month: 'short' })}{' '}
                   {new Date(post.published_at).getDate()}
                   {`, ${new Date(post.published_at).getFullYear()}`}
+                  {` • ${post.reading_time} min read`}
                 </div>
               </div>
             </div>
@@ -102,14 +103,14 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         {post.feature_image && (
           <div className="justify-center pb-14">
             <img
-              className="mx-[5%] max-h-[36rem] w-[90%] object-cover"
+              className="max-h-[36rem] w-full object-cover sm:mx-[5%] sm:w-[90%]"
               src={post.feature_image}
               alt={post?.feature_image_alt}
             />
           </div>
         )}
         <div
-          className="mx-[15%] justify-center font-avenir"
+          className="mx-[5%] justify-center font-avenir sm:mx-[15%]"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: newHtml }}
           style={{}}
