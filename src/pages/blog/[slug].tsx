@@ -85,13 +85,15 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </div>
           </div>
         </div>
-        <div className="justify-center pb-14">
-          <img
-            className="mx-[5%] max-h-[36rem] w-[90%] object-cover"
-            src={post.feature_image}
-            alt={post.feature_image_alt}
-          />
-        </div>
+        {post.feature_image && (
+          <div className="justify-center pb-14">
+            <img
+              className="mx-[5%] max-h-[36rem] w-[90%] object-cover"
+              src={post.feature_image}
+              alt={post?.feature_image_alt}
+            />
+          </div>
+        )}
         <div
           className="mx-[15%] justify-center"
           // eslint-disable-next-line react/no-danger
