@@ -42,6 +42,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { post } = props;
 
+  const { html }: { html: string } = post;
+
+  const newHtml = html
+    .replaceAll('<p>', '<p class="mb-6">')
+    .replaceAll(
+      '<figcaption>',
+      '<figcaption class="text-center text-sm text-[rgb(151,151,151)] mt-2 mb-6">'
+    )
+    .replaceAll(
+      '<img',
+      '<img class="mx-auto max-h-[36rem] w-[90%] object-cover"'
+    )
+    .replaceAll('<li>', '<li class="list-disc list-outside mb-3">');
+
   return (
     <Main
       meta={<Meta title={post.title} description={post.meta_description} />}
@@ -95,9 +109,10 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           </div>
         )}
         <div
-          className="mx-[15%] justify-center"
+          className="mx-[15%] justify-center font-avenir"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: post.html }}
+          dangerouslySetInnerHTML={{ __html: newHtml }}
+          style={{}}
         />
       </div>
     </Main>

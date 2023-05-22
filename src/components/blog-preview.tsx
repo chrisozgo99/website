@@ -70,7 +70,7 @@ export default function BlogPreview(props: BlogPreviewProps) {
             </div>
           )}
         </div>
-        <div className="mb-2 font-raleway text-[1.625rem] font-thin">
+        <div className="mb-2 h-[78px] font-raleway text-[1.625rem] font-thin">
           {title}
         </div>
         <div className="line-clamp-2 h-12 w-full font-avenir text-base font-thin">
