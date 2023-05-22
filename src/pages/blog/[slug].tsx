@@ -42,7 +42,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { post } = props;
 
-  console.log(post);
   return (
     <Main
       meta={<Meta title={post.title} description={post.meta_description} />}
@@ -50,9 +49,11 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       <div>
         <div className="mx-[15%] pb-14">
           <div>
-            <h1 className="text-base font-bold text-[rgb(151,151,151)]">
-              {post.primary_tag.name}
-            </h1>
+            {post.primary_tag && (
+              <h1 className="text-base font-bold text-[rgb(151,151,151)]">
+                {post.primary_tag.name}
+              </h1>
+            )}
           </div>
           <div>
             <h1 className="font-helvetica text-5xl font-extrabold">

@@ -75,7 +75,6 @@ const Blog = (props: any) => {
       </div>
       <div className="flex flex-wrap justify-between">
         {posts.map((post: any) => {
-          console.log(post);
           return (
             <div className="col-span-1 mx-7 mb-8 w-fit" key={post.id}>
               <Link
@@ -99,12 +98,6 @@ const Blog = (props: any) => {
           );
         })}
       </div>
-      {/* <iframe
-        src="https://widgets.sociablekit.com/medium-publication-feed/iframe/144737"
-        frameBorder="0"
-        width="100%"
-        height="4200"
-      /> */}
     </Main>
   );
 };
