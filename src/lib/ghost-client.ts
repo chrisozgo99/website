@@ -1,6 +1,5 @@
 import GhostContentAPI from '@tryghost/content-api';
 
-// Create API instance with site credentials
 const api = new GhostContentAPI({
   url: process.env.NEXT_PUBLIC_GHOST_URL as string,
   key: process.env.NEXT_PUBLIC_GHOST_KEY as string,
@@ -13,6 +12,21 @@ export async function getPosts() {
       limit: 'all',
       include: ['tags', 'authors'],
     })
+    .catch((err) => {
+      throw new Error(err);
+    });
+}
+
+export async function getSinglePost(postSlug: string) {
+  return api.posts
+    .read(
+      {
+        slug: postSlug,
+      },
+      {
+        include: ['tags', 'authors'],
+      }
+    )
     .catch((err) => {
       throw new Error(err);
     });

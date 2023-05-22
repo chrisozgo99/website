@@ -1,50 +1,28 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
+import type { GetStaticProps } from 'next';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 import BlogPreview from '@/components/blog-preview';
 import { Meta } from '@/layouts/Meta';
 import { getPosts, getTags } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
-const Blog = () => {
-  const [gotPosts, setGotPosts] = useState(false);
-  const [posts, setPosts] = useState([]);
-  const [gotTags, setGotTags] = useState(false);
-  const [tags, setTags] = useState([]);
+export const getStaticProps: GetStaticProps = async () => {
+  const posts = await getPosts();
+  const tags = await getTags();
 
-  useEffect(() => {
-    if (!gotPosts) {
-      getPosts().then((res: any) => {
-        setPosts(res);
-        setGotPosts(true);
-      });
-    }
-  });
+  if (!posts || !tags) {
+    return {
+      notFound: true,
+    };
+  }
 
-  useEffect(() => {
-    if (!gotTags) {
-      getTags().then((res: any) => {
-        const sortedTags = [
-          'Startups',
-          'Coding',
-          'Travel',
-          'Fitness',
-          'Foreign Policy',
-        ];
-        const orderedTags = [];
-        for (const tag of sortedTags) {
-          for (const t of res) {
-            if (t.name === tag) {
-              orderedTags.push(t);
-            }
-          }
-        }
-        setTags(orderedTags?.length > 0 ? orderedTags : res);
-        setGotTags(true);
-      });
-    }
-  });
+  return {
+    props: { posts, tags },
+  };
+};
+
+const Blog = (props: any) => {
+  const { posts, tags } = props;
 
   return (
     <Main
@@ -96,28 +74,16 @@ const Blog = () => {
         ))}
       </div>
       <div className="flex flex-wrap justify-between">
-        {posts.map((post: any, index: number) => {
-          if (index % 2 === 1) {
-            return (
-              <div className="col-span-1 mb-8 mr-7 w-fit" key={post.id}>
-                <a className="w-fit" href={`/blog/${post.slug}`}>
-                  <BlogPreview
-                    excerpt={post.excerpt}
-                    feature_image={post.feature_image}
-                    feature_image_alt={post.feature_image_alt}
-                    primary_author={post.primary_author}
-                    primary_tag={post.primary_tag}
-                    published_at={post.published_at}
-                    reading_time={post.reading_time}
-                    title={post.title}
-                  />
-                </a>
-              </div>
-            );
-          }
+        {posts.map((post: any) => {
+          console.log(post);
           return (
-            <div className="col-span-1 mb-8 ml-7 w-fit" key={post.id}>
-              <a className="w-fit" href={`/blog/${post.slug}`}>
+            <div className="col-span-1 mx-7 mb-8 w-fit" key={post.id}>
+              <Link
+                className="w-fit"
+                href={{
+                  pathname: `/blog/${post.slug}`,
+                }}
+              >
                 <BlogPreview
                   excerpt={post.excerpt}
                   feature_image={post.feature_image}
@@ -128,7 +94,7 @@ const Blog = () => {
                   reading_time={post.reading_time}
                   title={post.title}
                 />
-              </a>
+              </Link>
             </div>
           );
         })}
