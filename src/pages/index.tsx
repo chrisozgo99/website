@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import 'react-horizontal-scrolling-menu/dist/styles.css';
 
 import Link from 'next/link';
