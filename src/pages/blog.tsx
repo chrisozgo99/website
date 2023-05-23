@@ -1,4 +1,4 @@
-import type { GetStaticProps } from 'next';
+import type { GetServerSideProps } from 'next';
 import Link from 'next/link';
 
 import BlogPreview from '@/components/blog-preview';
@@ -6,7 +6,7 @@ import { Meta } from '@/layouts/Meta';
 import { getPosts, getTags } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await getPosts();
   const tags = await getTags();
 
@@ -67,9 +67,16 @@ const Blog = (props: any) => {
       <div className="ml-4 flex flex-row">
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
           <div key={tag.id}>
-            {/* <a href={`/blog/${tag.slug}`}> */}
+            {/* <Link
+              className="w-fit"
+              href={{
+                pathname:
+                  tag.name === 'All Posts' ? `/blog` : 
+                  `/blog/${tag.slug}`,
+              }}
+            > */}
             <h1 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h1>
-            {/* </a> */}
+            {/* </Link> */}
           </div>
         ))}
       </div>
