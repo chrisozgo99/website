@@ -92,11 +92,11 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     <Main meta={<Meta title={proj.name} description={proj.description} />}>
       <div className="mx-10">
         <div className="mb-4 font-avenir text-4.5xl font-bold">{proj.name}</div>
-        <div className="mb-4 w-2/3 whitespace-pre-wrap font-avenir text-base">
+        <div className="mb-4 whitespace-pre-wrap font-avenir text-base sm:w-2/3">
           {proj.synopsis}
         </div>
         {proj.stack && (
-          <div className="my-4 w-2/3">
+          <div className="my-4 sm:w-2/3">
             {proj.stack.map((tech) => {
               return (
                 <div
@@ -110,7 +110,7 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           </div>
         )}
         {proj.stack && proj.deliverable ? (
-          <div className="flex w-full justify-center">
+          <div className="mb-8 flex w-full justify-center sm:mb-0">
             <a
               href={proj.deliverable}
               target="_blank"
@@ -123,7 +123,7 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </a>
           </div>
         ) : proj.deliverable ? (
-          <div className="flex w-full justify-center">
+          <div className="mb-8 flex w-full justify-center sm:mb-0">
             <a
               href={proj.deliverable}
               target="_blank"
@@ -141,28 +141,28 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </div>
       <div className="bg-gray-400 pb-3">
         {proj.customerDiscovery && (
-          <div className="my-8 flex w-full flex-row items-center py-8">
-            <div className="mx-6 w-2/3 justify-center">
+          <div className="mt-8 w-full items-center pt-8 sm:my-8 sm:flex sm:flex-row sm:py-8">
+            <div className="mx-6 justify-center sm:w-2/3">
               <img
                 className="rounded-2xl"
                 src={`${router.basePath}/assets/images/${proj.slug}/0.png`}
                 alt={proj.name}
               />
             </div>
-            <div className="mx-6 w-1/3">
-              <div className="whitespace-pre-wrap font-avenir text-sm">
+            <div className="mx-6 sm:w-1/3">
+              <div className="mt-4 whitespace-pre-wrap font-avenir text-sm">
                 {proj.customerDiscovery}
               </div>
             </div>
           </div>
         )}
-        <div className="my-8 flex w-full flex-row items-center pt-8">
-          <div className="mx-6 w-1/3">
+        <div className="flex w-full flex-col-reverse items-center sm:my-8 sm:flex-row sm:pt-8">
+          <div className="mx-6 sm:w-1/3">
             <div className="whitespace-pre-wrap font-avenir text-sm">
               {proj.product}
             </div>
           </div>
-          <div className="mx-6 my-8 w-2/3 justify-center">
+          <div className="mx-6 my-8 justify-center sm:w-2/3">
             <img
               className="rounded-2xl"
               src={`${router.basePath}/assets/images/${proj.slug}/1.png`}
