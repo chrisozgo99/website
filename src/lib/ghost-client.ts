@@ -17,6 +17,18 @@ export async function getPosts() {
     });
 }
 
+export async function getPostsWithTag(tagSlug: string) {
+  return api.posts
+    .browse({
+      limit: 'all',
+      filter: `tag:${tagSlug}`,
+      include: ['tags', 'authors'],
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+}
+
 export async function getSinglePost(postSlug: string) {
   return api.posts
     .read(
