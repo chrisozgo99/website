@@ -6,10 +6,22 @@ const api = new GhostContentAPI({
   version: 'v5.0',
 });
 
-export async function getPosts() {
+export async function getPosts(limit?: number) {
   return api.posts
     .browse({
-      limit: 'all',
+      limit: limit || 'all',
+      include: ['tags', 'authors'],
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+}
+
+export async function getMorePosts(page: number, limit: number = 10) {
+  return api.posts
+    .browse({
+      page,
+      limit,
       include: ['tags', 'authors'],
     })
     .catch((err) => {

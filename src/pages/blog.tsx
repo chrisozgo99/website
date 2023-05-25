@@ -1,13 +1,16 @@
+/* eslint-disable react/no-unescaped-entities */
 import type { GetServerSideProps } from 'next';
 import Link from 'next/link';
+import { useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
 import { Meta } from '@/layouts/Meta';
-import { getPosts, getTags } from '@/lib/ghost-client';
+import { getMorePosts, getPosts, getTags } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const posts = await getPosts();
+  const posts = await getPosts(10);
   const tags = await getTags();
 
   if (!posts || !tags) {
@@ -23,6 +26,20 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Blog = (props: any) => {
   const { posts, tags } = props;
+
+  const [postList, setPostList] = useState(posts);
+  const [pagination, setPagination] = useState(2);
+  const [hasMore, setHasMore] = useState(true);
+
+  async function getAdditionalPosts() {
+    await getMorePosts(pagination).then((res) => {
+      if (res.meta.pagination.page === res.meta.pagination.pages) {
+        setHasMore(false);
+      }
+      setPostList([...postList, ...res]);
+      setPagination(pagination + 1);
+    });
+  }
 
   return (
     <Main
@@ -81,29 +98,75 @@ const Blog = (props: any) => {
         ))}
       </div>
       <div className="flex flex-wrap justify-between">
-        {posts.map((post: any) => {
-          return (
-            <div className="col-span-1 mb-8 w-fit sm:mx-7" key={post.id}>
-              <Link
-                className="w-fit"
-                href={{
-                  pathname: `/blog/${post.slug}`,
-                }}
-              >
-                <BlogPreview
-                  excerpt={post.excerpt}
-                  feature_image={post.feature_image}
-                  feature_image_alt={post.feature_image_alt}
-                  primary_author={post.primary_author}
-                  primary_tag={post.primary_tag}
-                  published_at={post.published_at}
-                  reading_time={post.reading_time}
-                  title={post.title}
-                />
-              </Link>
-            </div>
-          );
-        })}
+        <InfiniteScroll
+          dataLength={postList.length}
+          next={() => getAdditionalPosts()}
+          hasMore={hasMore}
+          loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>Thanks for scrolling! That's all for now!</b>
+            </p>
+          }
+        >
+          {postList.map((post: any, index: number) => {
+            if (index % 2 === 0) {
+              return (
+                <div
+                  className="sm:flex sm:flex-row"
+                  key={post.id + new Date().toLocaleDateString()}
+                >
+                  <div className="col-span-1 mb-8 w-fit sm:mx-7" key={post.id}>
+                    <Link
+                      className="w-fit"
+                      href={{
+                        pathname: `/blog/${post.slug}`,
+                      }}
+                    >
+                      <BlogPreview
+                        excerpt={post.excerpt}
+                        feature_image={post.feature_image}
+                        feature_image_alt={post.feature_image_alt}
+                        primary_author={post.primary_author}
+                        primary_tag={post.primary_tag}
+                        published_at={post.published_at}
+                        reading_time={post.reading_time}
+                        title={post.title}
+                      />
+                    </Link>
+                  </div>
+                  {postList[index + 1] && (
+                    <div
+                      className="col-span-2 mb-8 w-fit sm:mx-7"
+                      key={postList[index + 1].id}
+                    >
+                      <Link
+                        className="w-fit"
+                        href={{
+                          pathname: `/blog/${postList[index + 1].slug}`,
+                        }}
+                      >
+                        <BlogPreview
+                          excerpt={postList[index + 1].excerpt}
+                          feature_image={postList[index + 1].feature_image}
+                          feature_image_alt={
+                            postList[index + 1].feature_image_alt
+                          }
+                          primary_author={postList[index + 1].primary_author}
+                          primary_tag={postList[index + 1].primary_tag}
+                          published_at={postList[index + 1].published_at}
+                          reading_time={postList[index + 1].reading_time}
+                          title={postList[index + 1].title}
+                        />
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            return null;
+          })}
+        </InfiniteScroll>
       </div>
     </Main>
   );
