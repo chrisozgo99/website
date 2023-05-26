@@ -29,10 +29,27 @@ export async function getMorePosts(page: number, limit: number = 10) {
     });
 }
 
-export async function getPostsWithTag(tagSlug: string) {
+export async function getPostsWithTag(tagSlug: string, limit?: number) {
   return api.posts
     .browse({
-      limit: 'all',
+      limit: limit || 'all',
+      filter: `tag:${tagSlug}`,
+      include: ['tags', 'authors'],
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+}
+
+export async function getMorePostsWithTag(
+  tagSlug: string,
+  page: number,
+  limit: number = 10
+) {
+  return api.posts
+    .browse({
+      page,
+      limit,
       filter: `tag:${tagSlug}`,
       include: ['tags', 'authors'],
     })

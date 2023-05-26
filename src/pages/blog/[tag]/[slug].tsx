@@ -10,6 +10,7 @@ import { getPosts, getSinglePost } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
 type IBlogUrl = {
+  tag: string;
   slug: string;
 };
 
@@ -19,6 +20,7 @@ export const getStaticPaths: GetStaticPaths<IBlogUrl> = async () => {
   return {
     paths: posts.map((post: any) => ({
       params: {
+        tag: post.primary_tag.slug,
         slug: post.slug,
       },
     })),

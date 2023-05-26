@@ -1,39 +1,52 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
 import { Meta } from '@/layouts/Meta';
-import { getMorePosts, getPosts, getTags } from '@/lib/ghost-client';
+import {
+  getMorePostsWithTag,
+  getPostsWithTag,
+  getTags,
+} from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const posts = await getPosts(10);
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { tag } = params as { tag: string };
+
   const tags = await getTags();
 
-  if (!posts || !tags) {
+  if (!tags) {
     return {
       notFound: true,
     };
   }
 
+  const posts = await getPostsWithTag(tag.toString(), 10);
+
   return {
-    props: { posts, tags },
+    props: { posts, tag, tags },
   };
 };
 
 const Blog = (props: any) => {
-  const { posts, tags } = props;
+  const { posts, tag, tags } = props;
 
   const [postList, setPostList] = useState(posts);
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
 
+  useEffect(() => {
+    setPostList(posts);
+    setHasMore(true);
+    setPagination(2);
+  }, [posts]);
+
   async function getAdditionalPosts() {
-    await getMorePosts(pagination).then((res) => {
-      if (res.meta.pagination.page === res.meta.pagination.pages) {
+    await getMorePostsWithTag(tag, pagination).then((res) => {
+      if (res.meta.pagination.page >= res.meta.pagination.pages) {
         setHasMore(false);
       }
       setPostList([...postList, ...res]);
@@ -82,16 +95,20 @@ const Blog = (props: any) => {
         </div>
       </div>
       <div className="ml-4 flex flex-row">
-        {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
-          <div key={tag.id}>
+        {[{ id: 'all', name: 'All Posts' }, ...tags].map((category: any) => (
+          <div key={category.id}>
             <Link
               className="w-fit"
               href={{
                 pathname:
-                  tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
+                  category.name === 'All Posts'
+                    ? `/blog`
+                    : `/blog/${category.slug}`,
               }}
             >
-              <h1 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h1>
+              <h1 className="my-7 mr-10 font-avenir text-lg">
+                {category.name}
+              </h1>
             </Link>
           </div>
         ))}
@@ -103,9 +120,11 @@ const Blog = (props: any) => {
           hasMore={hasMore}
           loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
           endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Thanks for scrolling! That's all for now!</b>
-            </p>
+            postList.length >= 10 && (
+              <p style={{ textAlign: 'center' }}>
+                <b>Thanks for scrolling! That's all for now!</b>
+              </p>
+            )
           }
         >
           {postList.map((post: any, index: number) => {
