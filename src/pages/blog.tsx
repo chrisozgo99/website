@@ -89,7 +89,6 @@ const Blog = (props: any) => {
               href={{
                 pathname:
                   tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
-                query: { tag: tag.slug },
               }}
             >
               <h1 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h1>

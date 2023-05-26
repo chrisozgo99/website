@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
@@ -13,9 +13,9 @@ import {
 } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { tag } = context.query as { tag: string };
-  // const tag = 'Travel';
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { tag } = params as { tag: string };
+
   const tags = await getTags();
 
   if (!tags) {
@@ -38,9 +38,15 @@ const Blog = (props: any) => {
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
 
+  useEffect(() => {
+    setPostList(posts);
+    setHasMore(true);
+    setPagination(2);
+  }, [posts]);
+
   async function getAdditionalPosts() {
     await getMorePostsWithTag(tag, pagination).then((res) => {
-      if (res.meta.pagination.page === res.meta.pagination.pages) {
+      if (res.meta.pagination.page >= res.meta.pagination.pages) {
         setHasMore(false);
       }
       setPostList([...postList, ...res]);
@@ -98,7 +104,6 @@ const Blog = (props: any) => {
                   category.name === 'All Posts'
                     ? `/blog`
                     : `/blog/${category.slug}`,
-                query: { tag: category.slug },
               }}
             >
               <h1 className="my-7 mr-10 font-avenir text-lg">
@@ -115,9 +120,11 @@ const Blog = (props: any) => {
           hasMore={hasMore}
           loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
           endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Thanks for scrolling! That's all for now!</b>
-            </p>
+            postList.length >= 10 && (
+              <p style={{ textAlign: 'center' }}>
+                <b>Thanks for scrolling! That's all for now!</b>
+              </p>
+            )
           }
         >
           {postList.map((post: any, index: number) => {

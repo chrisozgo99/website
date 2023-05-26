@@ -63,6 +63,17 @@ const Main = (props: IMainProps) => (
       <footer className="border-t border-gray-300 py-8 text-center text-sm">
         <div className="pb-3">chrisozgo99@gmail.com</div>©
         {new Date().getFullYear()} {AppConfig.title}. Made with ❤️.
+        <div>
+          <a
+            className="text-blue-600"
+            href="https://github.com/chrisozgo99/website"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Source code
+          </a>
+        </div>
+        <div className="mb-3" />
         <p>
           Boilerplate from{' '}
           <a href="https://creativedesignsguru.com">
