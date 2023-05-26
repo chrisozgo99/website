@@ -161,7 +161,9 @@ const Blog = (props: any) => {
                       <Link
                         className="w-fit"
                         href={{
-                          pathname: `/blog/${postList[index + 1].slug}`,
+                          pathname: `/blog/${
+                            postList[index + 1].primary_tag.slug
+                          }/${postList[index + 1].slug}`,
                         }}
                       >
                         <BlogPreview
