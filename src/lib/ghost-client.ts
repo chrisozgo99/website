@@ -6,6 +6,8 @@ const api = new GhostContentAPI({
   version: 'v5.0',
 });
 
+export const POSTS_PER_PAGE = 4;
+
 export async function getPosts(limit?: number) {
   return api.posts
     .browse({
@@ -17,7 +19,10 @@ export async function getPosts(limit?: number) {
     });
 }
 
-export async function getMorePosts(page: number, limit: number = 10) {
+export async function getMorePosts(
+  page: number,
+  limit: number = POSTS_PER_PAGE
+) {
   return api.posts
     .browse({
       page,
@@ -44,7 +49,7 @@ export async function getPostsWithTag(tagSlug: string, limit?: number) {
 export async function getMorePostsWithTag(
   tagSlug: string,
   page: number,
-  limit: number = 10
+  limit: number = POSTS_PER_PAGE
 ) {
   return api.posts
     .browse({

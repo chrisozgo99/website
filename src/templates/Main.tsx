@@ -14,9 +14,11 @@ const Main = (props: IMainProps) => (
     <div>
       <header className="pb-2 sm:mt-11 sm:pb-6">
         <div className="flex-wrap items-center justify-between sm:flex">
-          <h1 className="w-full text-center font-avenir text-2xl text-black sm:w-80 sm:max-w-xs sm:text-4.5xl">
-            {AppConfig.title.toUpperCase()}
-          </h1>
+          <Link href="/">
+            <h1 className="w-full text-center font-avenir text-2xl text-black sm:w-80 sm:max-w-xs sm:text-4.5xl">
+              {AppConfig.title.toUpperCase()}
+            </h1>
+          </Link>
           <nav>
             <ul className="flex flex-wrap justify-evenly">
               <li className="sm:mr-6">

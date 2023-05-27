@@ -24,10 +24,10 @@ export default function Card(props: CardProps) {
       <div className="z-10 mt-[-25px] max-w-[315px] rounded-b-3xl bg-gray-400">
         <div className="mx-5">
           <div className="mb-3 pt-4 font-helvetica text-xl font-bold">
-            {name}
+            <h3>{name}</h3>
           </div>
           <div className="pb-6 font-helvetica text-sm font-light">
-            {description}
+            <h4>{description}</h4>
           </div>
         </div>
       </div>

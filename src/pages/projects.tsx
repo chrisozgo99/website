@@ -362,9 +362,9 @@ const Projects = () => {
           </h1>
         </div>
         <div>
-          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
+          <h2 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             My Apps
-          </h1>
+          </h2>
           <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {prjcts.apps.map((app) => (
               <div className="my-8" key={app.name}>
@@ -380,9 +380,9 @@ const Projects = () => {
           </div>
         </div>
         <div>
-          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
+          <h2 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             Work Experience
-          </h1>
+          </h2>
           <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {prjcts.work.map((app) => (
               <div className="my-8" key={app.name}>
@@ -398,9 +398,9 @@ const Projects = () => {
           </div>
         </div>
         <div>
-          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
+          <h2 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             Seek Discomfort
-          </h1>
+          </h2>
           <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {prjcts.seekDiscomfort.map((app) => (
               <div className="my-8" key={app.name}>
@@ -417,9 +417,9 @@ const Projects = () => {
           </div>
         </div>
         <div>
-          <h1 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
+          <h2 className="mt-6 text-center font-avenir text-[1.625rem] sm:my-12">
             Tank Brand
-          </h1>
+          </h2>
           <div className="m-auto table align-middle sm:flex sm:justify-evenly">
             {prjcts.tank.map((app) => (
               <div className="my-8" key={app.name}>

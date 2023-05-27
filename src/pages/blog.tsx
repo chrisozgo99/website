@@ -1,17 +1,26 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { GetServerSideProps } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
 import { Meta } from '@/layouts/Meta';
-import { getMorePosts, getPosts, getTags } from '@/lib/ghost-client';
+import {
+  getMorePosts,
+  getPosts,
+  getTags,
+  POSTS_PER_PAGE,
+} from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const posts = await getPosts(10);
-  const tags = await getTags();
+  const postsPromise = getPosts(POSTS_PER_PAGE);
+  const tagsPromise = getTags();
+
+  const [posts, tags] = await Promise.all([postsPromise, tagsPromise]);
 
   if (!posts || !tags) {
     return {
@@ -25,6 +34,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Blog = (props: any) => {
+  const router = useRouter();
   const { posts, tags } = props;
 
   const [postList, setPostList] = useState(posts);
@@ -45,7 +55,7 @@ const Blog = (props: any) => {
     <Main
       meta={
         <Meta
-          title="Think Tank"
+          title="Blog | Think Tank"
           description="Blog discussing startups, coding, fitness, travel, foreign policy, and more!"
         />
       }
@@ -58,10 +68,10 @@ const Blog = (props: any) => {
             </h1>
           </div>
           <div>
-            <p className="font-avenir text-base leading-7 sm:mr-12">
+            <h2 className="font-avenir text-base leading-7 sm:mr-12">
               Welcome to the Think Tank, my blog where I discuss topics such as
               startups, coding, travel, fitness, foreign policy, and much more!
-            </p>
+            </h2>
           </div>
           <div>
             <button
@@ -74,8 +84,11 @@ const Blog = (props: any) => {
           </div>
         </div>
         <div className="sm:w-1/2">
-          <img
-            src="../../assets/images/thinktank2.png"
+          <Image
+            width={400}
+            height={400}
+            priority
+            src={`${router.basePath}/assets/images/thinktank2.png`}
             alt="Think Tank logo"
             className="h-[230px] w-full object-cover sm:h-[400px]"
           />
@@ -91,7 +104,7 @@ const Blog = (props: any) => {
                   tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
               }}
             >
-              <h1 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h1>
+              <h2 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h2>
             </Link>
           </div>
         ))}

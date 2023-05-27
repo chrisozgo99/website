@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -10,7 +11,10 @@ const About = () => {
     <Main meta={<Meta title="About" description="About Chris Ozgo" />}>
       <div className="mx-4 flex-row sm:ml-8 sm:flex">
         <div className="sm:h-[740px] sm:w-[640px]">
-          <img
+          <Image
+            height={740}
+            width={640}
+            priority
             className="h-full w-full object-cover"
             src={`${router.basePath}/assets/images/chrisozgo3.png`}
             alt="Chris Ozgo smiling in graduation regalia"

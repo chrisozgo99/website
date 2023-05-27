@@ -4,6 +4,7 @@ import type {
   GetStaticProps,
   InferGetStaticPropsType,
 } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { Meta } from '@/layouts/Meta';
@@ -143,7 +144,10 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         {proj.customerDiscovery && (
           <div className="mt-8 w-full items-center pt-8 sm:my-8 sm:flex sm:flex-row sm:py-8">
             <div className="mx-6 justify-center sm:w-2/3">
-              <img
+              <Image
+                priority
+                width={1000}
+                height={600}
                 className="rounded-2xl"
                 src={`${router.basePath}/assets/images/${proj.slug}/0.png`}
                 alt={proj.name}
@@ -163,7 +167,9 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </div>
           </div>
           <div className="mx-6 my-8 justify-center sm:w-2/3">
-            <img
+            <Image
+              width={1000}
+              height={600}
               className="rounded-2xl"
               src={`${router.basePath}/assets/images/${proj.slug}/1.png`}
               alt={proj.name}

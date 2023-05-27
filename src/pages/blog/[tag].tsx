@@ -1,6 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { GetServerSideProps } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -10,13 +12,17 @@ import {
   getMorePostsWithTag,
   getPostsWithTag,
   getTags,
+  POSTS_PER_PAGE,
 } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { tag } = params as { tag: string };
 
-  const tags = await getTags();
+  const tagsPromise = getTags();
+  const postsPromise = getPostsWithTag(tag.toString(), POSTS_PER_PAGE);
+
+  const [posts, tags] = await Promise.all([postsPromise, tagsPromise]);
 
   if (!tags) {
     return {
@@ -24,14 +30,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     };
   }
 
-  const posts = await getPostsWithTag(tag.toString(), 10);
-
   return {
     props: { posts, tag, tags },
   };
 };
 
 const Blog = (props: any) => {
+  const router = useRouter();
+
   const { posts, tag, tags } = props;
 
   const [postList, setPostList] = useState(posts);
@@ -58,8 +64,10 @@ const Blog = (props: any) => {
     <Main
       meta={
         <Meta
-          title="Think Tank"
-          description="Blog discussing startups, coding, fitness, travel, foreign policy, and more!"
+          title={`${
+            tag[0].toUpperCase() + tag.substr(1, tag.length - 1)
+          } Blog Posts - Think Tank`}
+          description={`Blog posts about ${tag}!`}
         />
       }
     >
@@ -87,8 +95,11 @@ const Blog = (props: any) => {
           </div>
         </div>
         <div className="sm:w-1/2">
-          <img
-            src="../../assets/images/thinktank2.png"
+          <Image
+            priority
+            width={400}
+            height={400}
+            src={`${router.basePath}/assets/images/thinktank2.png`}
             alt="Think Tank logo"
             className="h-[230px] w-full object-cover sm:h-[400px]"
           />
@@ -106,9 +117,9 @@ const Blog = (props: any) => {
                     : `/blog/${category.slug}`,
               }}
             >
-              <h1 className="my-7 mr-10 font-avenir text-lg">
+              <h2 className="my-7 mr-10 font-avenir text-lg">
                 {category.name}
-              </h1>
+              </h2>
             </Link>
           </div>
         ))}
@@ -120,7 +131,7 @@ const Blog = (props: any) => {
           hasMore={hasMore}
           loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
           endMessage={
-            postList.length >= 10 && (
+            postList.length >= POSTS_PER_PAGE && (
               <p style={{ textAlign: 'center' }}>
                 <b>Thanks for scrolling! That's all for now!</b>
               </p>
