@@ -50,6 +50,7 @@ export const BlogPost = (props: { post: any; newHtml: string }) => {
       {post.feature_image && (
         <div className="justify-center pb-14">
           <Image
+            priority
             width={1200}
             height={630}
             loader={({ src }) => src}

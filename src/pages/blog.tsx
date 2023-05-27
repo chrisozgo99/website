@@ -87,6 +87,7 @@ const Blog = (props: any) => {
           <Image
             width={400}
             height={400}
+            priority
             src={`${router.basePath}/assets/images/thinktank2.png`}
             alt="Think Tank logo"
             className="h-[230px] w-full object-cover sm:h-[400px]"

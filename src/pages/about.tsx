@@ -14,6 +14,7 @@ const About = () => {
           <Image
             height={740}
             width={640}
+            priority
             className="h-full w-full object-cover"
             src={`${router.basePath}/assets/images/chrisozgo3.png`}
             alt="Chris Ozgo smiling in graduation regalia"

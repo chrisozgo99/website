@@ -145,6 +145,7 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           <div className="mt-8 w-full items-center pt-8 sm:my-8 sm:flex sm:flex-row sm:py-8">
             <div className="mx-6 justify-center sm:w-2/3">
               <Image
+                priority
                 width={1000}
                 height={600}
                 className="rounded-2xl"

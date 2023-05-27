@@ -88,6 +88,7 @@ const Index = () => {
           <Image
             height={500}
             width={500}
+            priority
             src={`${router.basePath}/assets/images/chrisozgo2.png`}
             alt="Chris Ozgo at Zion National Park"
           />
