@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export const BlogPost = (props: { post: any; newHtml: string }) => {
   const { post, newHtml } = props;
 
@@ -6,9 +8,9 @@ export const BlogPost = (props: { post: any; newHtml: string }) => {
       <div className="mx-[5%] pb-10 sm:mx-[15%] sm:pb-14">
         <div>
           {post.primary_tag && (
-            <h1 className="mb-4 text-base font-bold text-[rgb(151,151,151)]">
+            <h2 className="mb-4 text-base font-bold text-[rgb(151,151,151)]">
               {post.primary_tag.name}
-            </h1>
+            </h2>
           )}
         </div>
         <div>
@@ -18,8 +20,11 @@ export const BlogPost = (props: { post: any; newHtml: string }) => {
         </div>
         <div className="flex flex-row items-center">
           <div>
-            <img
-              className="h-[52px] w-[52px] rounded-full"
+            <Image
+              className="rounded-full"
+              loader={({ src }) => src}
+              width={52}
+              height={52}
               src={post.primary_author.profile_image}
               alt={post.primary_author.name}
             />
@@ -44,7 +49,10 @@ export const BlogPost = (props: { post: any; newHtml: string }) => {
       </div>
       {post.feature_image && (
         <div className="justify-center pb-14">
-          <img
+          <Image
+            width={1200}
+            height={630}
+            loader={({ src }) => src}
             className="max-h-[36rem] w-full object-cover sm:mx-[5%] sm:w-[90%]"
             src={post.feature_image}
             alt={post?.feature_image_alt}

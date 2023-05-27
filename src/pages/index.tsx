@@ -1,5 +1,6 @@
 import 'react-horizontal-scrolling-menu/dist/styles.css';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
@@ -37,9 +38,9 @@ const Index = () => {
     >
       <div className="mb-8 flex-row items-center justify-between sm:flex">
         <div className="mx-4 sm:ml-16">
-          <h3 className="text-center text-4xl sm:font-avenir sm:text-6.5xl">
+          <h1 className="text-center text-4xl sm:font-avenir sm:text-6.5xl">
             Hi, I{`'`}m Chris!
-          </h3>
+          </h1>
           <p className="mt-2 font-avenir text-xl">I{`'`}m passionate about</p>
           <ul className="mt-0 list-inside list-disc font-avenir">
             <li className="my-1 ml-4">startups</li>
@@ -51,7 +52,9 @@ const Index = () => {
           </ul>
         </div>
         <div className="mx-16 mt-4 sm:mr-16 sm:max-w-xs">
-          <img
+          <Image
+            height={400}
+            width={400}
             src={`${router.basePath}/assets/images/chrisozgo1.png`}
             alt="Chris Ozgo smiling candidly in Los Angeles"
           />
@@ -82,13 +85,15 @@ const Index = () => {
       <div className="mx-6 mb-10 border-b border-black sm:mb-24" />
       <div className="justify-center sm:flex">
         <div className="mx-6 sm:mb-[76px]">
-          <img
+          <Image
+            height={500}
+            width={500}
             src={`${router.basePath}/assets/images/chrisozgo2.png`}
             alt="Chris Ozgo at Zion National Park"
           />
         </div>
         <div className="mb-6 pl-[26px] pr-7 pt-4 sm:mb-36 sm:ml-[-160px] sm:mt-20 sm:max-w-[478px] sm:bg-gray-200 sm:pt-10">
-          <h1 className="font-avenir text-base leading-6 sm:text-[0.94rem]">
+          <h2 className="font-avenir text-base leading-6 sm:text-[0.94rem]">
             <p className="pb-2 font-raleway text-[1.375rem] font-light sm:pb-[26px]">
               In the past few years I:
             </p>
@@ -175,7 +180,7 @@ const Index = () => {
                 </a>
               </li>
             </ul>
-          </h1>
+          </h2>
         </div>
       </div>
       <div>

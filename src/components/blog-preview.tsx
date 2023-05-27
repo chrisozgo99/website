@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import Image from 'next/image';
 import React from 'react';
 
 interface BlogPreviewProps {
@@ -26,8 +27,11 @@ export default function BlogPreview(props: BlogPreviewProps) {
   return (
     <div className="w-full border-gray-500 sm:w-[453px] sm:border">
       <div>
-        <img
+        <Image
           className="h-[340px] w-[453px] object-cover"
+          width={453}
+          height={340}
+          loader={({ src }) => src}
           src={feature_image}
           alt={feature_image_alt}
         />
@@ -36,8 +40,11 @@ export default function BlogPreview(props: BlogPreviewProps) {
         <div className="mb-3 flex flex-row justify-between">
           <div className="flex flex-row">
             <div>
-              <img
+              <Image
                 className="h-8 w-8 rounded-full"
+                width={32}
+                height={32}
+                loader={({ src }) => src}
                 src={primary_author.profile_image}
                 alt={primary_author.name}
               />
@@ -71,10 +78,10 @@ export default function BlogPreview(props: BlogPreviewProps) {
           )}
         </div>
         <div className="mb-2 line-clamp-2 h-[78px] font-raleway text-[1.625rem] font-thin">
-          {title}
+          <h1>{title}</h1>
         </div>
         <div className="line-clamp-2 h-12 w-full font-avenir text-base font-thin">
-          {excerpt}
+          <h2>{excerpt}</h2>
         </div>
       </div>
     </div>
