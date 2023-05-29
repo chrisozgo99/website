@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
 import { Meta } from '@/layouts/Meta';
+import addMember from '@/lib/ghost-admin';
 import {
   getMorePosts,
   getPosts,
@@ -40,6 +41,7 @@ const Blog = (props: any) => {
   const [postList, setPostList] = useState(posts);
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
+  const [email, setEmail] = useState('');
 
   async function getAdditionalPosts() {
     await getMorePosts(pagination).then((res) => {
@@ -79,7 +81,20 @@ const Blog = (props: any) => {
               disabled
               className="my-4 py-2 font-raleway text-sm font-semibold hover:decoration-inherit sm:mt-6 sm:h-12"
             >
-              <Link href="/blog/">Read More</Link>
+              <Link
+                href="#tags"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const targetId = document.getElementById('tags');
+                  if (targetId) {
+                    targetId.scrollIntoView({
+                      behavior: 'smooth',
+                    });
+                  }
+                }}
+              >
+                Read More
+              </Link>
             </button>
           </div>
         </div>
@@ -94,7 +109,39 @@ const Blog = (props: any) => {
           />
         </div>
       </div>
-      <div className="ml-4 flex flex-row">
+      <div>
+        <h2 className="mb-4 mt-12 font-avenir text-2xl font-bold">Subscribe</h2>
+        <p className="mb-4 font-avenir text-base leading-7">
+          Subscribe to my newsletter to get notified when I post new content!
+        </p>
+        <div className="flex flex-col sm:flex-row">
+          <input
+            type="email"
+            name="EMAIL"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mb-2 w-full rounded-md border border-gray-300 bg-white px-4 py-2 font-raleway text-sm text-gray-700 placeholder:text-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 sm:mr-2"
+            id="mce-EMAIL"
+            placeholder="Email Address"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => {
+              addMember(email);
+            }}
+            title="Subscribe"
+            // type="submit"
+            // value="Subscribe"
+            // name="subscribe"
+            // id="mc-embedded-subscribe"
+            className="w-full rounded-md border border-transparent bg-blue-400 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 sm:ml-2"
+          >
+            Subscribe
+          </button>
+        </div>
+      </div>
+      <div id="tags" className="ml-4 flex flex-row">
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
           <div key={tag.id}>
             <Link
@@ -102,6 +149,14 @@ const Blog = (props: any) => {
               href={{
                 pathname:
                   tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(
+                  tag.name === 'All Posts'
+                    ? `/blog#tags`
+                    : `/blog/${tag.slug}#tags`
+                );
               }}
             >
               <h2 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h2>

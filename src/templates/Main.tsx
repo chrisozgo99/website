@@ -63,8 +63,8 @@ const Main = (props: IMainProps) => (
       <main className="py-4 text-xl sm:py-5">{props.children}</main>
 
       <footer className="border-t border-gray-300 py-8 text-center text-sm">
-        <div className="pb-3">chrisozgo99@gmail.com</div>©
-        {new Date().getFullYear()} {AppConfig.title}. Made with ❤️.
+        <div className="pb-3">hi@chrisozgo.com</div>©{new Date().getFullYear()}{' '}
+        {AppConfig.title}. Made with ❤️.
         <div>
           <a
             className="text-blue-600"

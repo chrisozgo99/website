@@ -90,7 +90,20 @@ const Blog = (props: any) => {
               disabled
               className="my-4 py-2 font-raleway text-sm font-semibold hover:decoration-inherit sm:mt-6 sm:h-12"
             >
-              <Link href="/blog/">Read More</Link>
+              <Link
+                href="#tags"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const targetId = document.getElementById('tags');
+                  if (targetId) {
+                    targetId.scrollIntoView({
+                      behavior: 'smooth',
+                    });
+                  }
+                }}
+              >
+                Read More
+              </Link>
             </button>
           </div>
         </div>
@@ -105,7 +118,7 @@ const Blog = (props: any) => {
           />
         </div>
       </div>
-      <div className="ml-4 flex flex-row">
+      <div id="tags" className="ml-4 flex flex-row">
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((category: any) => (
           <div key={category.id}>
             <Link
@@ -115,6 +128,14 @@ const Blog = (props: any) => {
                   category.name === 'All Posts'
                     ? `/blog`
                     : `/blog/${category.slug}`,
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(
+                  category.name === 'All Posts'
+                    ? `/blog#tags`
+                    : `/blog/${category.slug}#tags`
+                );
               }}
             >
               <h2 className="my-7 mr-10 font-avenir text-lg">
