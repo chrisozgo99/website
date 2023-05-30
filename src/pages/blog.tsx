@@ -11,7 +11,6 @@ import BlogPreview from '@/components/blog-preview';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
-import addMember from '@/lib/ghost-admin';
 import {
   getMorePosts,
   getPosts,
@@ -78,9 +77,21 @@ const Blog = (props: any) => {
           email={email}
           setEmail={setEmail}
           onClick={() => {
-            addMember(email).then(() => {
-              setEmail('');
-              setMessage('Success! Thank you for subscribing!');
+            fetch('/api/subscribe', {
+              body: JSON.stringify({
+                email,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+            }).then((response) => {
+              response.json().then((data) => {
+                if (!data.error) {
+                  setEmail('');
+                  setMessage('Success! Thank you for subscribing!');
+                }
+              });
             });
           }}
           message={message}

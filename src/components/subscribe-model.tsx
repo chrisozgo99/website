@@ -94,7 +94,7 @@ export default function SubscribeModal(props: SubscribeModalProps) {
                     Subscribe
                   </button>
                 </div>
-                <div className="mt-4">
+                <div className="mx-8 mt-4">
                   <p className="text-center font-avenir text-black">
                     {message}
                   </p>

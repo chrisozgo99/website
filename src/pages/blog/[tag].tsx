@@ -47,6 +47,7 @@ const Blog = (props: any) => {
   const [hasMore, setHasMore] = useState(true);
   const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     setPostList(posts);
@@ -83,9 +84,28 @@ const Blog = (props: any) => {
         <SubscribeModal
           open={openSubscribe}
           setOpen={setOpenSubscribe}
+          message={message}
+          setMessage={setMessage}
           email={email}
           setEmail={setEmail}
-          onClick={() => {}}
+          onClick={() => {
+            fetch('/api/subscribe', {
+              body: JSON.stringify({
+                email,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+            }).then((response) => {
+              response.json().then((data) => {
+                if (!data.error) {
+                  setEmail('');
+                  setMessage('Success! Thank you for subscribing!');
+                }
+              });
+            });
+          }}
         />
       </div>
       <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />

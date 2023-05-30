@@ -9,7 +9,6 @@ import { BlogPost } from '@/components/blog-post';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
-import addMember from '@/lib/ghost-admin';
 import { getPosts, getSinglePost } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
@@ -85,9 +84,21 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           email={email}
           setEmail={setEmail}
           onClick={() => {
-            addMember(email).then(() => {
-              setEmail('');
-              setMessage('Success! Thank you for subscribing!');
+            fetch('/api/subscribe', {
+              body: JSON.stringify({
+                email,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+            }).then((response) => {
+              response.json().then((data) => {
+                if (!data.error) {
+                  setEmail('');
+                  setMessage('Success! Thank you for subscribing!');
+                }
+              });
             });
           }}
         />
