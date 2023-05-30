@@ -7,8 +7,9 @@ import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
+import Subscribe from '@/components/subscribe';
+import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
-import addMember from '@/lib/ghost-admin';
 import {
   getMorePosts,
   getPosts,
@@ -42,6 +43,7 @@ const Blog = (props: any) => {
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [email, setEmail] = useState('');
+  const [openSubscribe, setOpenSubscribe] = useState(false);
 
   async function getAdditionalPosts() {
     await getMorePosts(pagination).then((res) => {
@@ -62,6 +64,13 @@ const Blog = (props: any) => {
         />
       }
     >
+      <SubscribeModal
+        open={openSubscribe}
+        email={email}
+        setEmail={setEmail}
+        onClick={() => {}}
+      />
+      <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
       <div className="w-full flex-row sm:flex">
         <div className="bg-gray-400 px-4 sm:w-1/2 sm:pl-12">
           <div className="mb-4 sm:mt-20">
@@ -107,38 +116,6 @@ const Blog = (props: any) => {
             alt="Think Tank logo"
             className="h-[230px] w-full object-cover sm:h-[400px]"
           />
-        </div>
-      </div>
-      <div>
-        <h2 className="mb-4 mt-12 font-avenir text-2xl font-bold">Subscribe</h2>
-        <p className="mb-4 font-avenir text-base leading-7">
-          Subscribe to my newsletter to get notified when I post new content!
-        </p>
-        <div className="flex flex-col sm:flex-row">
-          <input
-            type="email"
-            name="EMAIL"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mb-2 w-full rounded-md border border-gray-300 bg-white px-4 py-2 font-raleway text-sm text-gray-700 placeholder:text-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 sm:mr-2"
-            id="mce-EMAIL"
-            placeholder="Email Address"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => {
-              addMember(email);
-            }}
-            title="Subscribe"
-            // type="submit"
-            // value="Subscribe"
-            // name="subscribe"
-            // id="mc-embedded-subscribe"
-            className="w-full rounded-md border border-transparent bg-blue-400 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 sm:ml-2"
-          >
-            Subscribe
-          </button>
         </div>
       </div>
       <div id="tags" className="ml-4 flex flex-row">
