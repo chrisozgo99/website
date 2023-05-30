@@ -64,7 +64,7 @@ const Main = (props: IMainProps) => {
                 </li>
               </ul>
             </nav>
-            <div className="mx-5">
+            <div className="mx-5 hidden sm:flex">
               <Subscribe header open={open} setOpen={setOpen} />
             </div>
           </div>
