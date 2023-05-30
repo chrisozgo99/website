@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+
 import type { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,6 +11,7 @@ import BlogPreview from '@/components/blog-preview';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
+import addMember from '@/lib/ghost-admin';
 import {
   getMorePosts,
   getPosts,
@@ -44,6 +46,7 @@ const Blog = (props: any) => {
   const [hasMore, setHasMore] = useState(true);
   const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [message, setMessage] = useState('');
 
   async function getAdditionalPosts() {
     await getMorePosts(pagination).then((res) => {
@@ -64,13 +67,28 @@ const Blog = (props: any) => {
         />
       }
     >
-      <SubscribeModal
-        open={openSubscribe}
-        email={email}
-        setEmail={setEmail}
-        onClick={() => {}}
-      />
+      <div
+        className={`transition-all duration-500 ${
+          openSubscribe ? 'fixed z-50' : 'opacity-0'
+        }`}
+      >
+        <SubscribeModal
+          open={openSubscribe}
+          setOpen={setOpenSubscribe}
+          email={email}
+          setEmail={setEmail}
+          onClick={() => {
+            addMember(email).then(() => {
+              setEmail('');
+              setMessage('Success! Thank you for subscribing!');
+            });
+          }}
+          message={message}
+          setMessage={setMessage}
+        />
+      </div>
       <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
+      <div className="flex h-full w-full flex-col items-center justify-center" />
       <div className="w-full flex-row sm:flex">
         <div className="bg-gray-400 px-4 sm:w-1/2 sm:pl-12">
           <div className="mb-4 sm:mt-20">
@@ -118,11 +136,10 @@ const Blog = (props: any) => {
           />
         </div>
       </div>
-      <div id="tags" className="ml-4 flex flex-row">
+      <div id="tags" className="flex flex-row overflow-x-scroll sm:ml-4">
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
           <div key={tag.id}>
             <Link
-              className="w-fit"
               href={{
                 pathname:
                   tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
@@ -136,7 +153,9 @@ const Blog = (props: any) => {
                 );
               }}
             >
-              <h2 className="my-7 mr-10 font-avenir text-lg">{tag.name}</h2>
+              <h2 className="my-7 mr-10 w-full text-center font-avenir text-lg sm:text-left">
+                {tag.name}
+              </h2>
             </Link>
           </div>
         ))}
