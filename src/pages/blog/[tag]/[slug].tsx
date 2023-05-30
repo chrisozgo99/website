@@ -3,8 +3,11 @@ import type {
   GetStaticProps,
   InferGetStaticPropsType,
 } from 'next';
+import { useState } from 'react';
 
 import { BlogPost } from '@/components/blog-post';
+import Subscribe from '@/components/subscribe';
+import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
 import { getPosts, getSinglePost } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
@@ -47,6 +50,10 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   const { html }: { html: string } = post;
 
+  const [email, setEmail] = useState('');
+  const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [message, setMessage] = useState('');
+
   const newHtml = html
     .replaceAll('<p>', '<p class="mb-8">')
     .replaceAll(
@@ -64,6 +71,39 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     <Main
       meta={<Meta title={post.title} description={post.meta_description} />}
     >
+      <div
+        className={`transition-all duration-500 ${
+          openSubscribe ? 'fixed z-50' : 'opacity-0'
+        }`}
+      >
+        <SubscribeModal
+          open={openSubscribe}
+          setOpen={setOpenSubscribe}
+          message={message}
+          setMessage={setMessage}
+          email={email}
+          setEmail={setEmail}
+          onClick={() => {
+            fetch('/api/subscribe', {
+              body: JSON.stringify({
+                email,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+            }).then((response) => {
+              response.json().then((data) => {
+                if (!data.error) {
+                  setEmail('');
+                  setMessage('Success! Thank you for subscribing!');
+                }
+              });
+            });
+          }}
+        />
+      </div>
+      <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
       <BlogPost post={post} newHtml={newHtml} />
     </Main>
   );

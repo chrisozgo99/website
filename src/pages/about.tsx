@@ -61,7 +61,7 @@ const About = () => {
       </div>
       <div className="mt-6 flex-row justify-evenly font-raleway text-base sm:mt-16 sm:flex">
         <div className="mx-24 mb-4 sm:h-12 sm:w-48">
-          <a href="mailto:chrisozgo99@gmail.com">
+          <a href="mailto:hi@chrisozgo.com">
             <button
               type="button"
               className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white"

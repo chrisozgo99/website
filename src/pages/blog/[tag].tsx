@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
+import Subscribe from '@/components/subscribe';
+import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
 import {
   getMorePostsWithTag,
@@ -43,6 +45,9 @@ const Blog = (props: any) => {
   const [postList, setPostList] = useState(posts);
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
+  const [email, setEmail] = useState('');
+  const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     setPostList(posts);
@@ -71,6 +76,39 @@ const Blog = (props: any) => {
         />
       }
     >
+      <div
+        className={`transition-all duration-500 ${
+          openSubscribe ? 'fixed z-50' : 'opacity-0'
+        }`}
+      >
+        <SubscribeModal
+          open={openSubscribe}
+          setOpen={setOpenSubscribe}
+          message={message}
+          setMessage={setMessage}
+          email={email}
+          setEmail={setEmail}
+          onClick={() => {
+            fetch('/api/subscribe', {
+              body: JSON.stringify({
+                email,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+            }).then((response) => {
+              response.json().then((data) => {
+                if (!data.error) {
+                  setEmail('');
+                  setMessage('Success! Thank you for subscribing!');
+                }
+              });
+            });
+          }}
+        />
+      </div>
+      <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
       <div className="w-full flex-row sm:flex">
         <div className="bg-gray-400 px-4 sm:w-1/2 sm:pl-12">
           <div className="mb-4 sm:mt-20">
@@ -90,7 +128,20 @@ const Blog = (props: any) => {
               disabled
               className="my-4 py-2 font-raleway text-sm font-semibold hover:decoration-inherit sm:mt-6 sm:h-12"
             >
-              <Link href="/blog/">Read More</Link>
+              <Link
+                href="#tags"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const targetId = document.getElementById('tags');
+                  if (targetId) {
+                    targetId.scrollIntoView({
+                      behavior: 'smooth',
+                    });
+                  }
+                }}
+              >
+                Read More
+              </Link>
             </button>
           </div>
         </div>
@@ -105,19 +156,26 @@ const Blog = (props: any) => {
           />
         </div>
       </div>
-      <div className="ml-4 flex flex-row">
+      <div id="tags" className="flex flex-row overflow-x-scroll sm:ml-4">
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((category: any) => (
           <div key={category.id}>
             <Link
-              className="w-fit"
               href={{
                 pathname:
                   category.name === 'All Posts'
                     ? `/blog`
                     : `/blog/${category.slug}`,
               }}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(
+                  category.name === 'All Posts'
+                    ? `/blog#tags`
+                    : `/blog/${category.slug}#tags`
+                );
+              }}
             >
-              <h2 className="my-7 mr-10 font-avenir text-lg">
+              <h2 className="my-7 mr-10 w-full text-center font-avenir text-lg sm:text-left">
                 {category.name}
               </h2>
             </Link>

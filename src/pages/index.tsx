@@ -101,53 +101,55 @@ const Index = () => {
             <ul className="mt-0 list-inside list-disc">
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Co-founded{' '}
-                <a
+                <Link
                   href="https://seedgatech.wixsite.com/home"
                   target="_blank"
                   rel="noopener noreferrer"
                   className=" underline"
                 >
                   SEED
-                </a>{' '}
+                </Link>{' '}
                 and{' '}
-                <a
+                <Link
                   href="https://www.instagram.com/gtseekdiscomfort/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className=" underline"
                 >
                   Seek Discomfort Club
-                </a>
+                </Link>
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Broke the Guinness World Record for the{' '}
-                <a
+                <Link
                   href="https://linktr.ee/seedgt"
                   target="_blank"
                   rel="noopener noreferrer"
                   className=" underline"
                 >
                   Longest Hopscotch Game
-                </a>
+                </Link>
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
-                <a
+                <Link
                   href="https://chrisozgo.substack.com/"
                   className=" underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Solo traveled on 4 different continents
-                </a>
+                </Link>
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Gave the{' '}
-                <a
+                <Link
                   href="https://www.youtube.com/watch?v=IRyCNIOo_Po"
                   target="_blank"
                   rel="noopener noreferrer"
                   className=" underline"
                 >
                   keynote speech
-                </a>{' '}
+                </Link>{' '}
                 to Georgia Tech{`'`}s freshman class
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
@@ -159,26 +161,26 @@ const Index = () => {
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Built a{' '}
-                <a
+                <Link
                   href="https://linktr.ee/chrisozgoapps"
                   target="_blank"
                   rel="noopener noreferrer"
                   className=" underline"
                 >
                   few mobile apps
-                </a>{' '}
+                </Link>{' '}
                 that made some money
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Worked for some{' '}
-                <a
+                <Link
                   href="https://linktr.ee/chrisozgostartups"
                   target="_blank"
                   rel="noopener noreferrer"
                   className=" underline"
                 >
                   kickass startups
-                </a>
+                </Link>
               </li>
             </ul>
           </h2>
