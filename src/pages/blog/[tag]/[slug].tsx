@@ -71,6 +71,8 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     <Main
       meta={<Meta title={post.title} description={post.meta_description} />}
     >
+      <BlogPost post={post} newHtml={newHtml} />
+      <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
       <div
         className={`transition-all duration-500 ${
           openSubscribe ? 'fixed z-50' : 'opacity-0'
@@ -79,8 +81,6 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <SubscribeModal
           open={openSubscribe}
           setOpen={setOpenSubscribe}
-          message={message}
-          setMessage={setMessage}
           email={email}
           setEmail={setEmail}
           onClick={() => {
@@ -101,10 +101,10 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
               });
             });
           }}
+          message={message}
+          setMessage={setMessage}
         />
       </div>
-      <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
-      <BlogPost post={post} newHtml={newHtml} />
     </Main>
   );
 };
