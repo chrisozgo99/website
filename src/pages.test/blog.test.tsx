@@ -8,7 +8,7 @@ import Blog from '@/pages/blog';
 describe('Blog page', () => {
   describe('Render method', () => {
     it('should say THINK TANK', () => {
-      render(<Blog />);
+      render(<Blog posts={[]} tags={[]} />);
 
       const heading = screen.getByText(/THINK TANK/);
 
