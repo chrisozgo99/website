@@ -62,7 +62,7 @@ const Index = () => {
           <Image
             height={400}
             width={400}
-            src={`${router.basePath}/assets/images/chrisozgo1.png`}
+            src={`/${router.basePath}/assets/images/chrisozgo1.png`}
             alt="Chris Ozgo"
           />
         </div>
@@ -96,7 +96,7 @@ const Index = () => {
             height={500}
             width={500}
             priority
-            src={`${router.basePath}/assets/images/chrisozgo2.png`}
+            src={`/${router.basePath}/assets/images/chrisozgo2.png`}
             alt="Chris Ozgo at Zion National Park"
           />
         </div>

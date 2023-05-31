@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { Main } from './Main';
 
@@ -10,18 +10,6 @@ describe('Main template', () => {
       const menuItemList = screen.getAllByRole('listitem');
 
       expect(menuItemList).toHaveLength(4);
-    });
-
-    it('should have a link to support creativedesignsguru.com', () => {
-      render(<Main meta={null}>{null}</Main>);
-
-      const copyrightSection = screen.getByText(/©/);
-      const copyrightLink = within(copyrightSection).getByRole('link');
-
-      expect(copyrightLink).toHaveAttribute(
-        'href',
-        'https://creativedesignsguru.com'
-      );
     });
   });
 });

@@ -36,7 +36,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const Blog = (props: any) => {
+interface BlogProps {
+  posts: any;
+  tags: any;
+}
+
+const Blog = (props: BlogProps) => {
   const router = useRouter();
   const { posts, tags } = props;
 
@@ -108,7 +113,7 @@ const Blog = (props: any) => {
             width={400}
             height={400}
             priority
-            src={`${router.basePath}/assets/images/thinktank2.png`}
+            src={`/${router.basePath}/assets/images/thinktank2.png`}
             alt="Think Tank logo"
             className="h-[230px] w-full object-cover sm:h-[400px]"
           />

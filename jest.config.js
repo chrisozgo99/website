@@ -6,6 +6,7 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
+  preset: 'ts-jest',
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -32,6 +33,10 @@ const customJestConfig = {
       statements: 0,
     },
   },
+  transform: {
+    'node_modules/variables/.+\\.(j|t)sx?$': 'ts-jest',
+  },
+  transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
   testEnvironment: 'jest-environment-jsdom',
 };
 
