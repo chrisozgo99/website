@@ -57,6 +57,9 @@ jobs:
 
             - name: Run unit tests
               run: npm run test
+              env:
+                  NEXT_PUBLIC_GHOST_URL: ${{ secrets.NEXT_PUBLIC_GHOST_URL }}
+                  NEXT_PUBLIC_GHOST_KEY: ${{ secrets.NEXT_PUBLIC_GHOST_KEY }}
 
             - name: Run storybook tests
               run: npm run test-storybook:ci
