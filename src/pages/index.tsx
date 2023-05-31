@@ -63,7 +63,7 @@ const Index = () => {
             height={400}
             width={400}
             src={`${router.basePath}/assets/images/chrisozgo1.png`}
-            alt="Chris Ozgo smiling candidly in Los Angeles"
+            alt="Chris Ozgo"
           />
         </div>
       </div>
