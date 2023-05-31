@@ -66,39 +66,6 @@ const Blog = (props: any) => {
         />
       }
     >
-      <div
-        className={`transition-all duration-500 ${
-          openSubscribe ? 'fixed z-50' : 'opacity-0'
-        }`}
-      >
-        <SubscribeModal
-          open={openSubscribe}
-          setOpen={setOpenSubscribe}
-          email={email}
-          setEmail={setEmail}
-          onClick={() => {
-            fetch('/api/subscribe', {
-              body: JSON.stringify({
-                email,
-              }),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              method: 'POST',
-            }).then((response) => {
-              response.json().then((data) => {
-                if (!data.error) {
-                  setEmail('');
-                  setMessage('Success! Thank you for subscribing!');
-                }
-              });
-            });
-          }}
-          message={message}
-          setMessage={setMessage}
-        />
-      </div>
-      <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
       <div className="flex h-full w-full flex-col items-center justify-center" />
       <div className="w-full flex-row sm:flex">
         <div className="bg-gray-400 px-4 sm:w-1/2 sm:pl-12">
@@ -171,7 +138,7 @@ const Blog = (props: any) => {
           </div>
         ))}
       </div>
-      <div className="flex flex-wrap justify-between">
+      <div className="-z-10 flex flex-wrap justify-between">
         <InfiniteScroll
           dataLength={postList.length}
           next={() => getAdditionalPosts()}
@@ -187,7 +154,7 @@ const Blog = (props: any) => {
             if (index % 2 === 0) {
               return (
                 <div
-                  className="sm:flex sm:flex-row"
+                  className="-z-20 sm:flex sm:flex-row"
                   key={post.id + new Date().toLocaleDateString()}
                 >
                   <div className="col-span-1 mb-8 w-fit sm:mx-7" key={post.id}>
@@ -243,6 +210,39 @@ const Blog = (props: any) => {
             return null;
           })}
         </InfiniteScroll>
+        <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
+        <div
+          className={`transition-all duration-500 ${
+            openSubscribe ? 'fixed z-50' : 'opacity-0'
+          }`}
+        >
+          <SubscribeModal
+            open={openSubscribe}
+            setOpen={setOpenSubscribe}
+            email={email}
+            setEmail={setEmail}
+            onClick={() => {
+              fetch('/api/subscribe', {
+                body: JSON.stringify({
+                  email,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                method: 'POST',
+              }).then((response) => {
+                response.json().then((data) => {
+                  if (!data.error) {
+                    setEmail('');
+                    setMessage('Success! Thank you for subscribing!');
+                  }
+                });
+              });
+            }}
+            message={message}
+            setMessage={setMessage}
+          />
+        </div>
       </div>
     </Main>
   );

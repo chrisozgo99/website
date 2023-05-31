@@ -76,39 +76,6 @@ const Blog = (props: any) => {
         />
       }
     >
-      <div
-        className={`transition-all duration-500 ${
-          openSubscribe ? 'fixed z-50' : 'opacity-0'
-        }`}
-      >
-        <SubscribeModal
-          open={openSubscribe}
-          setOpen={setOpenSubscribe}
-          message={message}
-          setMessage={setMessage}
-          email={email}
-          setEmail={setEmail}
-          onClick={() => {
-            fetch('/api/subscribe', {
-              body: JSON.stringify({
-                email,
-              }),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              method: 'POST',
-            }).then((response) => {
-              response.json().then((data) => {
-                if (!data.error) {
-                  setEmail('');
-                  setMessage('Success! Thank you for subscribing!');
-                }
-              });
-            });
-          }}
-        />
-      </div>
-      <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
       <div className="w-full flex-row sm:flex">
         <div className="bg-gray-400 px-4 sm:w-1/2 sm:pl-12">
           <div className="mb-4 sm:mt-20">
@@ -256,6 +223,39 @@ const Blog = (props: any) => {
             return null;
           })}
         </InfiniteScroll>
+        <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
+        <div
+          className={`transition-all duration-500 ${
+            openSubscribe ? 'fixed z-50' : 'opacity-0'
+          }`}
+        >
+          <SubscribeModal
+            open={openSubscribe}
+            setOpen={setOpenSubscribe}
+            email={email}
+            setEmail={setEmail}
+            onClick={() => {
+              fetch('/api/subscribe', {
+                body: JSON.stringify({
+                  email,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                method: 'POST',
+              }).then((response) => {
+                response.json().then((data) => {
+                  if (!data.error) {
+                    setEmail('');
+                    setMessage('Success! Thank you for subscribing!');
+                  }
+                });
+              });
+            }}
+            message={message}
+            setMessage={setMessage}
+          />
+        </div>
       </div>
     </Main>
   );
