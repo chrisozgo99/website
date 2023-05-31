@@ -3,13 +3,20 @@ import 'react-horizontal-scrolling-menu/dist/styles.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
+import Subscribe from '@/components/subscribe';
+import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
   const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [message, setMessage] = useState('');
 
   const items = [
     { id: 1 },
@@ -244,6 +251,41 @@ const Index = () => {
             return <div key={id} />;
           })}
         </ScrollMenu>
+      </div>
+      <div className="sm:hidden">
+        <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
+        <div
+          className={`transition-all duration-500 ${
+            openSubscribe ? 'fixed z-50' : 'opacity-0'
+          }`}
+        >
+          <SubscribeModal
+            open={openSubscribe}
+            setOpen={setOpenSubscribe}
+            email={email}
+            setEmail={setEmail}
+            onClick={() => {
+              fetch('/api/subscribe', {
+                body: JSON.stringify({
+                  email,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                method: 'POST',
+              }).then((response) => {
+                response.json().then((data) => {
+                  if (!data.error) {
+                    setEmail('');
+                    setMessage('Success! Thank you for subscribing!');
+                  }
+                });
+              });
+            }}
+            message={message}
+            setMessage={setMessage}
+          />
+        </div>
       </div>
     </Main>
   );

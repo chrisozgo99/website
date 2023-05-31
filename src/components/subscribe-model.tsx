@@ -62,7 +62,7 @@ export default function SubscribeModal(props: SubscribeModalProps) {
               <div className="mt-8 w-full">
                 <div className="mb-4 flex justify-center">
                   <input
-                    className="w-2/3 rounded-lg border-2 border-gray-300 px-4 py-2 font-avenir text-base focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 sm:w-1/2"
+                    className="w-2/3 rounded-lg border-2 border-gray-300 px-4 py-2 font-avenir text-base sm:w-1/2"
                     type="email"
                     placeholder="Email"
                     value={email}
@@ -76,7 +76,8 @@ export default function SubscribeModal(props: SubscribeModalProps) {
                     type="button"
                     disabled={email === ''}
                     className="w-2/3 rounded-lg bg-[#FF1A75] px-4 py-2 font-avenir text-base text-white hover:cursor-pointer sm:w-1/2"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       const validateEmail = (val: string) => {
                         return String(val)
                           .toLowerCase()
