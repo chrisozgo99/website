@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import addMember from './ghost-admin';
+import addMember from '../../lib/ghost-admin';
 
 export default function handler(
   request: NextApiRequest,
