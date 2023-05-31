@@ -1,12 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
+import Subscribe from '@/components/subscribe';
+import SubscribeModal from '@/components/subscribe-model';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
 const About = () => {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [message, setMessage] = useState('');
+
   return (
     <Main meta={<Meta title="About" description="About Chris Ozgo" />}>
       <div className="mx-4 flex-row sm:ml-8 sm:flex">
@@ -79,6 +86,41 @@ const About = () => {
               Blog
             </button>
           </Link>
+        </div>
+      </div>
+      <div className="sm:hidden">
+        <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
+        <div
+          className={`transition-all duration-500 ${
+            openSubscribe ? 'fixed z-50' : 'opacity-0'
+          }`}
+        >
+          <SubscribeModal
+            open={openSubscribe}
+            setOpen={setOpenSubscribe}
+            email={email}
+            setEmail={setEmail}
+            onClick={() => {
+              fetch('/api/subscribe', {
+                body: JSON.stringify({
+                  email,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                method: 'POST',
+              }).then((response) => {
+                response.json().then((data) => {
+                  if (!data.error) {
+                    setEmail('');
+                    setMessage('Success! Thank you for subscribing!');
+                  }
+                });
+              });
+            }}
+            message={message}
+            setMessage={setMessage}
+          />
         </div>
       </div>
     </Main>
