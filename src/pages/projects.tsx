@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import Card from '@/components/card';
 import Subscribe from '@/components/subscribe';
-import SubscribeModal from '@/components/subscribe-model';
+import SubscribeModal from '@/components/subscribe-modal';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
@@ -465,12 +465,17 @@ const Projects = () => {
                 },
                 method: 'POST',
               }).then((response) => {
-                response.json().then((data) => {
-                  if (!data.error) {
-                    setEmail('');
-                    setMessage('Success! Thank you for subscribing!');
-                  }
-                });
+                if (!response.ok) {
+                  setEmail('');
+                  setMessage('You are already subscribed!');
+                } else {
+                  response.json().then((data) => {
+                    if (!data.error) {
+                      setEmail('');
+                      setMessage('Success! Thank you for subscribing!');
+                    }
+                  });
+                }
               });
             }}
             message={message}

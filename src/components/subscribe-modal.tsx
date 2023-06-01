@@ -79,11 +79,15 @@ export default function SubscribeModal(props: SubscribeModalProps) {
                     onClick={(e) => {
                       e.preventDefault();
                       const validateEmail = (val: string) => {
-                        return String(val)
-                          .toLowerCase()
-                          .match(
-                            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                          );
+                        try {
+                          return String(val)
+                            .toLowerCase()
+                            .match(
+                              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                            );
+                        } catch (err) {
+                          return false;
+                        }
                       };
                       if (validateEmail(email)) {
                         onClick();

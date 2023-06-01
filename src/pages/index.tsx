@@ -7,11 +7,17 @@ import { useState } from 'react';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
 import Subscribe from '@/components/subscribe';
-import SubscribeModal from '@/components/subscribe-model';
+import SubscribeModal from '@/components/subscribe-modal';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
-const Index = () => {
+interface IIndexProps {
+  test?: boolean;
+}
+
+const Index = (props: IIndexProps) => {
+  const { test } = props;
+
   const router = useRouter();
 
   const [email, setEmail] = useState('');
@@ -62,7 +68,9 @@ const Index = () => {
           <Image
             height={400}
             width={400}
-            src={`/${router.basePath}/assets/images/chrisozgo1.png`}
+            src={`${test ? '/' : ''}${
+              router.basePath
+            }/assets/images/chrisozgo1.png`}
             alt="Chris Ozgo"
           />
         </div>
@@ -96,7 +104,9 @@ const Index = () => {
             height={500}
             width={500}
             priority
-            src={`/${router.basePath}/assets/images/chrisozgo2.png`}
+            src={`${test ? '/' : ''}${
+              router.basePath
+            }/assets/images/chrisozgo2.png`}
             alt="Chris Ozgo at Zion National Park"
           />
         </div>
@@ -274,12 +284,17 @@ const Index = () => {
                 },
                 method: 'POST',
               }).then((response) => {
-                response.json().then((data) => {
-                  if (!data.error) {
-                    setEmail('');
-                    setMessage('Success! Thank you for subscribing!');
-                  }
-                });
+                if (!response.ok) {
+                  setEmail('');
+                  setMessage('You are already subscribed!');
+                } else {
+                  response.json().then((data) => {
+                    if (!data.error) {
+                      setEmail('');
+                      setMessage('Success! Thank you for subscribing!');
+                    }
+                  });
+                }
               });
             }}
             message={message}

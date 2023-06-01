@@ -9,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
 import Subscribe from '@/components/subscribe';
-import SubscribeModal from '@/components/subscribe-model';
+import SubscribeModal from '@/components/subscribe-modal';
 import { Meta } from '@/layouts/Meta';
 import {
   getMorePosts,
@@ -39,11 +39,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
 interface BlogProps {
   posts: any;
   tags: any;
+  test?: boolean;
 }
 
 const Blog = (props: BlogProps) => {
   const router = useRouter();
-  const { posts, tags } = props;
+  const { posts, tags, test } = props;
 
   const [postList, setPostList] = useState(posts);
   const [pagination, setPagination] = useState(2);
@@ -113,7 +114,9 @@ const Blog = (props: BlogProps) => {
             width={400}
             height={400}
             priority
-            src={`/${router.basePath}/assets/images/thinktank2.png`}
+            src={`${test ? '/' : ''}${
+              router.basePath
+            }/assets/images/thinktank2.png`}
             alt="Think Tank logo"
             className="h-[230px] w-full object-cover sm:h-[400px]"
           />
@@ -236,12 +239,17 @@ const Blog = (props: BlogProps) => {
                 },
                 method: 'POST',
               }).then((response) => {
-                response.json().then((data) => {
-                  if (!data.error) {
-                    setEmail('');
-                    setMessage('Success! Thank you for subscribing!');
-                  }
-                });
+                if (!response.ok) {
+                  setEmail('');
+                  setMessage('You are already subscribed!');
+                } else {
+                  response.json().then((data) => {
+                    if (!data.error) {
+                      setEmail('');
+                      setMessage('Success! Thank you for subscribing!');
+                    }
+                  });
+                }
               });
             }}
             message={message}
