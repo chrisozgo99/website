@@ -4,11 +4,17 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import Subscribe from '@/components/subscribe';
-import SubscribeModal from '@/components/subscribe-model';
+import SubscribeModal from '@/components/subscribe-modal';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
-const About = () => {
+interface IAboutProps {
+  test?: boolean;
+}
+
+const About = (props: IAboutProps) => {
+  const { test } = props;
+
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
@@ -23,7 +29,9 @@ const About = () => {
             width={640}
             priority
             className="h-full w-full object-cover"
-            src={`/${router.basePath}/assets/images/chrisozgo3.png`}
+            src={`${test ? '/' : ''}${
+              router.basePath
+            }/assets/images/chrisozgo3.png`}
             alt="Chris Ozgo smiling in graduation regalia"
           />
         </div>
@@ -110,12 +118,17 @@ const About = () => {
                 },
                 method: 'POST',
               }).then((response) => {
-                response.json().then((data) => {
-                  if (!data.error) {
-                    setEmail('');
-                    setMessage('Success! Thank you for subscribing!');
-                  }
-                });
+                if (!response.ok) {
+                  setEmail('');
+                  setMessage('You are already subscribed!');
+                } else {
+                  response.json().then((data) => {
+                    if (!data.error) {
+                      setEmail('');
+                      setMessage('Success! Thank you for subscribing!');
+                    }
+                  });
+                }
               });
             }}
             message={message}

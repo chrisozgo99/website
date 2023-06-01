@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 
 import Subscribe from '@/components/subscribe';
-import SubscribeModal from '@/components/subscribe-model';
+import SubscribeModal from '@/components/subscribe-modal';
 import { AppConfig } from '@/utils/AppConfig';
 
 type IMainProps = {
@@ -93,12 +93,17 @@ const Main = (props: IMainProps) => {
                   },
                   method: 'POST',
                 }).then((response) => {
-                  response.json().then((data) => {
-                    if (!data.error) {
-                      setEmail('');
-                      setMessage('Success! Thank you for subscribing!');
-                    }
-                  });
+                  if (!response.ok) {
+                    setEmail('');
+                    setMessage('You are already subscribed!');
+                  } else {
+                    response.json().then((data) => {
+                      if (!data.error) {
+                        setEmail('');
+                        setMessage('Success! Thank you for subscribing!');
+                      }
+                    });
+                  }
                 });
               }}
             />

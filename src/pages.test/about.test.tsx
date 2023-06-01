@@ -8,7 +8,7 @@ import About from '@/pages/about';
 describe('About page', () => {
   describe('Render method', () => {
     it('should say "About Me"`', () => {
-      render(<About />);
+      render(<About test />);
 
       const paragraph = screen.getByText(/About Me/);
 
