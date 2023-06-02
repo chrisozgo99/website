@@ -59,6 +59,7 @@ jobs:
               env:
                   NEXT_PUBLIC_GHOST_URL: ${{ secrets.NEXT_PUBLIC_GHOST_URL }}
                   NEXT_PUBLIC_GHOST_KEY: ${{ secrets.NEXT_PUBLIC_GHOST_KEY }}
+                  NEXT_PUBLIC_DISQUS_SHORTNAME: ${{ secrets.NEXT_PUBLIC_DISQUS_SHORTNAME }}
 
             - name: Run storybook tests
               run: npm run test-storybook:ci
