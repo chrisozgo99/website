@@ -1,8 +1,10 @@
+import { DiscussionEmbed } from 'disqus-react';
 import type {
   GetStaticPaths,
   GetStaticProps,
   InferGetStaticPropsType,
 } from 'next';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { BlogPost } from '@/components/blog-post';
@@ -11,6 +13,7 @@ import SubscribeModal from '@/components/subscribe-modal';
 import { Meta } from '@/layouts/Meta';
 import { getPosts, getSinglePost } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
+import { AppConfig } from '@/utils/AppConfig';
 
 type IBlogUrl = {
   tag: string;
@@ -46,6 +49,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
   const { post } = props;
 
   const { html }: { html: string } = post;
@@ -71,7 +75,21 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     <Main
       meta={<Meta title={post.title} description={post.meta_description} />}
     >
-      <BlogPost post={post} newHtml={newHtml} />
+      <div className="mb-14">
+        <BlogPost post={post} newHtml={newHtml} />
+      </div>
+      <div className="mx-auto w-4/5">
+        <DiscussionEmbed
+          shortname={process.env.NEXT_PUBLIC_DISQUS_SHORTNAME as string}
+          config={{
+            url: `${AppConfig.url}/${router.asPath}`,
+            identifier: post.id,
+            title: post.title,
+            language: 'en',
+          }}
+        />
+      </div>
+
       <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />
       <div
         className={`transition-all duration-500 ${
