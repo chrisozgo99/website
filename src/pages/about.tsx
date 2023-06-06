@@ -43,10 +43,11 @@ const About = (props: IAboutProps) => {
             I love boiling down my entire life into just a few sentences.
           </p>
           <p className="mb-6">
-            My name is Chris, and just like everyone else, I{`'`}m trying to
-            figure things out. I was an aspiring college basketball player
-            before a neck injury-induced gap year that opened up my mind to many
-            other amazing opportunities.
+            My name is Chris, and I{`'`}m from Arlington, VA. I{`'`}m high
+            energy, hard working, and deep thinking. Growing up, I was an
+            aspiring college basketball player before a neck injury led me to
+            take a gap year that opened up my mind to many other amazing
+            opportunities.
           </p>
           <p className="mb-6">
             I got into entrepreneurship, learned how to code, and traveled the
@@ -67,10 +68,10 @@ const About = (props: IAboutProps) => {
             solo traveling, and building mobile apps.
           </p>
           <p className="mb-6">
-            I{`'`}m a avid writer with a passion for many of the above topics,
-            and I{`'`}ve built this site to share my thoughts and experiences
-            with the world! If any of that interests you, feel free to reach
-            out, or check out my blog to learn more!
+            I{`'`}m an avid writer with a passion for many of the above topics,
+            and I built this site to share my thoughts and experiences with the
+            world! If any of that interests you, feel free to reach out, or
+            check out my blog to learn more!
           </p>
         </div>
       </div>
