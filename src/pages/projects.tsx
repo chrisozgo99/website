@@ -303,8 +303,8 @@ export const projects = (
         customerDiscovery:
           'One tank is strong, but a team of tanks is unstoppable.\n\n' +
           'Under the Team Tank brand, 17 people ran their first half or full marathon in the 2022 Publix Atlanta Marathon, and an additional 12 ' +
-          'did the same in the 2023 Publix Atlanta Marathon. The brand has also been worn by finishers of 6 half or full Ironman finishers and their ' +
-          'support teams. Leading up to every race, we designed a commemorative shirt that was worn by the team.',
+          'did the same in the 2023 Publix Atlanta Marathon. The brand has also been worn by finishers of 6 half or full Ironman Triathlons and their ' +
+          'support teams. Leading up to every race, we design a commemorative shirt that is worn by the team.',
       },
       {
         name: 'Tank Travels',
@@ -322,11 +322,11 @@ export const projects = (
           "and never give up. In a society that loves to give up when things get hard, being a tank means that that's when you're just getting started.",
         customerDiscovery:
           'While I was on a semester abroad in Singapore, I wanted a way to enable my friends to keep up with my travels without having to ' +
-          'constantly call and text them individually. Out of this need, Tank Travels was born.\n\nI started writing weekly blog posts about my ' +
-          'time in Asia, while embedding pictures and videos to make it more engaging. What started as simply a way to keep my friends ' +
-          'updated on my travels turned into an accountability mechanism for me to make the most of my time abroad. I wanted to make sure ' +
-          'that I was doing something interesting every week so that I would have something to write about. I also wanted to make sure that ' +
-          'I was reflecting on my experiences and learning from them.\n\nI found that writing about my experiences helped me to internalize ' +
+          'constantly call and text them individually. Out of this, Tank Travels was born.\n\nI started writing weekly blog posts about my ' +
+          'time in Asia, embedding pictures and GIFs to make it more engaging. What started as simply a way to keep my friends ' +
+          'updated on my travels turned into an accountability mechanism for me to make the most of my time abroad. It seemed as though ' +
+          'every week I was doing something interesting just so I could have something to write about.\n\nI also wanted to make sure that ' +
+          'I was reflecting on my experiences and learning from them and I found that writing about my experiences helped me to internalize ' +
           'them and learn from them in a way that I would not have otherwise.',
         deliverable: 'https://chrisozgo.substack.com/',
       },

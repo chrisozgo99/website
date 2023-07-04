@@ -1,3 +1,4 @@
+import type { Tag } from '@tryghost/content-api';
 import GhostContentAPI from '@tryghost/content-api';
 
 const api = new GhostContentAPI({
@@ -78,10 +79,28 @@ export async function getSinglePost(postSlug: string) {
     });
 }
 
+const orderedTags = [
+  'Startups',
+  'Coding',
+  'Foreign Policy',
+  'Travel',
+  'Fitness',
+  'Other',
+];
+
 export async function getTags() {
   return api.tags
     .browse({
       limit: 'all',
+    })
+    .then((tags) => {
+      // Sort tags by order
+      const sortedTags = tags.sort((a: Tag, b: Tag) => {
+        return (
+          orderedTags.indexOf(a.name || '') - orderedTags.indexOf(b.name || '')
+        );
+      });
+      return sortedTags;
     })
     .catch((err) => {
       throw new Error(err);

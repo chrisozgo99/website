@@ -57,7 +57,6 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
   const [message, setMessage] = useState('');
-
   const newHtml = html
     .replaceAll('<p>', '<p class="mb-8">')
     .replaceAll(
@@ -69,7 +68,8 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       '<img class="w-full mx-auto max-h-[36rem] sm:w-[90%] my-4 object-cover"'
     )
     .replaceAll('<li>', '<li class="list-disc list-outside mb-3 ml-6">')
-    .replaceAll('<a href', '<a class="text-blue-500 underline" href');
+    .replaceAll('<a href', '<a class="text-blue-500 underline" href')
+    .replaceAll('<h2', '<h2 class="text-[32px] font-bold mb-4"');
 
   return (
     <Main
