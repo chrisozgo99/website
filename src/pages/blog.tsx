@@ -139,9 +139,15 @@ const Blog = (props: BlogProps) => {
                 );
               }}
             >
-              <h2 className="my-7 mr-10 w-full text-center font-avenir text-lg sm:text-left">
-                {tag.name}
-              </h2>
+              {tag.name === 'Foreign Policy' ? (
+                <h2 className="my-7 mr-0 w-32 text-center font-avenir text-lg sm:mr-10 sm:w-full sm:text-left">
+                  {tag.name}
+                </h2>
+              ) : (
+                <h2 className="my-7 mr-10 w-full text-center font-avenir text-lg sm:text-left">
+                  {tag.name}
+                </h2>
+              )}
             </Link>
           </div>
         ))}
