@@ -82,9 +82,9 @@ export async function getSinglePost(postSlug: string) {
 const orderedTags = [
   'Startups',
   'Coding',
-  'Foreign Policy',
   'Travel',
   'Fitness',
+  'Foreign Policy',
   'Other',
 ];
 
