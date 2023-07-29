@@ -68,7 +68,7 @@ const Blog = (props: BlogProps) => {
       meta={
         <Meta
           title="Blog | Think Tank"
-          description="Blog discussing startups, coding, fitness, travel, foreign policy, and more!"
+          description="Blog discussing startups, coding, fitness, travel, current events, and more!"
         />
       }
     >
@@ -83,7 +83,7 @@ const Blog = (props: BlogProps) => {
           <div>
             <h2 className="font-avenir text-base leading-7 sm:mr-12">
               Welcome to the Think Tank, my blog where I discuss topics such as
-              startups, coding, travel, fitness, foreign policy, and much more!
+              startups, coding, travel, fitness, current events, and much more!
             </h2>
           </div>
           <div>

@@ -142,7 +142,7 @@ const Blog = (props: any) => {
                 );
               }}
             >
-              {category.name === 'Foreign Policy' ? (
+              {category.name === 'Current Events' ? (
                 <h2 className="my-7 mr-0 w-32 text-center font-avenir text-lg sm:mr-10 sm:w-full sm:text-left">
                   {category.name}
                 </h2>
