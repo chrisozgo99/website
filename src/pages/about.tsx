@@ -44,7 +44,7 @@ const About = (props: IAboutProps) => {
           </p>
           <p className="mb-6">
             My name is Chris, and I{`'`}m from Arlington, VA. I{`'`}m high
-            energy, hard working, and deep thinking. Growing up, I was an
+            energy, hard working, and deep thinking! Growing up, I was an
             aspiring college basketball player before a neck injury led me to
             take a gap year that opened up my mind to many other amazing
             opportunities.

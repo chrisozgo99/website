@@ -333,13 +333,13 @@ export const projects = (
       {
         name: 'Think Tank',
         description:
-          'Blog posts about startups, coding, foreign policy, fitness, and much more!',
+          'Blog posts about startups, coding, current events, fitness, and much more!',
         image: `${route?.basePath}/assets/images/thinktank.png`,
         background: '#000000',
         slug: 'think-tank',
         synopsis:
           'Think Tank is a blog that I started to share my thoughts and experiences with the world. Expanding on the original Tank Travels ' +
-          'blog, Think Tank covers a wide variety of topics, including startups, coding, foreign policy, fitness, and much more!',
+          'blog, Think Tank covers a wide variety of topics, including startups, coding, current events, fitness, and much more!',
         product:
           'Being a tank is a mindset. It means giving everything in front of you your best shot, and not being afraid to fail. Whether you ' +
           'are running a marathon, starting a business, or giving a speech to a large audience, being a tank means that you are willing to put yourself out there ' +

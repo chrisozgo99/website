@@ -84,7 +84,7 @@ const orderedTags = [
   'Coding',
   'Travel',
   'Fitness',
-  'Foreign Policy',
+  'Current Events',
   'Other',
 ];
 
