@@ -110,7 +110,7 @@ const Index = (props: IIndexProps) => {
             alt="Chris Ozgo at Zion National Park"
           />
         </div>
-        <div className="mb-6 pl-[26px] pr-7 pt-4 sm:mb-36 sm:ml-[-160px] sm:mt-20 sm:max-w-[478px] sm:bg-gray-200 sm:pt-10">
+        <div className="mb-6 pl-[26px] pr-7 pt-4 sm:mb-36 sm:ml-[-160px] sm:mt-12 sm:max-w-[478px] sm:bg-gray-200 sm:pb-8 sm:pt-10">
           <h2 className="font-avenir text-base leading-6 sm:text-[0.94rem]">
             <p className="pb-2 font-raleway text-[1.375rem] font-light sm:pb-[26px]">
               In the past few years I:
@@ -149,12 +149,12 @@ const Index = (props: IIndexProps) => {
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 <Link
-                  href="https://chrisozgo.substack.com/"
+                  href="https://chrisozgo.com/blog/travel/#tags"
                   className=" underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Solo traveled on 4 different continents
+                  Solo traveled on 5 different continents
                 </Link>
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
@@ -172,6 +172,19 @@ const Index = (props: IIndexProps) => {
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Played college basketball in Singapore and led the country in
                 scoring
+              </li>
+              <li className="my-1 ml-4 list-outside sm:ml-8">
+                Climbed{' '}
+                <Link
+                  href="https://chrisozgo.com/blog/fitness/climbing-mt-kilimanjaro/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" underline"
+                >
+                  Mt. Kilimanjaro
+                </Link>
+                , the tallest mountain in Africa and highest freestanding
+                mountain in the world
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Completed 4 marathons, 2 half-Ironmans and 1 Ironman
