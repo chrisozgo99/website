@@ -139,7 +139,7 @@ const Blog = (props: BlogProps) => {
                 );
               }}
             >
-              {tag.name === 'Foreign Policy' ? (
+              {tag.name === 'Current Events' ? (
                 <h2 className="my-7 mr-0 w-32 text-center font-avenir text-lg sm:mr-10 sm:w-full sm:text-left">
                   {tag.name}
                 </h2>

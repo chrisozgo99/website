@@ -57,7 +57,6 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
   const [message, setMessage] = useState('');
-  console.log(html);
   const newHtml = html
     .replaceAll('<p>', '<p class="mb-8">')
     .replaceAll(
