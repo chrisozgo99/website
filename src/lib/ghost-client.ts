@@ -15,6 +15,9 @@ export async function getPosts(limit?: number) {
       limit: limit || 'all',
       include: ['tags', 'authors'],
     })
+    .then((posts) => {
+      return posts;
+    })
     .catch((err) => {
       throw new Error(err);
     });

@@ -60,7 +60,11 @@ const Blog = (props: any) => {
       if (res.meta.pagination.page >= res.meta.pagination.pages) {
         setHasMore(false);
       }
-      setPostList([...postList, ...res]);
+      setPostList(
+        [...postList, ...res].filter((post) => {
+          return post.primary_tag.slug === tag;
+        })
+      );
       setPagination(pagination + 1);
     });
   }
@@ -86,7 +90,7 @@ const Blog = (props: any) => {
           <div>
             <p className="font-avenir text-base leading-7 sm:mr-12">
               Welcome to the Think Tank, my blog where I discuss topics such as
-              startups, coding, travel, fitness, foreign policy, and much more!
+              startups, coding, travel, fitness, current events, and much more!
             </p>
           </div>
           <div>
