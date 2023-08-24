@@ -31,9 +31,9 @@ export default function BlogPreview(props: BlogPreviewProps) {
           className="h-[340px] w-[453px] object-cover"
           width={453}
           height={340}
-          loader={({ src }) => src}
+          loader={({ src, width }) => `${src}?w=${width}`}
           src={feature_image}
-          alt={feature_image_alt}
+          alt={feature_image_alt || title}
         />
       </div>
       <div className="px-[30px] pb-[25px] pt-7">
@@ -44,7 +44,7 @@ export default function BlogPreview(props: BlogPreviewProps) {
                 className="h-8 w-8 rounded-full"
                 width={32}
                 height={32}
-                loader={({ src }) => src}
+                loader={({ src, width }) => `${src}?w=${width}`}
                 src={primary_author.profile_image}
                 alt={primary_author.name}
               />
