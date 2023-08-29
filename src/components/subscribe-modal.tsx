@@ -53,9 +53,7 @@ export default function SubscribeModal(props: SubscribeModalProps) {
                   <h3>Subscribe to Think Tank</h3>
                 </div>
                 <div className="mx-8 text-center font-avenir text-base">
-                  <h3>
-                    Get the latest posts delivered right to your inbox. No spam.
-                  </h3>
+                  Join the community to get my posts delivered to your inbox!
                 </div>
               </div>
 
