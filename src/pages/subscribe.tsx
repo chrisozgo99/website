@@ -54,7 +54,7 @@ const Subscribe = () => {
                 <button
                   className={`rounded-sm ${
                     subscribe === 'Subscribe!' ? 'bg-[#FF1A75]' : 'bg-[#e396b5]'
-                  }  p-3 text-base font-bold text-white sm:px-5`}
+                  }  px-1 py-3 text-base font-bold text-white sm:px-5`}
                   type="button"
                   onClick={(e) => {
                     setSubscribe('Please wait...');
