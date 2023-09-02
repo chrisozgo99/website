@@ -54,9 +54,7 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   const { html }: { html: string } = post;
 
-  const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
-  const [message, setMessage] = useState('');
   const newHtml = html
     .replaceAll('<p>', '<p class="mb-8">')
     .replaceAll(
@@ -77,7 +75,7 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       meta={<Meta title={post.title} description={post.meta_description} />}
     >
       <div className="mb-14">
-        <BlogPost post={post} newHtml={newHtml} />
+        <BlogPost post={post} newHtml={newHtml} onClick={() => router.back()} />
       </div>
       <div className="mx-auto w-4/5">
         <DiscussionEmbed
@@ -97,37 +95,7 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           openSubscribe ? 'fixed z-50' : 'opacity-0'
         }`}
       >
-        <SubscribeModal
-          open={openSubscribe}
-          setOpen={setOpenSubscribe}
-          email={email}
-          setEmail={setEmail}
-          onClick={() => {
-            fetch('/api/subscribe', {
-              body: JSON.stringify({
-                email,
-              }),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              method: 'POST',
-            }).then((response) => {
-              if (!response.ok) {
-                setEmail('');
-                setMessage('You are already subscribed!');
-              } else {
-                response.json().then((data) => {
-                  if (!data.error) {
-                    setEmail('');
-                    setMessage('Success! Thank you for subscribing!');
-                  }
-                });
-              }
-            });
-          }}
-          message={message}
-          setMessage={setMessage}
-        />
+        <SubscribeModal open={openSubscribe} setOpen={setOpenSubscribe} />
       </div>
     </Main>
   );

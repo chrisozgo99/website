@@ -49,9 +49,7 @@ const Blog = (props: BlogProps) => {
   const [postList, setPostList] = useState(posts);
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
-  const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
-  const [message, setMessage] = useState('');
 
   async function getAdditionalPosts() {
     await getMorePosts(pagination).then((res) => {
@@ -230,37 +228,7 @@ const Blog = (props: BlogProps) => {
             openSubscribe ? 'fixed z-50' : 'opacity-0'
           }`}
         >
-          <SubscribeModal
-            open={openSubscribe}
-            setOpen={setOpenSubscribe}
-            email={email}
-            setEmail={setEmail}
-            onClick={() => {
-              fetch('/api/subscribe', {
-                body: JSON.stringify({
-                  email,
-                }),
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                method: 'POST',
-              }).then((response) => {
-                if (!response.ok) {
-                  setEmail('');
-                  setMessage('You are already subscribed!');
-                } else {
-                  response.json().then((data) => {
-                    if (!data.error) {
-                      setEmail('');
-                      setMessage('Success! Thank you for subscribing!');
-                    }
-                  });
-                }
-              });
-            }}
-            message={message}
-            setMessage={setMessage}
-          />
+          <SubscribeModal open={openSubscribe} setOpen={setOpenSubscribe} />
         </div>
       </div>
     </Main>

@@ -16,9 +16,7 @@ const About = (props: IAboutProps) => {
   const { test } = props;
 
   const router = useRouter();
-  const [email, setEmail] = useState('');
   const [openSubscribe, setOpenSubscribe] = useState(false);
-  const [message, setMessage] = useState('');
 
   return (
     <Main meta={<Meta title="About" description="About Chris Ozgo" />}>
@@ -104,37 +102,7 @@ const About = (props: IAboutProps) => {
             openSubscribe ? 'fixed z-50' : 'opacity-0'
           }`}
         >
-          <SubscribeModal
-            open={openSubscribe}
-            setOpen={setOpenSubscribe}
-            email={email}
-            setEmail={setEmail}
-            onClick={() => {
-              fetch('/api/subscribe', {
-                body: JSON.stringify({
-                  email,
-                }),
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                method: 'POST',
-              }).then((response) => {
-                if (!response.ok) {
-                  setEmail('');
-                  setMessage('You are already subscribed!');
-                } else {
-                  response.json().then((data) => {
-                    if (!data.error) {
-                      setEmail('');
-                      setMessage('Success! Thank you for subscribing!');
-                    }
-                  });
-                }
-              });
-            }}
-            message={message}
-            setMessage={setMessage}
-          />
+          <SubscribeModal open={openSubscribe} setOpen={setOpenSubscribe} />
         </div>
       </div>
     </Main>
