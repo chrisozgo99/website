@@ -13,8 +13,6 @@ type IMainProps = {
 
 const Main = (props: IMainProps) => {
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
 
   return (
     <div className="m-auto max-w-5xl overflow-x-auto antialiased">
@@ -77,35 +75,35 @@ const Main = (props: IMainProps) => {
             }`}
           >
             <SubscribeModal
-              email={email}
-              setEmail={setEmail}
-              message={message}
-              setMessage={setMessage}
+              // email={email}
+              // setEmail={setEmail}
+              // message={message}
+              // setMessage={setMessage}
               open={open}
               setOpen={setOpen}
-              onClick={() => {
-                fetch('/api/subscribe', {
-                  body: JSON.stringify({
-                    email,
-                  }),
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  method: 'POST',
-                }).then((response) => {
-                  if (!response.ok) {
-                    setEmail('');
-                    setMessage('You are already subscribed!');
-                  } else {
-                    response.json().then((data) => {
-                      if (!data.error) {
-                        setEmail('');
-                        setMessage('Success! Thank you for subscribing!');
-                      }
-                    });
-                  }
-                });
-              }}
+              // onClick={() => {
+              //   fetch('/api/subscribe', {
+              //     body: JSON.stringify({
+              //       email,
+              //     }),
+              //     headers: {
+              //       'Content-Type': 'application/json',
+              //     },
+              //     method: 'POST',
+              //   }).then((response) => {
+              //     if (!response.ok) {
+              //       setEmail('');
+              //       setMessage('You are already subscribed!');
+              //     } else {
+              //       response.json().then((data) => {
+              //         if (!data.error) {
+              //           setEmail('');
+              //           setMessage('Success! Thank you for subscribing!');
+              //         }
+              //       });
+              //     }
+              //   });
+              // }}
             />
           </div>
           {props.children}
