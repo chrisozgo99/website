@@ -123,37 +123,49 @@ const Blog = (props: BlogProps) => {
       </div>
       <div
         id="tags"
-        className="flex flex-row items-center overflow-x-scroll sm:ml-4"
+        className="items-center sm:ml-4 sm:flex sm:flex-row sm:overflow-x-scroll"
       >
-        {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
-          <div key={tag.id} className="mx-4">
-            <Link
-              href={{
-                pathname:
-                  tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                router.push(
-                  tag.name === 'All Posts'
-                    ? `/blog#tags`
-                    : `/blog/${tag.slug}#tags`
-                );
-              }}
-            >
-              {tag.name === 'Current Events' || tag.name === 'All Posts' ? (
-                <h2 className="my-7 flex w-max text-center font-avenir text-lg sm:text-center">
-                  {tag.name}
-                </h2>
-              ) : (
-                <h2 className="my-7 text-center font-avenir text-lg sm:text-center">
-                  {tag.name}
-                </h2>
-              )}
-            </Link>
-          </div>
-        ))}
-        <div className="flex w-full flex-row justify-end sm:mr-4 sm:w-1/2">
+        <style>
+          {`
+            @media (min-width: 640px) {
+              div#tags {
+                overflow: initial;
+              }
+            }
+          `}
+        </style>
+        <div className="flex flex-row overflow-x-scroll pr-4" id="tags">
+          {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
+            <div key={tag.id} className="mx-4">
+              <Link
+                href={{
+                  pathname:
+                    tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(
+                    tag.name === 'All Posts'
+                      ? `/blog#tags`
+                      : `/blog/${tag.slug}#tags`
+                  );
+                }}
+              >
+                {tag.name === 'Current Events' || tag.name === 'All Posts' ? (
+                  <h2 className="my-4 flex w-max text-center font-avenir text-lg sm:my-7 sm:text-center">
+                    {tag.name}
+                  </h2>
+                ) : (
+                  <h2 className="my-4 text-center font-avenir text-lg sm:my-7 sm:text-center">
+                    {tag.name}
+                  </h2>
+                )}
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex w-full flex-row justify-center border py-2 sm:mr-4 sm:w-1/2 sm:justify-end sm:border-0">
           <Search />
         </div>
       </div>
