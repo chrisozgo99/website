@@ -125,7 +125,10 @@ const Blog = (props: any) => {
           />
         </div>
       </div>
-      <div id="tags" className="flex flex-row overflow-x-scroll sm:ml-4">
+      <div
+        id="tags"
+        className="flex flex-row items-center overflow-x-scroll sm:ml-4"
+      >
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((category: any) => (
           <div key={category.id}>
             <Link
@@ -144,12 +147,13 @@ const Blog = (props: any) => {
                 );
               }}
             >
-              {category.name === 'Current Events' ? (
-                <h2 className="my-7 mr-0 w-32 text-center font-avenir text-lg sm:mr-10 sm:w-full sm:text-left">
+              {category.name === 'Current Events' ||
+              category.name === 'All Posts' ? (
+                <h2 className="mx-4 my-7 flex w-max text-center font-avenir text-lg sm:text-center">
                   {category.name}
                 </h2>
               ) : (
-                <h2 className="my-7 mr-10 w-full text-center font-avenir text-lg sm:text-left">
+                <h2 className="mx-4 my-7 text-center font-avenir text-lg sm:text-center">
                   {category.name}
                 </h2>
               )}

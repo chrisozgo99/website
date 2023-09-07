@@ -10,8 +10,8 @@ export const BlogPost = (props: {
   return (
     <div>
       <div className="pb-10 sm:pb-14">
-        <div className="mb-4 ml-[15%] flex flex-row items-center">
-          <div className="ml-[-80px] mr-10 items-center">
+        <div className="mb-4 ml-[5%] items-center sm:ml-[15%] sm:flex sm:flex-row">
+          <div className="mr-10 items-center sm:ml-[-80px]">
             <button type="button" onClick={onClick}>
               <Image
                 className=""

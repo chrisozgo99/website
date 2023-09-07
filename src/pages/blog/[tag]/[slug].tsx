@@ -75,7 +75,18 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       meta={<Meta title={post.title} description={post.meta_description} />}
     >
       <div className="mb-14">
-        <BlogPost post={post} newHtml={newHtml} onClick={() => router.back()} />
+        <BlogPost
+          post={post}
+          newHtml={newHtml}
+          onClick={() => {
+            // router.back(), unless we are on the first page, then go to blog
+            if (router.asPath === '/blog') {
+              router.push('/blog');
+            } else {
+              router.back();
+            }
+          }}
+        />
       </div>
       <div className="mx-auto w-4/5">
         <DiscussionEmbed

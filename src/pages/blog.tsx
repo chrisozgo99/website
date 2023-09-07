@@ -8,6 +8,7 @@ import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import BlogPreview from '@/components/blog-preview';
+import Search from '@/components/search';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-modal';
 import { Meta } from '@/layouts/Meta';
@@ -120,9 +121,12 @@ const Blog = (props: BlogProps) => {
           />
         </div>
       </div>
-      <div id="tags" className="flex flex-row overflow-x-scroll sm:ml-4">
+      <div
+        id="tags"
+        className="flex flex-row items-center overflow-x-scroll sm:ml-4"
+      >
         {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
-          <div key={tag.id}>
+          <div key={tag.id} className="mx-4">
             <Link
               href={{
                 pathname:
@@ -137,18 +141,21 @@ const Blog = (props: BlogProps) => {
                 );
               }}
             >
-              {tag.name === 'Current Events' ? (
-                <h2 className="my-7 mr-0 w-32 text-center font-avenir text-lg sm:mr-10 sm:w-full sm:text-left">
+              {tag.name === 'Current Events' || tag.name === 'All Posts' ? (
+                <h2 className="my-7 flex w-max text-center font-avenir text-lg sm:text-center">
                   {tag.name}
                 </h2>
               ) : (
-                <h2 className="my-7 mr-10 w-full text-center font-avenir text-lg sm:text-left">
+                <h2 className="my-7 text-center font-avenir text-lg sm:text-center">
                   {tag.name}
                 </h2>
               )}
             </Link>
           </div>
         ))}
+        <div className="flex w-full flex-row justify-end sm:mr-4 sm:w-1/2">
+          <Search />
+        </div>
       </div>
       <div className="-z-10 flex flex-wrap justify-between">
         <InfiniteScroll
