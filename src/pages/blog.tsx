@@ -20,6 +20,10 @@ import {
 } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 
+export const config = {
+  runtime: 'nodejs',
+};
+
 export const getServerSideProps: GetServerSideProps = async () => {
   const postsPromise = getPosts(POSTS_PER_PAGE);
   const tagsPromise = getTags();
