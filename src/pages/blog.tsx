@@ -170,7 +170,7 @@ const Blog = (props: BlogProps) => {
         </div>
 
         <div className="flex w-full flex-row justify-center border py-2 sm:mr-4 sm:w-1/2 sm:justify-end sm:border-0">
-          <Search />
+          <Search onSearch={() => {}} />
         </div>
       </div>
       <div className="-z-10 flex flex-wrap justify-between">
