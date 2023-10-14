@@ -74,37 +74,7 @@ const Main = (props: IMainProps) => {
               open ? 'fixed z-50' : 'opacity-0'
             }`}
           >
-            <SubscribeModal
-              // email={email}
-              // setEmail={setEmail}
-              // message={message}
-              // setMessage={setMessage}
-              open={open}
-              setOpen={setOpen}
-              // onClick={() => {
-              //   fetch('/api/subscribe', {
-              //     body: JSON.stringify({
-              //       email,
-              //     }),
-              //     headers: {
-              //       'Content-Type': 'application/json',
-              //     },
-              //     method: 'POST',
-              //   }).then((response) => {
-              //     if (!response.ok) {
-              //       setEmail('');
-              //       setMessage('You are already subscribed!');
-              //     } else {
-              //       response.json().then((data) => {
-              //         if (!data.error) {
-              //           setEmail('');
-              //           setMessage('Success! Thank you for subscribing!');
-              //         }
-              //       });
-              //     }
-              //   });
-              // }}
-            />
+            <SubscribeModal open={open} setOpen={setOpen} />
           </div>
           {props.children}
         </main>

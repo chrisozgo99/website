@@ -66,6 +66,8 @@ const Index = (props: IIndexProps) => {
           <Image
             height={400}
             width={400}
+            priority
+            className="h-auto w-auto"
             src={`${test ? '/' : ''}${
               router.basePath
             }/assets/images/chrisozgo1.png`}
@@ -101,7 +103,6 @@ const Index = (props: IIndexProps) => {
           <Image
             height={500}
             width={500}
-            priority
             src={`${test ? '/' : ''}${
               router.basePath
             }/assets/images/chrisozgo2.png`}
@@ -185,7 +186,7 @@ const Index = (props: IIndexProps) => {
                 mountain in the world
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
-                Completed 4 marathons, 2 half-Ironmans and 1 Ironman
+                Completed 5 marathons, 2 half-Ironmans and 1 Ironman
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Built a{' '}
@@ -229,16 +230,12 @@ const Index = (props: IIndexProps) => {
                       backgroundPosition: 'center center',
                     }}
                   />
-                  <div
+                  <Image
                     className="m-0.5 h-[287px] w-[257px] bg-gray-300"
-                    style={{
-                      backgroundImage: `url(${router.basePath}/assets/gallery/${
-                        id - 1
-                      }.jpeg)`,
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'center center',
-                    }}
+                    height={287}
+                    width={257}
+                    src={`${router.basePath}/assets/gallery/${id - 1}.jpeg`}
+                    alt="Chris Ozgo"
                   />
                 </div>
               );
@@ -255,17 +252,13 @@ const Index = (props: IIndexProps) => {
                       backgroundPosition: 'center center',
                     }}
                   />
-                  <div
+                  <Image
                     className="m-0.5 h-[431px] w-[257px] bg-gray-300"
-                    style={{
-                      backgroundImage: `url(${router.basePath}/assets/gallery/${
-                        id - 1
-                      }.jpeg)`,
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'center center',
-                    }}
-                  />{' '}
+                    height={431}
+                    width={257}
+                    src={`${router.basePath}/assets/gallery/${id - 1}.jpeg`}
+                    alt="Chris Ozgo"
+                  />
                 </div>
               );
             }
