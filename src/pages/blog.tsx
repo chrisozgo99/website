@@ -85,7 +85,7 @@ function EmptyQueryBoundary({ children, postList }: any) {
     if (index % 2 === 0) {
       return (
         <div
-          className="-z-20 sm:flex sm:flex-row"
+          className="sm:flex sm:flex-row"
           key={post.id + new Date().toLocaleDateString()}
         >
           <div className="col-span-1 mb-8 w-fit sm:mx-7" key={post.id}>
