@@ -297,8 +297,23 @@ const Blog = (props: any) => {
               </Link>
             </div>
           ))}
+          <div className="hidden w-full flex-row justify-center border py-2 sm:mr-4 sm:flex sm:w-1/2 sm:justify-end sm:border-0">
+            <SearchBox
+              classNames={{
+                root: 'display-flex flex-row justify-center border-2 border-gray-400 rounded-md outline-none mr-4',
+                input:
+                  'pl-4 pt-2 pb-2 text-sm placeholder-gray-400 outline-none rounded-md',
+                form: 'flex flex-row justify-center rounded-md',
+                submit: 'p-2 text-sm outline-none rounded-md',
+                reset: 'hidden',
+                loadingIndicator: 'hidden',
+              }}
+              placeholder="Search"
+              {...(props as SearchBoxProps)}
+            />
+          </div>
         </div>
-        <div className="flex w-full flex-row justify-center border py-2 sm:mr-4 sm:w-1/2 sm:justify-end sm:border-0">
+        <div className="flex w-full flex-row justify-center border py-2 sm:mr-4 sm:hidden sm:w-1/2 sm:justify-end sm:border-0">
           <SearchBox
             classNames={{
               root: 'display-flex flex-row justify-center border-2 border-gray-400 rounded-md outline-none mr-4',
