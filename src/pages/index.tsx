@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-modal';
@@ -21,22 +20,6 @@ const Index = (props: IIndexProps) => {
   const router = useRouter();
 
   const [openSubscribe, setOpenSubscribe] = useState(false);
-
-  const items = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 10 },
-    { id: 11 },
-    { id: 12 },
-    { id: 13 },
-  ];
 
   return (
     <Main
@@ -216,7 +199,19 @@ const Index = (props: IIndexProps) => {
         </div>
       </div>
       <div>
-        <ScrollMenu>
+        <div className="overflow-x-scroll">
+          <Image
+            height={722}
+            width={2084}
+            className="max-w-none"
+            src={`${test ? '/' : ''}${
+              router.basePath
+            }/assets/gallery/gallery.webp`}
+            alt="A collection of photos from all over the world"
+          />
+        </div>
+
+        {/* <ScrollMenu>
           {items.map(({ id }) => {
             if (id % 4 === 1) {
               return (
@@ -264,7 +259,7 @@ const Index = (props: IIndexProps) => {
             }
             return <div key={id} />;
           })}
-        </ScrollMenu>
+        </ScrollMenu> */}
       </div>
       <div className="sm:hidden">
         <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />

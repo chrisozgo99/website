@@ -1,5 +1,5 @@
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next/types';
 
 import { getPosts } from '@/lib/ghost-client';
 import { app as firebaseApp } from '@/utils/FirebaseConfig';
