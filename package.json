@@ -1,6 +1,6 @@
 {
   "name": "chrisozgo.com",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -74,7 +74,7 @@
     "cross-env": "^7.0.3",
     "cssnano": "^6.0.1",
     "cypress": "^12.11.0",
-    "eslint": "^8.39.0",
+    "eslint": "^8.52.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-next": "^13.4.1",
