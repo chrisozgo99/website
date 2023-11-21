@@ -1,4 +1,4 @@
-import type { Tag } from '@tryghost/content-api';
+import type { PostsOrPages, Tag } from '@tryghost/content-api';
 import GhostContentAPI from '@tryghost/content-api';
 
 const api = new GhostContentAPI({
@@ -15,7 +15,7 @@ export async function getPosts(limit?: number) {
       limit: limit || 'all',
       include: ['tags', 'authors'],
     })
-    .then((posts) => {
+    .then((posts: PostsOrPages) => {
       return posts;
     })
     .catch((err) => {
