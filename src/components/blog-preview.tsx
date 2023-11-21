@@ -41,7 +41,7 @@ export default function BlogPreview(props: BlogPreviewProps) {
           <div className="flex flex-row">
             <div>
               <Image
-                className="h-8 w-8 rounded-full"
+                className="rounded-full"
                 width={32}
                 height={32}
                 loader={({ src, width }) => `${src}?w=${width}`}

@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { MultipleQueriesQuery } from '@algolia/client-search';
 import algoliasearch from 'algoliasearch/lite';
-import type { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import type { SearchBoxProps } from 'react-instantsearch';
 import {
@@ -29,23 +28,6 @@ import { Main } from '@/templates/Main';
 
 export const config = {
   runtime: 'nodejs',
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const postsPromise = getPosts(POSTS_PER_PAGE);
-  const tagsPromise = getTags();
-
-  const [posts, tags] = await Promise.all([postsPromise, tagsPromise]);
-
-  if (!posts || !tags) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { posts, tags },
-  };
 };
 
 interface BlogProps {
@@ -147,6 +129,7 @@ function EmptyQueryBoundary({ children, postList }: any) {
 }
 
 const Blog = (props: BlogProps) => {
+  const { test } = props;
   const algoliaClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID as string,
     process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY as string
@@ -176,19 +159,31 @@ const Blog = (props: BlogProps) => {
   };
 
   const router = useRouter();
-  const { posts, tags, test } = props;
 
-  const [postList, setPostList] = useState(posts);
+  const [postList, setPostList] = useState([]);
+  const [tags, setTags] = useState([]);
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [openSubscribe, setOpenSubscribe] = useState(false);
 
+  useEffect(() => {
+    const postsPromise: any = getPosts(POSTS_PER_PAGE);
+    const tagsPromise: any = getTags();
+
+    Promise.all([postsPromise, tagsPromise]).then(([postsRes, tagsRes]) => {
+      setPostList(postsRes);
+      setTags(tagsRes);
+      setPagination(2);
+      setHasMore(true);
+    });
+  }, []);
+
   async function getAdditionalPosts() {
-    await getMorePosts(pagination).then((res) => {
+    await getMorePosts(pagination).then((res: any) => {
       if (res.meta.pagination.page === res.meta.pagination.pages) {
         setHasMore(false);
       }
-      setPostList([...postList, ...res]);
+      setPostList([...postList.concat(res)]);
       setPagination(pagination + 1);
     });
   }
