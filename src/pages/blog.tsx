@@ -21,10 +21,11 @@ import { Meta } from '@/layouts/Meta';
 import {
   getMorePosts,
   getPosts,
-  getTags,
+  // getTags,
   POSTS_PER_PAGE,
 } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
+import { tagHierarchy } from '@/utils/tags';
 
 export const config = {
   runtime: 'nodejs',
@@ -168,7 +169,7 @@ const Blog = (props: BlogProps) => {
 
   useEffect(() => {
     const postsPromise: any = getPosts(POSTS_PER_PAGE);
-    const tagsPromise: any = getTags();
+    const tagsPromise: any = Object.keys(tagHierarchy);
 
     Promise.all([postsPromise, tagsPromise]).then(([postsRes, tagsRes]) => {
       setPostList(postsRes);
@@ -257,7 +258,7 @@ const Blog = (props: BlogProps) => {
         </div>
         <div
           id="tags"
-          className="items-center sm:ml-4 sm:flex sm:flex-row sm:overflow-x-scroll"
+          className="items-center sm:ml-4 sm:flex sm:w-full sm:flex-row sm:overflow-x-scroll"
         >
           <style>
             {`
@@ -268,37 +269,45 @@ const Blog = (props: BlogProps) => {
             }
           `}
           </style>
-          <div className="flex flex-row overflow-x-scroll pr-4" id="tags">
-            {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
-              <div key={tag.id} className="mx-4">
+          <div
+            className="flex w-full flex-row overflow-x-scroll pr-4"
+            id="tags"
+          >
+            {['All Posts', ...tags].map((tag: any) => (
+              <div
+                key={tag.replace(/\s+/g, '-').toLowerCase()}
+                className="mx-5"
+              >
                 <Link
                   href={{
                     pathname:
-                      tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
+                      tag === 'All Posts'
+                        ? `/blog`
+                        : `/blog/${tag.replace(/\s+/g, '-').toLowerCase()}`,
                   }}
                   onClick={(e) => {
                     e.preventDefault();
                     router.push(
                       tag.name === 'All Posts'
                         ? `/blog#tags`
-                        : `/blog/${tag.slug}#tags`
+                        : `/blog/${tag.replace(/\s+/g, '-').toLowerCase()}#tags`
                     );
                   }}
                 >
-                  {tag.name === 'Current Events' || tag.name === 'All Posts' ? (
+                  {tag.name === 'All Posts' ? (
                     <h2 className="my-4 flex w-max text-center font-avenir text-lg sm:my-7 sm:text-center">
-                      {tag.name}
+                      {tag}
                     </h2>
                   ) : (
                     <h2 className="my-4 text-center font-avenir text-lg sm:my-7 sm:text-center">
-                      {tag.name}
+                      {tag}
                     </h2>
                   )}
                 </Link>
               </div>
             ))}
           </div>
-          <div className="flex w-full flex-row justify-center border py-2 sm:mr-4 sm:w-1/2 sm:justify-end sm:border-0">
+          <div className="flex w-full flex-row justify-center border py-2 sm:mr-8 sm:justify-end sm:border-0">
             <SearchBox
               classNames={{
                 root: 'display-flex flex-row justify-center border-2 border-gray-400 rounded-md outline-none mr-4',
