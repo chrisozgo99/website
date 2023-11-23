@@ -1,4 +1,4 @@
-export const tagHierarchy = {
+export const tagHierarchy: any = {
   Tech: ['Startups', 'Coding'],
   Fitness: ['Endurance', 'Nutrition', 'Goals'],
   Travel: [

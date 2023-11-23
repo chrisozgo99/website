@@ -15,6 +15,7 @@ import {
 } from 'react-instantsearch';
 
 import BlogPreview from '@/components/blog-preview';
+import { DropdownMenu } from '@/components/dropdown';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-modal';
 import { Meta } from '@/layouts/Meta';
@@ -166,6 +167,8 @@ const Blog = (props: BlogProps) => {
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdownTag, setDropdownTag] = useState();
 
   useEffect(() => {
     const postsPromise: any = getPosts(POSTS_PER_PAGE);
@@ -279,6 +282,14 @@ const Blog = (props: BlogProps) => {
                 className="mx-5"
               >
                 <Link
+                  onMouseEnter={() => {
+                    setShowDropdown(true);
+                    setDropdownTag(tag);
+                  }}
+                  onMouseLeave={() => {
+                    setShowDropdown(false);
+                    setDropdownTag(undefined);
+                  }}
                   href={{
                     pathname:
                       tag === 'All Posts'
@@ -295,15 +306,30 @@ const Blog = (props: BlogProps) => {
                   }}
                 >
                   {tag.name === 'All Posts' ? (
-                    <h2 className="my-4 flex w-max text-center font-avenir text-lg sm:my-7 sm:text-center">
+                    <h2 className="flex w-max py-4 text-center font-avenir text-lg sm:py-7 sm:text-center">
                       {tag}
                     </h2>
                   ) : (
-                    <h2 className="my-4 text-center font-avenir text-lg sm:my-7 sm:text-center">
+                    <h2 className="pm:my-7 py-4 text-center font-avenir text-lg sm:text-center">
                       {tag}
                     </h2>
                   )}
                 </Link>
+                {showDropdown && dropdownTag === tag && (
+                  <div
+                    onMouseEnter={() => {
+                      setShowDropdown(true);
+                      setDropdownTag(tag);
+                    }}
+                    onMouseLeave={() => {
+                      setShowDropdown(false);
+                      setDropdownTag(undefined);
+                    }}
+                    className="absolute z-50"
+                  >
+                    <DropdownMenu dropdownItems={tagHierarchy[tag]} />
+                  </div>
+                )}
               </div>
             ))}
           </div>
