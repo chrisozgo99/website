@@ -279,7 +279,12 @@ const Blog = (props: BlogProps) => {
             {['All Posts', ...tags].map((tag: any) => (
               <div
                 key={tag.replace(/\s+/g, '-').toLowerCase()}
-                className="mx-5"
+                className={`${
+                  showDropdown &&
+                  dropdownTag === tag &&
+                  tag !== 'All Posts' &&
+                  'bg-gray-400'
+                } px-5`}
               >
                 <Link
                   onMouseEnter={() => {
@@ -305,12 +310,16 @@ const Blog = (props: BlogProps) => {
                     );
                   }}
                 >
-                  {tag.name === 'All Posts' ? (
+                  {tag === 'All Posts' ? (
                     <h2 className="flex w-max py-4 text-center font-avenir text-lg sm:py-7 sm:text-center">
                       {tag}
                     </h2>
                   ) : (
-                    <h2 className="pm:my-7 py-4 text-center font-avenir text-lg sm:text-center">
+                    <h2
+                      className={`py-4 text-center font-avenir text-lg sm:py-7  ${
+                        showDropdown && dropdownTag === tag && 'bg-gray-400'
+                      } sm:text-center`}
+                    >
                       {tag}
                     </h2>
                   )}
@@ -325,7 +334,7 @@ const Blog = (props: BlogProps) => {
                       setShowDropdown(false);
                       setDropdownTag(undefined);
                     }}
-                    className="absolute z-50"
+                    className="absolute z-50 mx-[-20px] border-[1px] border-gray-400"
                   >
                     <DropdownMenu dropdownItems={tagHierarchy[tag]} />
                   </div>

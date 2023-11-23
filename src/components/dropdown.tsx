@@ -3,7 +3,6 @@ import Dropdown from 'rc-dropdown';
 import Menu, { Divider, Item as MenuItem } from 'rc-menu';
 
 interface DropdownProps {
-  // children: React.ReactNode;
   dropdownItems: any[];
 }
 
@@ -17,8 +16,16 @@ export function DropdownMenu(props: DropdownProps) {
           return <Divider key={item} />;
         }
         return (
-          <MenuItem key={item}>
-            <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+          <MenuItem
+            key={item}
+            className="items-center py-1 text-center hover:bg-gray-400"
+          >
+            <Link
+              href={`/${item.toLowerCase()}`}
+              className="items-center px-6 font-avenir text-[16px] font-light text-gray-700 hover:text-gray-900"
+            >
+              {item}
+            </Link>
           </MenuItem>
         );
       })}
@@ -26,7 +33,7 @@ export function DropdownMenu(props: DropdownProps) {
   );
 
   return (
-    <div className="relative inline-block bg-green-400 text-left">
+    <div className="relative inline-block bg-white text-left">
       <Dropdown overlay={menu}>{menu}</Dropdown>
     </div>
   );
