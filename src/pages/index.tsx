@@ -37,11 +37,9 @@ const Index = (props: IIndexProps) => {
           </h1>
           <p className="mt-2 font-avenir text-xl">I{`'`}m passionate about</p>
           <ul className="mt-0 list-inside list-disc font-avenir">
-            <li className="my-1 ml-4">startups</li>
-            <li className="my-1 ml-4">coding</li>
-            <li className="my-1 ml-4">current events</li>
-            <li className="my-1 ml-4">travel</li>
+            <li className="my-1 ml-4">tech</li>
             <li className="my-1 ml-4">fitness</li>
+            <li className="my-1 ml-4">travel</li>
             <li className="my-1 ml-4">and plenty of other niche topics!</li>
           </ul>
         </div>

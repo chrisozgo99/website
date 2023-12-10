@@ -161,7 +161,6 @@ const Blog = (props: any) => {
   const router = useRouter();
 
   const { tag } = props;
-  // tag = the tag slug of the page we are on. This is the tag we need to pull posts from
 
   const [postList, setPostList] = useState([]);
   const [tags, setTags] = useState([]);
@@ -181,13 +180,17 @@ const Blog = (props: any) => {
       );
       const tagsPromise: any = Object.keys(tagHierarchy);
       Promise.all([postsPromise, tagsPromise]).then(([postsRes, tagsRes]) => {
-        setPostList(postsRes);
+        if (postsRes) {
+          setPostList(postsRes);
+        } else {
+          setPostList([]);
+        }
         setTags(tagsRes);
         setPagination(2);
         setHasMore(true);
       });
     }
-  }, [selectedTag, refresh]);
+  }, [selectedTag, refresh, tag]);
 
   async function getAdditionalPosts() {
     await getMorePostsWithTag(selectedTag || tag, pagination).then(
@@ -229,8 +232,7 @@ const Blog = (props: any) => {
             <div>
               <p className="font-avenir text-base leading-7 sm:mr-12">
                 Welcome to the Think Tank, my blog where I discuss topics such
-                as startups, coding, travel, fitness, current events, and much
-                more!
+                as tech, fitness, travel, and more!
               </p>
             </div>
             <div>
@@ -276,22 +278,22 @@ const Blog = (props: any) => {
           setSelectedTag={setSelectedTag}
           setRefresh={setRefresh}
         />
-        <div className="flex flex-wrap justify-between">
+        <div className="flex w-full flex-col flex-wrap">
           <InfiniteScroll
             dataLength={postList.length}
             next={() => getAdditionalPosts()}
             hasMore={hasMore}
             loader={
-              <h4 style={{ textAlign: 'center' }}>
+              <h4 style={{ textAlign: 'center', width: '100%' }}>
                 <p style={{ textAlign: 'center' }}>
-                  <b>Thanks for scrolling! That's all for now!</b>
+                  Thanks for scrolling! That's all for now!
                 </p>
               </h4>
             }
             endMessage={
               postList.length >= POSTS_PER_PAGE && (
                 <p style={{ textAlign: 'center' }}>
-                  <b>Thanks for scrolling! That's all for now!</b>
+                  Thanks for scrolling! That's all for now!
                 </p>
               )
             }

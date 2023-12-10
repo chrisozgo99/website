@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Dropdown from 'rc-dropdown';
-import Menu, { Divider, Item as MenuItem } from 'rc-menu';
+import Menu, { Item as MenuItem } from 'rc-menu';
 
 interface DropdownProps {
   dropdownItems: any[];
@@ -14,9 +14,6 @@ export function DropdownMenu(props: DropdownProps) {
   const menu = (
     <Menu>
       {dropdownItems?.map((item: any) => {
-        if (item === 'divider') {
-          return <Divider key={item} />;
-        }
         return (
           <MenuItem
             key={item}
@@ -24,7 +21,7 @@ export function DropdownMenu(props: DropdownProps) {
           >
             <Link
               href={`/blog/${item.replace(/\s+/g, '-').toLowerCase()}#tags`}
-              className="items-center px-6 font-avenir text-[16px] font-light text-gray-700 hover:text-gray-900"
+              className="items-center px-2 font-avenir text-[16px] font-light text-gray-700 hover:text-gray-900 sm:px-6"
               onClick={() => {
                 setRefresh(true);
                 setSelectedTag(item);
@@ -38,9 +35,18 @@ export function DropdownMenu(props: DropdownProps) {
     </Menu>
   );
 
+  // Empty menu because this is a necessary prop, but not needed for the implementation
+  const dropdownItemsList: React.ReactElement = (
+    <div>
+      {dropdownItems?.map((item: any) => {
+        return <div key={item} />;
+      })}
+    </div>
+  );
+
   return (
     <div className="relative inline-block bg-white text-left">
-      <Dropdown overlay={menu}>{menu}</Dropdown>
+      <Dropdown overlay={dropdownItemsList}>{menu}</Dropdown>
     </div>
   );
 }

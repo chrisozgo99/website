@@ -36,12 +36,12 @@ export function Tags({
       >
         <style>
           {`
-    @media (min-width: 640px) {
-      div#tags {
-        overflow: initial;
-      }
-    }
-  `}
+            @media (min-width: 640px) {
+              div#tags {
+                overflow: initial;
+              }
+            }
+          `}
         </style>
         <div className="flex w-full flex-row overflow-x-scroll pr-4" id="tags">
           {['All Posts', ...tags].map((tag: any) => {
@@ -105,7 +105,7 @@ export function Tags({
                       setShowDropdown(false);
                       setDropdownTag(undefined);
                     }}
-                    className="absolute z-50 mx-[-20px] border-[1px] border-gray-400"
+                    className="absolute z-50 mx-[-100px] border-[1px] border-gray-400 sm:absolute sm:mx-[-20px]"
                   >
                     <DropdownMenu
                       dropdownItems={tagHierarchy[tag]}

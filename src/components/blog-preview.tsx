@@ -26,7 +26,7 @@ export default function BlogPreview(props: BlogPreviewProps) {
   } = props;
   return (
     <div className="w-full border-gray-500 sm:w-[453px] sm:border">
-      <div className="relative h-[340px] w-[453px]">
+      <div className="relative h-[340px] sm:w-[453px]">
         <Image
           fill
           style={{

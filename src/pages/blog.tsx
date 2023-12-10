@@ -192,7 +192,7 @@ const Blog = (props: BlogProps) => {
       meta={
         <Meta
           title="Blog | Think Tank"
-          description="Blog discussing startups, coding, fitness, travel, current events, and more!"
+          description="Blog discussing tech, fitness, travel, and more!"
         />
       }
     >
@@ -214,8 +214,7 @@ const Blog = (props: BlogProps) => {
             <div>
               <h2 className="font-avenir text-base leading-7 sm:mr-12">
                 Welcome to the Think Tank, my blog where I discuss topics such
-                as startups, coding, travel, fitness, current events, and much
-                more!
+                as tech, fitness, travel, and more!
               </h2>
             </div>
             <div>
@@ -271,7 +270,7 @@ const Blog = (props: BlogProps) => {
             loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
             endMessage={
               <p style={{ textAlign: 'center' }}>
-                <b>Thanks for scrolling! That's all for now!</b>
+                Thanks for scrolling! That's all for now!
               </p>
             }
           >
