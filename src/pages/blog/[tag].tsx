@@ -5,44 +5,28 @@ import type { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import type { SearchBoxProps } from 'react-instantsearch';
-import {
-  Hits,
-  InstantSearch,
-  SearchBox,
-  useInstantSearch,
-} from 'react-instantsearch';
+import { Hits, InstantSearch, useInstantSearch } from 'react-instantsearch';
 
 import BlogPreview from '@/components/blog-preview';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-modal';
+import { Tags } from '@/components/tags';
 import { Meta } from '@/layouts/Meta';
 import {
   getMorePostsWithTag,
   getPostsWithTag,
-  getTags,
   POSTS_PER_PAGE,
 } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
+import { tagHierarchy } from '@/utils/tags';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { tag } = params as { tag: string };
 
-  const tagsPromise = getTags();
-  const postsPromise = getPostsWithTag(tag.toString(), POSTS_PER_PAGE);
-
-  const [posts, tags] = await Promise.all([postsPromise, tagsPromise]);
-
-  if (!tags) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
-    props: { posts, tag, tags },
+    props: { tag },
   };
 };
 
@@ -139,70 +123,92 @@ function EmptyQueryBoundary({ children, postList }: any) {
 }
 
 const Blog = (props: any) => {
-  const algoliaClient = algoliasearch(
-    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID as string,
-    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY as string
+  const algoliaClient = useMemo(
+    () =>
+      algoliasearch(
+        process.env.NEXT_PUBLIC_ALGOLIA_APP_ID as string,
+        process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY as string
+      ),
+    []
   );
 
-  const searchClient = {
-    ...algoliaClient,
-    search(queries: readonly MultipleQueriesQuery[]): Promise<any> {
-      if (queries.every(({ params }) => !params?.query)) {
-        return Promise.resolve({
-          results: queries.map(() => ({
-            hits: [],
-            nbHits: 0,
-            nbPages: 0,
-            page: 0,
-            processingTimeMS: 0,
-            hitsPerPage: 0,
-            exhaustiveNbHits: false,
-            query: '',
-            params: '',
-          })),
-        });
-      }
+  const searchClient = useMemo(
+    () => ({
+      ...algoliaClient,
+      search(queries: readonly MultipleQueriesQuery[]): Promise<any> {
+        if (queries.every(({ params }) => !params?.query)) {
+          return Promise.resolve({
+            results: queries.map(() => ({
+              hits: [],
+              nbHits: 0,
+              nbPages: 0,
+              page: 0,
+              processingTimeMS: 0,
+              hitsPerPage: 0,
+              exhaustiveNbHits: false,
+              query: '',
+              params: '',
+            })),
+          });
+        }
 
-      return algoliaClient.search(queries);
-    },
-  };
+        return algoliaClient.search(queries);
+      },
+    }),
+    [algoliaClient]
+  );
 
   const router = useRouter();
 
-  const { posts, tag, tags } = props;
+  const { tag } = props;
 
-  const [postList, setPostList] = useState(posts);
+  const [postList, setPostList] = useState([]);
+  const [tags, setTags] = useState([]);
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdownTag, setDropdownTag] = useState();
+  const [selectedTag, setSelectedTag] = useState();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    setPostList(posts);
-    setHasMore(true);
-    setPagination(2);
-  }, [posts]);
+    if (selectedTag !== 'All Posts') {
+      const postsPromise: any = getPostsWithTag(
+        selectedTag || tag,
+        POSTS_PER_PAGE
+      );
+      const tagsPromise: any = Object.keys(tagHierarchy);
+      Promise.all([postsPromise, tagsPromise]).then(([postsRes, tagsRes]) => {
+        if (postsRes) {
+          setPostList(postsRes);
+        } else {
+          setPostList([]);
+        }
+        setTags(tagsRes);
+        setPagination(2);
+        setHasMore(true);
+      });
+    }
+  }, [selectedTag, refresh, tag]);
 
   async function getAdditionalPosts() {
-    await getMorePostsWithTag(tag, pagination).then((res) => {
-      if (res.meta.pagination.page >= res.meta.pagination.pages) {
-        setHasMore(false);
+    await getMorePostsWithTag(selectedTag || tag, pagination).then(
+      (res: any) => {
+        if (res.meta.pagination.page === res.meta.pagination.pages) {
+          setHasMore(false);
+        }
+        setPostList([...postList.concat(res)]);
+        setPagination(pagination + 1);
       }
-      setPostList(
-        [...postList, ...res].filter((post) => {
-          return post.primary_tag.slug === tag;
-        })
-      );
-      setPagination(pagination + 1);
-    });
+    );
   }
 
   return (
     <Main
       meta={
         <Meta
-          title={`${
-            tag[0].toUpperCase() + tag.substr(1, tag.length - 1)
-          } Blog Posts - Think Tank`}
+          title={`${selectedTag || tag} - Think Tank Blog`}
           description={`Blog posts about ${tag}!`}
         />
       }
@@ -224,8 +230,7 @@ const Blog = (props: any) => {
             <div>
               <p className="font-avenir text-base leading-7 sm:mr-12">
                 Welcome to the Think Tank, my blog where I discuss topics such
-                as startups, coding, travel, fitness, current events, and much
-                more!
+                as tech, fitness, travel, and more!
               </p>
             </div>
             <div>
@@ -262,82 +267,31 @@ const Blog = (props: any) => {
             />
           </div>
         </div>
-        <div
-          id="tags"
-          className="flex flex-row items-center overflow-x-scroll sm:ml-4"
-        >
-          {[{ id: 'all', name: 'All Posts' }, ...tags].map((category: any) => (
-            <div key={category.id}>
-              <Link
-                href={{
-                  pathname:
-                    category.name === 'All Posts'
-                      ? `/blog`
-                      : `/blog/${category.slug}`,
-                }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  router.push(
-                    category.name === 'All Posts'
-                      ? `/blog#tags`
-                      : `/blog/${category.slug}#tags`
-                  );
-                }}
-              >
-                {category.name === 'Current Events' ||
-                category.name === 'All Posts' ? (
-                  <h2 className="mx-4 my-7 flex w-max text-center font-avenir text-lg sm:text-center">
-                    {category.name}
-                  </h2>
-                ) : (
-                  <h2 className="mx-4 my-7 text-center font-avenir text-lg sm:text-center">
-                    {category.name}
-                  </h2>
-                )}
-              </Link>
-            </div>
-          ))}
-          <div className="hidden w-full flex-row justify-center border py-2 sm:mr-4 sm:flex sm:w-1/2 sm:justify-end sm:border-0">
-            <SearchBox
-              classNames={{
-                root: 'display-flex flex-row justify-center border-2 border-gray-400 rounded-md outline-none mr-4',
-                input:
-                  'pl-4 pt-2 pb-2 text-sm placeholder-gray-400 outline-none rounded-md',
-                form: 'flex flex-row justify-center rounded-md',
-                submit: 'p-2 text-sm outline-none rounded-md',
-                reset: 'hidden',
-                loadingIndicator: 'hidden',
-              }}
-              placeholder="Search"
-              {...(props as SearchBoxProps)}
-            />
-          </div>
-        </div>
-        <div className="flex w-full flex-row justify-center border py-2 sm:mr-4 sm:hidden sm:w-1/2 sm:justify-end sm:border-0">
-          <SearchBox
-            classNames={{
-              root: 'display-flex flex-row justify-center border-2 border-gray-400 rounded-md outline-none mr-4',
-              input:
-                'pl-4 pt-2 pb-2 text-sm placeholder-gray-400 outline-none rounded-md',
-              form: 'flex flex-row justify-center rounded-md',
-              submit: 'p-2 text-sm outline-none rounded-md',
-              reset: 'hidden',
-              loadingIndicator: 'hidden',
-            }}
-            placeholder="Search"
-            {...(props as SearchBoxProps)}
-          />
-        </div>
-        <div className="flex flex-wrap justify-between">
+        <Tags
+          tags={tags}
+          dropdownTag={dropdownTag}
+          setDropdownTag={setDropdownTag}
+          showDropdown={showDropdown}
+          setShowDropdown={setShowDropdown}
+          setSelectedTag={setSelectedTag}
+          setRefresh={setRefresh}
+        />
+        <div className="flex w-full flex-col flex-wrap">
           <InfiniteScroll
             dataLength={postList.length}
             next={() => getAdditionalPosts()}
             hasMore={hasMore}
-            loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+            loader={
+              <h4 style={{ textAlign: 'center', width: '100%' }}>
+                <p style={{ textAlign: 'center' }}>
+                  Thanks for scrolling! That's all for now!
+                </p>
+              </h4>
+            }
             endMessage={
               postList.length >= POSTS_PER_PAGE && (
                 <p style={{ textAlign: 'center' }}>
-                  <b>Thanks for scrolling! That's all for now!</b>
+                  Thanks for scrolling! That's all for now!
                 </p>
               )
             }

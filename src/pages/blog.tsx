@@ -4,35 +4,24 @@ import algoliasearch from 'algoliasearch/lite';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import type { SearchBoxProps } from 'react-instantsearch';
-import {
-  Hits,
-  InstantSearch,
-  SearchBox,
-  useInstantSearch,
-} from 'react-instantsearch';
+import { Hits, InstantSearch, useInstantSearch } from 'react-instantsearch';
 
 import BlogPreview from '@/components/blog-preview';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-modal';
+import { Tags } from '@/components/tags';
 import { Meta } from '@/layouts/Meta';
-import {
-  getMorePosts,
-  getPosts,
-  getTags,
-  POSTS_PER_PAGE,
-} from '@/lib/ghost-client';
+import { getMorePosts, getPosts, POSTS_PER_PAGE } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
+import { tagHierarchy } from '@/utils/tags';
 
 export const config = {
   runtime: 'nodejs',
 };
 
 interface BlogProps {
-  posts: any;
-  tags: any;
   test?: boolean;
 }
 
@@ -130,34 +119,40 @@ function EmptyQueryBoundary({ children, postList }: any) {
 
 const Blog = (props: BlogProps) => {
   const { test } = props;
-  const algoliaClient = algoliasearch(
-    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID as string,
-    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY as string
+  const algoliaClient = useMemo(
+    () =>
+      algoliasearch(
+        process.env.NEXT_PUBLIC_ALGOLIA_APP_ID as string,
+        process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY as string
+      ),
+    []
   );
 
-  const searchClient = {
-    ...algoliaClient,
-    search(queries: readonly MultipleQueriesQuery[]): Promise<any> {
-      if (queries.every(({ params }) => !params?.query)) {
-        return Promise.resolve({
-          results: queries.map(() => ({
-            hits: [],
-            nbHits: 0,
-            nbPages: 0,
-            page: 0,
-            processingTimeMS: 0,
-            hitsPerPage: 0,
-            exhaustiveNbHits: false,
-            query: '',
-            params: '',
-          })),
-        });
-      }
+  const searchClient = useMemo(
+    () => ({
+      ...algoliaClient,
+      search(queries: readonly MultipleQueriesQuery[]): Promise<any> {
+        if (queries.every(({ params }) => !params?.query)) {
+          return Promise.resolve({
+            results: queries.map(() => ({
+              hits: [],
+              nbHits: 0,
+              nbPages: 0,
+              page: 0,
+              processingTimeMS: 0,
+              hitsPerPage: 0,
+              exhaustiveNbHits: false,
+              query: '',
+              params: '',
+            })),
+          });
+        }
 
-      return algoliaClient.search(queries);
-    },
-  };
-
+        return algoliaClient.search(queries);
+      },
+    }),
+    [algoliaClient]
+  );
   const router = useRouter();
 
   const [postList, setPostList] = useState([]);
@@ -165,10 +160,14 @@ const Blog = (props: BlogProps) => {
   const [pagination, setPagination] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdownTag, setDropdownTag] = useState();
+  const [, setSelectedTag] = useState();
+  const [, setRefresh] = useState(false);
 
   useEffect(() => {
     const postsPromise: any = getPosts(POSTS_PER_PAGE);
-    const tagsPromise: any = getTags();
+    const tagsPromise: any = Object.keys(tagHierarchy);
 
     Promise.all([postsPromise, tagsPromise]).then(([postsRes, tagsRes]) => {
       setPostList(postsRes);
@@ -176,7 +175,7 @@ const Blog = (props: BlogProps) => {
       setPagination(2);
       setHasMore(true);
     });
-  }, []);
+  }, [dropdownTag]);
 
   async function getAdditionalPosts() {
     await getMorePosts(pagination).then((res: any) => {
@@ -193,7 +192,7 @@ const Blog = (props: BlogProps) => {
       meta={
         <Meta
           title="Blog | Think Tank"
-          description="Blog discussing startups, coding, fitness, travel, current events, and more!"
+          description="Blog discussing tech, fitness, travel, and more!"
         />
       }
     >
@@ -215,8 +214,7 @@ const Blog = (props: BlogProps) => {
             <div>
               <h2 className="font-avenir text-base leading-7 sm:mr-12">
                 Welcome to the Think Tank, my blog where I discuss topics such
-                as startups, coding, travel, fitness, current events, and much
-                more!
+                as tech, fitness, travel, and more!
               </h2>
             </div>
             <div>
@@ -245,7 +243,7 @@ const Blog = (props: BlogProps) => {
           <div className="sm:w-1/2">
             <Image
               width={400}
-              height={400}
+              height={230}
               priority
               src={`${test ? '/' : ''}${
                 router.basePath
@@ -255,66 +253,15 @@ const Blog = (props: BlogProps) => {
             />
           </div>
         </div>
-        <div
-          id="tags"
-          className="items-center sm:ml-4 sm:flex sm:flex-row sm:overflow-x-scroll"
-        >
-          <style>
-            {`
-            @media (min-width: 640px) {
-              div#tags {
-                overflow: initial;
-              }
-            }
-          `}
-          </style>
-          <div className="flex flex-row overflow-x-scroll pr-4" id="tags">
-            {[{ id: 'all', name: 'All Posts' }, ...tags].map((tag: any) => (
-              <div key={tag.id} className="mx-4">
-                <Link
-                  href={{
-                    pathname:
-                      tag.name === 'All Posts' ? `/blog` : `/blog/${tag.slug}`,
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    router.push(
-                      tag.name === 'All Posts'
-                        ? `/blog#tags`
-                        : `/blog/${tag.slug}#tags`
-                    );
-                  }}
-                >
-                  {tag.name === 'Current Events' || tag.name === 'All Posts' ? (
-                    <h2 className="my-4 flex w-max text-center font-avenir text-lg sm:my-7 sm:text-center">
-                      {tag.name}
-                    </h2>
-                  ) : (
-                    <h2 className="my-4 text-center font-avenir text-lg sm:my-7 sm:text-center">
-                      {tag.name}
-                    </h2>
-                  )}
-                </Link>
-              </div>
-            ))}
-          </div>
-          <div className="flex w-full flex-row justify-center border py-2 sm:mr-4 sm:w-1/2 sm:justify-end sm:border-0">
-            <SearchBox
-              classNames={{
-                root: 'display-flex flex-row justify-center border-2 border-gray-400 rounded-md outline-none mr-4',
-                input:
-                  'pl-4 pt-2 pb-2 text-sm placeholder-gray-400 outline-none rounded-md',
-                form: 'flex flex-row justify-center rounded-md',
-                submit: 'p-2 text-sm outline-none rounded-md',
-                reset: 'hidden',
-                loadingIndicator: 'hidden',
-              }}
-              placeholder="Search"
-              {...(props as SearchBoxProps)}
-            />
-          </div>
-        </div>
-
+        <Tags
+          tags={tags}
+          dropdownTag={dropdownTag}
+          setDropdownTag={setDropdownTag}
+          showDropdown={showDropdown}
+          setShowDropdown={setShowDropdown}
+          setSelectedTag={setSelectedTag}
+          setRefresh={setRefresh}
+        />
         <div className="-z-10 flex w-full flex-wrap justify-between">
           <InfiniteScroll
             dataLength={postList.length}
@@ -323,7 +270,7 @@ const Blog = (props: BlogProps) => {
             loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
             endMessage={
               <p style={{ textAlign: 'center' }}>
-                <b>Thanks for scrolling! That's all for now!</b>
+                Thanks for scrolling! That's all for now!
               </p>
             }
           >

@@ -1,4 +1,4 @@
-import type { PostsOrPages, Tag } from '@tryghost/content-api';
+import type { PostsOrPages } from '@tryghost/content-api';
 import GhostContentAPI from '@tryghost/content-api';
 
 const api = new GhostContentAPI({
@@ -39,10 +39,11 @@ export async function getMorePosts(
 }
 
 export async function getPostsWithTag(tagSlug: string, limit?: number) {
+  const slugify = tagSlug.replace(/\s+/g, '-').toLowerCase();
   return api.posts
     .browse({
       limit: limit || 'all',
-      filter: `tag:${tagSlug}`,
+      filter: `tag:${slugify}`,
       include: ['tags', 'authors'],
     })
     .catch((err) => {
@@ -55,11 +56,12 @@ export async function getMorePostsWithTag(
   page: number,
   limit: number = POSTS_PER_PAGE
 ) {
+  const slugify = tagSlug.replace(/\s+/g, '-').toLowerCase();
   return api.posts
     .browse({
       page,
       limit,
-      filter: `tag:${tagSlug}`,
+      filter: `tag:${slugify}`,
       include: ['tags', 'authors'],
     })
     .catch((err) => {
@@ -77,34 +79,6 @@ export async function getSinglePost(postSlug: string) {
         include: ['tags', 'authors'],
       }
     )
-    .catch((err) => {
-      throw new Error(err);
-    });
-}
-
-const orderedTags = [
-  'Startups',
-  'Coding',
-  'Travel',
-  'Fitness',
-  'Current Events',
-  'Other',
-];
-
-export async function getTags() {
-  return api.tags
-    .browse({
-      limit: 'all',
-    })
-    .then((tags) => {
-      // Sort tags by order
-      const sortedTags = tags.sort((a: Tag, b: Tag) => {
-        return (
-          orderedTags.indexOf(a.name || '') - orderedTags.indexOf(b.name || '')
-        );
-      });
-      return sortedTags;
-    })
     .catch((err) => {
       throw new Error(err);
     });

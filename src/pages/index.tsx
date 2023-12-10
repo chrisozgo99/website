@@ -37,11 +37,9 @@ const Index = (props: IIndexProps) => {
           </h1>
           <p className="mt-2 font-avenir text-xl">I{`'`}m passionate about</p>
           <ul className="mt-0 list-inside list-disc font-avenir">
-            <li className="my-1 ml-4">startups</li>
-            <li className="my-1 ml-4">coding</li>
-            <li className="my-1 ml-4">current events</li>
-            <li className="my-1 ml-4">travel</li>
+            <li className="my-1 ml-4">tech</li>
             <li className="my-1 ml-4">fitness</li>
+            <li className="my-1 ml-4">travel</li>
             <li className="my-1 ml-4">and plenty of other niche topics!</li>
           </ul>
         </div>
@@ -131,7 +129,7 @@ const Index = (props: IIndexProps) => {
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 <Link
-                  href="https://chrisozgo.com/blog/travel/#tags"
+                  href="https://chrisozgo.com/blog/travel#tags"
                   className=" underline"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -210,56 +208,6 @@ const Index = (props: IIndexProps) => {
             alt="A collection of photos from all over the world"
           />
         </div>
-
-        {/* <ScrollMenu>
-          {items.map(({ id }) => {
-            if (id % 4 === 1) {
-              return (
-                <div className="max-h-[713px]" key={id}>
-                  <div
-                    className="m-0.5 h-[431px] w-[257px] bg-gray-400"
-                    style={{
-                      backgroundImage: `url(${router.basePath}/assets/gallery/${id}.jpeg)`,
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'center center',
-                    }}
-                  />
-                  <Image
-                    className="m-0.5 h-[287px] w-[257px] bg-gray-300"
-                    height={287}
-                    width={257}
-                    src={`${router.basePath}/assets/gallery/${id - 1}.jpeg`}
-                    alt="Chris Ozgo"
-                  />
-                </div>
-              );
-            }
-            if (id % 2 === 1) {
-              return (
-                <div className="max-h-[713px]" key={id}>
-                  <div
-                    className="m-0.5 h-[287px] w-[257px] bg-gray-400"
-                    style={{
-                      backgroundImage: `url(${router.basePath}/assets/gallery/${id}.jpeg)`,
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'center center',
-                    }}
-                  />
-                  <Image
-                    className="m-0.5 h-[431px] w-[257px] bg-gray-300"
-                    height={431}
-                    width={257}
-                    src={`${router.basePath}/assets/gallery/${id - 1}.jpeg`}
-                    alt="Chris Ozgo"
-                  />
-                </div>
-              );
-            }
-            return <div key={id} />;
-          })}
-        </ScrollMenu> */}
       </div>
       <div className="sm:hidden">
         <Subscribe open={openSubscribe} setOpen={setOpenSubscribe} />

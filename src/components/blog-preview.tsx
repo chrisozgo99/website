@@ -26,14 +26,16 @@ export default function BlogPreview(props: BlogPreviewProps) {
   } = props;
   return (
     <div className="w-full border-gray-500 sm:w-[453px] sm:border">
-      <div>
+      <div className="relative h-[340px] sm:w-[453px]">
         <Image
-          className="h-[340px] w-[453px] object-cover"
-          width={453}
-          height={340}
-          loader={({ src, width }) => `${src}?w=${width}`}
+          fill
+          style={{
+            objectFit: 'cover',
+          }}
           src={feature_image}
           alt={feature_image_alt || title}
+          className="absolute left-0 top-0 object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       <div className="px-[30px] pb-[25px] pt-7">
@@ -41,9 +43,9 @@ export default function BlogPreview(props: BlogPreviewProps) {
           <div className="flex flex-row">
             <div>
               <Image
-                className="rounded-full"
-                width={32}
-                height={32}
+                className="h-[30px] w-[30px] rounded-full"
+                width={30}
+                height={30}
                 loader={({ src, width }) => `${src}?w=${width}`}
                 src={primary_author.profile_image}
                 alt={primary_author.name}
