@@ -1,6 +1,6 @@
 {
   "name": "chrisozgo.com",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
