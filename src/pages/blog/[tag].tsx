@@ -208,9 +208,7 @@ const Blog = (props: any) => {
     <Main
       meta={
         <Meta
-          title={`${
-            tag[0].toUpperCase() + tag.substr(1, tag.length - 1)
-          } Blog Posts - Think Tank`}
+          title={`${selectedTag || tag} - Think Tank Blog`}
           description={`Blog posts about ${tag}!`}
         />
       }
