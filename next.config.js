@@ -14,4 +14,18 @@ module.exports = withBundleAnalyzer({
   // So, the source code is "basePath-ready".
   // You can remove `basePath` if you don't need it.
   reactStrictMode: true,
+  images: {
+    domains: [
+      'images.unsplash.com',
+      'digitalpress.fra1.cdn.digitaloceanspaces.com',
+    ],
+    remotePatterns: [
+      {
+        hostname: 'digitalpress.fra1.cdn.digitaloceanspaces.com',
+      },
+      {
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
 });

@@ -39,10 +39,14 @@ export async function getMorePosts(
 }
 
 export async function getPostsWithTag(tagSlug: string, limit?: number) {
+  // turn tagslug into a tag slug if not already (remove spaces, lowercase, etc.)
+  const slugify = tagSlug.replace(/\s+/g, '-').toLowerCase();
+  console.log(slugify);
+
   return api.posts
     .browse({
       limit: limit || 'all',
-      filter: `tag:${tagSlug}`,
+      filter: `tag:${slugify}`,
       include: ['tags', 'authors'],
     })
     .catch((err) => {
@@ -55,11 +59,12 @@ export async function getMorePostsWithTag(
   page: number,
   limit: number = POSTS_PER_PAGE
 ) {
+  const slugify = tagSlug.replace(/\s+/g, '-').toLowerCase();
   return api.posts
     .browse({
       page,
       limit,
-      filter: `tag:${tagSlug}`,
+      filter: `tag:${slugify}`,
       include: ['tags', 'authors'],
     })
     .catch((err) => {
@@ -97,6 +102,7 @@ export async function getTags() {
       limit: 'all',
     })
     .then((tags) => {
+      console.log(tags);
       // Sort tags by order
       const sortedTags = tags.sort((a: Tag, b: Tag) => {
         return (

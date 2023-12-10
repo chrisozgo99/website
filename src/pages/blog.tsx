@@ -4,27 +4,16 @@ import algoliasearch from 'algoliasearch/lite';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import type { SearchBoxProps } from 'react-instantsearch';
-import {
-  Hits,
-  InstantSearch,
-  SearchBox,
-  useInstantSearch,
-} from 'react-instantsearch';
+import { Hits, InstantSearch, useInstantSearch } from 'react-instantsearch';
 
 import BlogPreview from '@/components/blog-preview';
-import { DropdownMenu } from '@/components/dropdown';
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-modal';
+import { Tags } from '@/components/tags';
 import { Meta } from '@/layouts/Meta';
-import {
-  getMorePosts,
-  getPosts,
-  // getTags,
-  POSTS_PER_PAGE,
-} from '@/lib/ghost-client';
+import { getMorePosts, getPosts, POSTS_PER_PAGE } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 import { tagHierarchy } from '@/utils/tags';
 
@@ -33,8 +22,6 @@ export const config = {
 };
 
 interface BlogProps {
-  posts: any;
-  tags: any;
   test?: boolean;
 }
 
@@ -132,34 +119,40 @@ function EmptyQueryBoundary({ children, postList }: any) {
 
 const Blog = (props: BlogProps) => {
   const { test } = props;
-  const algoliaClient = algoliasearch(
-    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID as string,
-    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY as string
+  const algoliaClient = useMemo(
+    () =>
+      algoliasearch(
+        process.env.NEXT_PUBLIC_ALGOLIA_APP_ID as string,
+        process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY as string
+      ),
+    []
   );
 
-  const searchClient = {
-    ...algoliaClient,
-    search(queries: readonly MultipleQueriesQuery[]): Promise<any> {
-      if (queries.every(({ params }) => !params?.query)) {
-        return Promise.resolve({
-          results: queries.map(() => ({
-            hits: [],
-            nbHits: 0,
-            nbPages: 0,
-            page: 0,
-            processingTimeMS: 0,
-            hitsPerPage: 0,
-            exhaustiveNbHits: false,
-            query: '',
-            params: '',
-          })),
-        });
-      }
+  const searchClient = useMemo(
+    () => ({
+      ...algoliaClient,
+      search(queries: readonly MultipleQueriesQuery[]): Promise<any> {
+        if (queries.every(({ params }) => !params?.query)) {
+          return Promise.resolve({
+            results: queries.map(() => ({
+              hits: [],
+              nbHits: 0,
+              nbPages: 0,
+              page: 0,
+              processingTimeMS: 0,
+              hitsPerPage: 0,
+              exhaustiveNbHits: false,
+              query: '',
+              params: '',
+            })),
+          });
+        }
 
-      return algoliaClient.search(queries);
-    },
-  };
-
+        return algoliaClient.search(queries);
+      },
+    }),
+    [algoliaClient]
+  );
   const router = useRouter();
 
   const [postList, setPostList] = useState([]);
@@ -169,6 +162,8 @@ const Blog = (props: BlogProps) => {
   const [openSubscribe, setOpenSubscribe] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [dropdownTag, setDropdownTag] = useState();
+  const [, setSelectedTag] = useState();
+  const [, setRefresh] = useState(false);
 
   useEffect(() => {
     const postsPromise: any = getPosts(POSTS_PER_PAGE);
@@ -180,7 +175,7 @@ const Blog = (props: BlogProps) => {
       setPagination(2);
       setHasMore(true);
     });
-  }, []);
+  }, [dropdownTag]);
 
   async function getAdditionalPosts() {
     await getMorePosts(pagination).then((res: any) => {
@@ -249,7 +244,7 @@ const Blog = (props: BlogProps) => {
           <div className="sm:w-1/2">
             <Image
               width={400}
-              height={400}
+              height={230}
               priority
               src={`${test ? '/' : ''}${
                 router.basePath
@@ -259,106 +254,15 @@ const Blog = (props: BlogProps) => {
             />
           </div>
         </div>
-        <div
-          id="tags"
-          className="items-center sm:ml-4 sm:flex sm:w-full sm:flex-row sm:overflow-x-scroll"
-        >
-          <style>
-            {`
-            @media (min-width: 640px) {
-              div#tags {
-                overflow: initial;
-              }
-            }
-          `}
-          </style>
-          <div
-            className="flex w-full flex-row overflow-x-scroll pr-4"
-            id="tags"
-          >
-            {['All Posts', ...tags].map((tag: any) => (
-              <div
-                key={tag.replace(/\s+/g, '-').toLowerCase()}
-                className={`${
-                  showDropdown &&
-                  dropdownTag === tag &&
-                  tag !== 'All Posts' &&
-                  'bg-gray-400'
-                } px-5`}
-              >
-                <Link
-                  onMouseEnter={() => {
-                    setShowDropdown(true);
-                    setDropdownTag(tag);
-                  }}
-                  onMouseLeave={() => {
-                    setShowDropdown(false);
-                    setDropdownTag(undefined);
-                  }}
-                  href={{
-                    pathname:
-                      tag === 'All Posts'
-                        ? `/blog`
-                        : `/blog/${tag.replace(/\s+/g, '-').toLowerCase()}`,
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    router.push(
-                      tag.name === 'All Posts'
-                        ? `/blog#tags`
-                        : `/blog/${tag.replace(/\s+/g, '-').toLowerCase()}#tags`
-                    );
-                  }}
-                >
-                  {tag === 'All Posts' ? (
-                    <h2 className="flex w-max py-4 text-center font-avenir text-lg sm:py-7 sm:text-center">
-                      {tag}
-                    </h2>
-                  ) : (
-                    <h2
-                      className={`py-4 text-center font-avenir text-lg sm:py-7  ${
-                        showDropdown && dropdownTag === tag && 'bg-gray-400'
-                      } sm:text-center`}
-                    >
-                      {tag}
-                    </h2>
-                  )}
-                </Link>
-                {showDropdown && dropdownTag === tag && (
-                  <div
-                    onMouseEnter={() => {
-                      setShowDropdown(true);
-                      setDropdownTag(tag);
-                    }}
-                    onMouseLeave={() => {
-                      setShowDropdown(false);
-                      setDropdownTag(undefined);
-                    }}
-                    className="absolute z-50 mx-[-20px] border-[1px] border-gray-400"
-                  >
-                    <DropdownMenu dropdownItems={tagHierarchy[tag]} />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="flex w-full flex-row justify-center border py-2 sm:mr-8 sm:justify-end sm:border-0">
-            <SearchBox
-              classNames={{
-                root: 'display-flex flex-row justify-center border-2 border-gray-400 rounded-md outline-none mr-4',
-                input:
-                  'pl-4 pt-2 pb-2 text-sm placeholder-gray-400 outline-none rounded-md',
-                form: 'flex flex-row justify-center rounded-md',
-                submit: 'p-2 text-sm outline-none rounded-md',
-                reset: 'hidden',
-                loadingIndicator: 'hidden',
-              }}
-              placeholder="Search"
-              {...(props as SearchBoxProps)}
-            />
-          </div>
-        </div>
-
+        <Tags
+          tags={tags}
+          dropdownTag={dropdownTag}
+          setDropdownTag={setDropdownTag}
+          showDropdown={showDropdown}
+          setShowDropdown={setShowDropdown}
+          setSelectedTag={setSelectedTag}
+          setRefresh={setRefresh}
+        />
         <div className="-z-10 flex w-full flex-wrap justify-between">
           <InfiniteScroll
             dataLength={postList.length}
