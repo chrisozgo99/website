@@ -279,7 +279,11 @@ const Blog = (props: any) => {
         <div className="flex w-full flex-col flex-wrap">
           <InfiniteScroll
             dataLength={postList.length}
-            next={() => getAdditionalPosts()}
+            next={() => {
+              if (postList.length !== 0) {
+                getAdditionalPosts();
+              }
+            }}
             hasMore={hasMore}
             loader={
               <h4 style={{ textAlign: 'center', width: '100%' }}>

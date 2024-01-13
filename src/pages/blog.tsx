@@ -265,7 +265,11 @@ const Blog = (props: BlogProps) => {
         <div className="-z-10 flex w-full flex-wrap justify-between">
           <InfiniteScroll
             dataLength={postList.length}
-            next={() => getAdditionalPosts()}
+            next={() => {
+              if (postList.length !== 0) {
+                getAdditionalPosts();
+              }
+            }}
             hasMore={hasMore}
             loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
             endMessage={
