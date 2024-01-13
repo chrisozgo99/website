@@ -204,11 +204,15 @@ const Blog = (props: any) => {
     );
   }
 
+  const tagName = tag
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (l: string) => l.toUpperCase());
+
   return (
     <Main
       meta={
         <Meta
-          title={`${selectedTag || tag} - Think Tank Blog`}
+          title={`${selectedTag || tagName} - Think Tank Blog`}
           description={`Blog posts about ${tag}!`}
         />
       }
