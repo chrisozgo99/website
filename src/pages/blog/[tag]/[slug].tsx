@@ -79,8 +79,7 @@ const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           post={post}
           newHtml={newHtml}
           onClick={() => {
-            // router.back(), unless we are on the first page, then go to blog
-            if (router.asPath === '/blog') {
+            if (router.asPath === '/blog' || window.history.length === 1) {
               router.push('/blog');
             } else {
               router.back();
