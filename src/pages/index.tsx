@@ -167,7 +167,7 @@ const Index = (props: IIndexProps) => {
                 mountain in the world
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
-                Completed 7 marathons, 2 half-Ironmans and 1 Ironman
+                Completed 8 marathons, 2 half-Ironmans and 1 Ironman
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Built a{' '}
