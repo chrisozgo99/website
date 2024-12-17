@@ -193,15 +193,19 @@ const Blog = (props: any) => {
   }, [selectedTag, refresh, tag]);
 
   async function getAdditionalPosts() {
-    await getMorePostsWithTag(selectedTag || tag, pagination).then(
-      (res: any) => {
-        if (res.meta.pagination.page === res.meta.pagination.pages) {
+    await getMorePostsWithTag(selectedTag || tag, pagination)
+      .then((res: any) => {
+        if (!res || res.length === 0) {
           setHasMore(false);
+          return;
         }
-        setPostList([...postList.concat(res)]);
+
+        setPostList([...(postList as never), ...(res as never)]);
         setPagination(pagination + 1);
-      }
-    );
+      })
+      .catch(() => {
+        setHasMore(false);
+      });
   }
 
   const tagName = tag
