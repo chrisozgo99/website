@@ -178,13 +178,19 @@ const Blog = (props: BlogProps) => {
   }, [dropdownTag]);
 
   async function getAdditionalPosts() {
-    await getMorePosts(pagination).then((res: any) => {
-      if (res.meta.pagination.page === res.meta.pagination.pages) {
+    await getMorePosts(pagination)
+      .then((res: any) => {
+        if (!res || res.length === 0) {
+          setHasMore(false);
+          return;
+        }
+
+        setPostList([...(postList as never), ...(res as never)]);
+        setPagination(pagination + 1);
+      })
+      .catch(() => {
         setHasMore(false);
-      }
-      setPostList([...postList.concat(res)]);
-      setPagination(pagination + 1);
-    });
+      });
   }
 
   return (
