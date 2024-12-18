@@ -114,8 +114,36 @@ export async function getPostsWithTag(tagSlug: string, limit?: number) {
       return [...posts1, ...posts2];
     }
 
-    // With limit, just get from first API
-    return await api.posts.browse({
+    // Try first API
+    const posts1 = await api.posts
+      .browse({
+        limit,
+        filter: `tag:${slugify}`,
+        include: ['tags', 'authors'],
+      })
+      .catch(() => ({ length: 0 })); // Return empty object if no posts found
+
+    // If we got enough posts from first API, return them
+    if (posts1.length >= limit) {
+      return posts1;
+    }
+
+    // If we got some posts from first API but not enough
+    if (posts1.length > 0) {
+      const remainingLimit = limit - posts1.length;
+      const posts2 = await api2.posts
+        .browse({
+          limit: remainingLimit,
+          filter: `tag:${slugify}`,
+          include: ['tags', 'authors'],
+        })
+        .catch(() => []); // Return empty array if no posts found
+
+      return [...(posts1 as any), ...posts2];
+    }
+
+    // If first API returned no posts, try second API
+    return await api2.posts.browse({
       limit,
       filter: `tag:${slugify}`,
       include: ['tags', 'authors'],
@@ -132,26 +160,51 @@ export async function getMorePostsWithTag(
 ) {
   const slugify = tagSlug.replace(/\s+/g, '-').toLowerCase();
   try {
-    // First get total tagged posts from first API
-    const firstApiTagged = await api.posts.browse({
-      limit: 1,
-      filter: `tag:${slugify}`,
-      include: ['tags', 'authors'],
-    });
-    const firstApiTotal = firstApiTagged.meta.pagination.total;
+    // Get total posts from first API for this tag
+    const firstApiTotal = await api.posts
+      .browse({
+        limit: 1,
+        filter: `tag:${slugify}`,
+        include: ['tags', 'authors'],
+      })
+      .then((res) => res.meta.pagination.total)
+      .catch(() => 0); // If error, assume 0 posts in first API
+
     const startIndex = (page - 1) * limit;
 
     // If we haven't exhausted first API's tagged posts yet
     if (startIndex < firstApiTotal) {
-      return await api.posts.browse({
+      const remainingInFirstApi = firstApiTotal - startIndex;
+
+      // If we can get all posts needed from first API
+      if (remainingInFirstApi >= limit) {
+        return await api.posts.browse({
+          page,
+          limit,
+          filter: `tag:${slugify}`,
+          include: ['tags', 'authors'],
+        });
+      }
+
+      // If we need posts from both APIs
+      const posts1 = await api.posts.browse({
         page,
-        limit,
+        limit: remainingInFirstApi,
         filter: `tag:${slugify}`,
         include: ['tags', 'authors'],
       });
+
+      const posts2 = await api2.posts.browse({
+        page: 1,
+        limit: limit - remainingInFirstApi,
+        filter: `tag:${slugify}`,
+        include: ['tags', 'authors'],
+      });
+
+      return [...posts1, ...posts2];
     }
 
-    // If we need tagged posts from second API
+    // If we need posts only from second API
     const adjustedPage = Math.floor((startIndex - firstApiTotal) / limit) + 1;
     return await api2.posts.browse({
       page: adjustedPage,
