@@ -8,5 +8,11 @@ export const tagHierarchy: any = {
     'Solo Travel',
     'Interviews',
   ],
-  Other: ['Seek Discomfort', 'Productivity', 'Current Events', 'Learnings'],
+  Other: [
+    'Seek Discomfort',
+    'Productivity',
+    'Current Events',
+    'Learnings',
+    'Top-10 Lists',
+  ],
 };
