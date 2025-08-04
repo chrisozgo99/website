@@ -202,7 +202,7 @@ const Blog = (props: BlogProps) => {
         />
       }
     >
-      <div className="flex h-full w-full flex-col items-center justify-center" />
+      <div className="flex size-full flex-col items-center justify-center" />
       <InstantSearch
         indexName="post"
         searchClient={searchClient}

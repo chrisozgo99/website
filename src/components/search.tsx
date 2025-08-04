@@ -30,6 +30,7 @@ const Search = (props: SearchProps) => {
             type="button"
             className="px-6 text-sm"
             onClick={() => onSearch(search)}
+            aria-label="Search"
           >
             <svg
               width="24"
@@ -37,6 +38,7 @@ const Search = (props: SearchProps) => {
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <circle
                 cx="9.69491"

@@ -14,7 +14,7 @@ const Subscribe = () => {
             <img
               src="/assets/images/thinktank.png"
               alt="Think Tank"
-              className="h-[100px] w-[100px] sm:h-[135px] sm:w-[135px]"
+              className="size-[100px] sm:size-[135px]"
             />
           </div>
           <div className="">

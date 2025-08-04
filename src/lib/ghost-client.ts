@@ -53,27 +53,18 @@ export async function getPosts(limit?: number) {
         include: ['tags', 'authors'],
       })
       .then((posts: PostsOrPages) => posts)
-      .catch((err) => {
-        console.warn('Failed to fetch posts from first API:', err.message);
+      .catch(() => {
         // Try second API as fallback
         return api2.posts
           .browse({
             limit,
             include: ['tags', 'authors'],
           })
-          .catch((err2) => {
-            console.warn(
-              'Failed to fetch posts from second API:',
-              err2.message
-            );
+          .catch(() => {
             return []; // Return empty array if both APIs fail
           });
       });
   } catch (err) {
-    console.warn(
-      'getPosts error:',
-      err instanceof Error ? err.message : String(err)
-    );
     return []; // Return empty array to prevent build failure
   }
 }
@@ -249,7 +240,6 @@ export async function getSinglePost(postSlug: string) {
         { include: ['tags', 'authors'] }
       );
     } catch (error) {
-      console.warn(`Post not found in first API: ${postSlug}`, error);
       // If not found, try second API
       try {
         return await api2.posts.read(
@@ -257,15 +247,10 @@ export async function getSinglePost(postSlug: string) {
           { include: ['tags', 'authors'] }
         );
       } catch (error2) {
-        console.warn(`Post not found in second API: ${postSlug}`, error2);
         return null; // Return null if post not found in either API
       }
     }
   } catch (err) {
-    console.warn(
-      'getSinglePost error:',
-      err instanceof Error ? err.message : String(err)
-    );
     return null; // Return null to prevent build failure
   }
 }

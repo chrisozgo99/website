@@ -26,6 +26,7 @@ export const getStaticPaths: GetStaticPaths<IBlogUrl> = async () => {
 
     // If no posts are available, return empty paths
     if (!posts || posts.length === 0) {
+      // eslint-disable-next-line no-console
       console.warn('No posts available for static path generation');
       return {
         paths: [],
@@ -43,6 +44,7 @@ export const getStaticPaths: GetStaticPaths<IBlogUrl> = async () => {
       fallback: false,
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('Error in getStaticPaths:', error);
     return {
       paths: [],
@@ -65,6 +67,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props: { post },
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('Error in getStaticProps:', error);
     return {
       notFound: true,
