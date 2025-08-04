@@ -235,16 +235,27 @@ const Index = (props: IIndexProps) => {
           </h2>
         </div>
       </div>
-      <div>
-        <div className="overflow-x-scroll">
+      <div
+        className="fixed inset-x-0 w-full"
+        style={{
+          position: 'relative',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '100vw',
+        }}
+      >
+        <div className="scrollbar-hide overflow-x-scroll">
           <Image
             height={722}
             width={3084}
             className="max-w-none"
             src={`${test ? '/' : ''}${
               router.basePath
-            }/assets/gallery/gallery.webp`}
+            }/assets/gallery/gallery.avif`}
             alt="A collection of photos from all over the world"
+            quality={100}
+            priority
+            sizes="100vw"
           />
         </div>
       </div>
