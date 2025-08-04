@@ -26,7 +26,7 @@ const About = (props: IAboutProps) => {
             height={740}
             width={640}
             priority
-            className="h-full w-full object-cover"
+            className="size-full object-cover"
             src={`${test ? '/' : ''}${
               router.basePath
             }/assets/images/chrisozgo3.png`}
@@ -40,36 +40,44 @@ const About = (props: IAboutProps) => {
           <p className="mb-6">
             I love boiling down my entire life into just a few sentences.
           </p>
-          <p className="mb-6">
-            My name is Chris, and I{`'`}m from Arlington, VA. I{`'`}m high
-            energy, hard working, and deep thinking! Growing up, I was an
-            aspiring college basketball player before a neck injury led me to
-            take a gap year that opened up my mind to many other amazing
-            opportunities.
+          <p className="mb-8">
+            My name is Chris, and I&apos;m from Arlington, VA.
+            <br />
+            I&apos;m high energy, hard working, and deep thinking :)
+            <br />
+            Growing up, I was an aspiring college basketball player before a
+            neck injury led me to take a gap year that opened up my mind to many
+            other amazing opportunities.
           </p>
           <p className="mb-6">
             I got into entrepreneurship, learned how to code, and traveled the
             world as a wide-eyed 18-year old. I started journaling for the first
             time, coached some basketball teams, and culminated my year of
-            exploration by earning a full-ride scholarship to Georgia Tech to
-            study Computer Science.
+            exploration by earning a full-ride scholarship to Georgia Tech.
           </p>
           <p className="mb-6">
-            While in college, I got attached to the concept of seeking
-            discomfort-intentionally putting yourself in situations that
-            challenge you in order to grow as a person-and built a 500+ person
-            community around the idea. I embarked on my own seek discomfort
-            projects like completing an Ironman triathlon, working on a couple
-            startups, and Project 30-a 30-day challenge with a friend where we
-            did something out of our comfort zone every day for a month. I also
-            continueed to grow and discover new passions, like foreign affairs,
-            solo traveling, and building mobile apps.
-          </p>
-          <p className="mb-6">
-            I{`'`}m an avid writer with a passion for many of the above topics,
-            and I built this site to share my thoughts and experiences with the
-            world! If any of that interests you, feel free to reach out, or
-            check out my blog to learn more!
+            After getting my BS and MS in computer science at GT, I solo
+            traveled around the world for 16 months while running a software
+            consulting agency. I&apos;ve since returned to the US and became the
+            co-founder of a proactive security startup called{' '}
+            <Link
+              href="https://www.getundaunted.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {/* Underline the word Undaunted */}
+              <span className="underline">Undaunted</span>
+            </Link>
+            . Using robots and cameras, our mission is to make communities safer
+            so people can thrive :)
+            <br />
+            <br />
+            In my free time, I enjoy competing in ultra endurance events, living
+            an urbanite lifestyle that involves a lot of walking, and cooking
+            healthy meals. I&apos;m an avid writer with a passion for many of
+            the above topics, and I built this site to share my thoughts and
+            experiences with the world! If any of that interests you, feel free
+            to reach out, or check out my blog to learn more!
           </p>
         </div>
       </div>
@@ -78,7 +86,7 @@ const About = (props: IAboutProps) => {
           <a href="mailto:hi@chrisozgo.com">
             <button
               type="button"
-              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white"
+              className="size-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white"
             >
               Contact
             </button>
@@ -88,7 +96,7 @@ const About = (props: IAboutProps) => {
           <Link href="/blog/">
             <button
               type="button"
-              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
+              className="size-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
             >
               Blog
             </button>

@@ -33,9 +33,9 @@ const Index = (props: IIndexProps) => {
       <div className="mb-8 flex-row items-center justify-between sm:flex">
         <div className="mx-4 sm:ml-16">
           <h1 className="text-center text-4xl sm:font-avenir sm:text-6.5xl">
-            Hi, I{`'`}m Chris!
+            Hi, I&apos;m Chris!
           </h1>
-          <p className="mt-2 font-avenir text-xl">I{`'`}m passionate about</p>
+          <p className="mt-2 font-avenir text-xl">I&apos;m passionate about</p>
           <ul className="mt-0 list-inside list-disc font-avenir">
             <li className="my-1 ml-4">tech</li>
             <li className="my-1 ml-4">fitness</li>
@@ -48,7 +48,7 @@ const Index = (props: IIndexProps) => {
             height={400}
             width={400}
             priority
-            className="h-auto w-auto"
+            className="size-auto"
             src={`${test ? '/' : ''}${
               router.basePath
             }/assets/images/chrisozgo1.png`}
@@ -61,7 +61,7 @@ const Index = (props: IIndexProps) => {
           <Link href="/about/">
             <button
               type="button"
-              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
+              className="size-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
             >
               About
             </button>
@@ -71,7 +71,7 @@ const Index = (props: IIndexProps) => {
           <Link href="/blog/">
             <button
               type="button"
-              className="h-full w-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
+              className="size-full rounded-3xl bg-black px-4 py-2 font-raleway font-bold text-white hover:decoration-inherit"
             >
               Blog
             </button>
@@ -90,13 +90,13 @@ const Index = (props: IIndexProps) => {
             alt="Chris Ozgo at Zion National Park"
           />
         </div>
-        <div className="mb-6 pl-[26px] pr-7 pt-4 sm:mb-36 sm:ml-[-160px] sm:mt-12 sm:max-w-[478px] sm:bg-gray-200 sm:pb-8 sm:pt-10">
+        <div className="mb-6 mt-8 pl-[26px] pr-7 pt-4 sm:mb-36 sm:ml-[-160px] sm:mt-8 sm:max-w-[478px] sm:bg-gray-200 sm:pb-8 sm:pt-10">
           <h2 className="font-avenir text-base leading-6 sm:text-[0.94rem]">
             <p className="pb-2 font-raleway text-[1.375rem] font-light sm:pb-[26px]">
-              In the past few years I:
+              Some fun things I&apos;ve done:
             </p>
             <ul className="mt-0 list-inside list-disc">
-              <li className="my-1 ml-4 list-outside sm:ml-8">
+              <li className="my-0 ml-4 list-outside sm:ml-8">
                 Co-founded{' '}
                 <Link
                   href="https://seedgatech.wixsite.com/home"
@@ -126,16 +126,19 @@ const Index = (props: IIndexProps) => {
                 >
                   Longest Hopscotch Game
                 </Link>
+                . Then lost it.
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
+                Went on a{' '}
                 <Link
                   href="https://chrisozgo.com/blog/travel#tags"
                   className=" underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Solo traveled on 5 different continents
-                </Link>
+                  16-month backpacking trip
+                </Link>{' '}
+                around the world
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Gave the{' '}
@@ -147,27 +150,63 @@ const Index = (props: IIndexProps) => {
                 >
                   keynote speech
                 </Link>{' '}
-                to Georgia Tech{`'`}s freshman class
+                to Georgia Tech&apos;s freshman class
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Played college basketball in Singapore and led the country in
                 scoring
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
-                Climbed{' '}
+                Silently meditated for a{' '}
                 <Link
-                  href="https://chrisozgo.com/blog/fitness/climbing-mt-kilimanjaro/"
+                  href="https://chrisozgo.com/blog/other/i-completed-a-10-day-silent-meditation-retreat-wow/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className=" underline"
                 >
-                  Mt. Kilimanjaro
+                  10-day Vipassana retreat
                 </Link>
-                , the tallest mountain in Africa and highest freestanding
-                mountain in the world
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
-                Completed 8 marathons, 2 half-Ironmans and 1 Ironman
+                Completed 9 marathons, 2 half-Ironmans and 1 Ironman
+              </li>
+              <li className="my-1 ml-4 list-outside sm:ml-8">
+                Conquered challenges like{' '}
+                <Link
+                  href="https://chrisozgo.com/blog/fitness/climbing-mt-kilimanjaro-summit-day/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" underline"
+                >
+                  climbing Mt. Kilimanjaro
+                </Link>
+                , a{' '}
+                <Link
+                  href="https://registration.goruck.com/event/city-ruck-50-miler-washington-dc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" underline"
+                >
+                  50-mile ruck
+                </Link>
+                , a{' '}
+                <Link
+                  href="https://www.roguefitness.com/challenges/the-standard?srsltid=AfmBOorV0Dv2owfb6ZujHvYXVV1VzxOyh_AtDGzLrKmKrOVD4Ja_n6tg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" underline"
+                >
+                  24-hour row
+                </Link>
+                , and{' '}
+                <Link
+                  href="https://sealfit.com/KOKORO/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" underline"
+                >
+                  SEALFIT Kokoro
+                </Link>
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Built a{' '}
@@ -200,7 +239,7 @@ const Index = (props: IIndexProps) => {
         <div className="overflow-x-scroll">
           <Image
             height={722}
-            width={2084}
+            width={3084}
             className="max-w-none"
             src={`${test ? '/' : ''}${
               router.basePath

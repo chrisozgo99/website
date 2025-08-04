@@ -21,31 +21,55 @@ type IBlogUrl = {
 };
 
 export const getStaticPaths: GetStaticPaths<IBlogUrl> = async () => {
-  const posts = await getPosts();
+  try {
+    const posts = await getPosts();
 
-  return {
-    paths: posts.map((post: any) => ({
-      params: {
-        tag: post.primary_tag.slug,
-        slug: post.slug,
-      },
-    })),
-    fallback: false,
-  };
+    // If no posts are available, return empty paths
+    if (!posts || posts.length === 0) {
+      console.warn('No posts available for static path generation');
+      return {
+        paths: [],
+        fallback: false,
+      };
+    }
+
+    return {
+      paths: posts.map((post: any) => ({
+        params: {
+          tag: post.primary_tag?.slug || 'uncategorized',
+          slug: post.slug,
+        },
+      })),
+      fallback: false,
+    };
+  } catch (error) {
+    console.warn('Error in getStaticPaths:', error);
+    return {
+      paths: [],
+      fallback: false,
+    };
+  }
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const post = await getSinglePost(context.params?.slug as string);
+  try {
+    const post = await getSinglePost(context.params?.slug as string);
 
-  if (!post) {
+    if (!post) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: { post },
+    };
+  } catch (error) {
+    console.warn('Error in getStaticProps:', error);
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: { post },
-  };
 };
 
 const Post = (props: InferGetStaticPropsType<typeof getStaticProps>) => {

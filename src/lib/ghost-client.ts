@@ -28,7 +28,7 @@ export async function getPosts(limit?: number) {
   try {
     if (!limit) {
       // If no limit, get all posts from both APIs
-      const [posts1, posts2] = await Promise.all([
+      const [posts1, posts2] = await Promise.allSettled([
         api.posts.browse({
           limit: 'all',
           include: ['tags', 'authors'],
@@ -38,7 +38,13 @@ export async function getPosts(limit?: number) {
           include: ['tags', 'authors'],
         }),
       ]);
-      return [...posts1, ...posts2];
+
+      const successfulPosts1 =
+        posts1.status === 'fulfilled' ? posts1.value : [];
+      const successfulPosts2 =
+        posts2.status === 'fulfilled' ? posts2.value : [];
+
+      return [...successfulPosts1, ...successfulPosts2];
     }
     // With limit, just get from first API since it has most recent posts
     return await api.posts
@@ -48,10 +54,27 @@ export async function getPosts(limit?: number) {
       })
       .then((posts: PostsOrPages) => posts)
       .catch((err) => {
-        throw new Error(err);
+        console.warn('Failed to fetch posts from first API:', err.message);
+        // Try second API as fallback
+        return api2.posts
+          .browse({
+            limit,
+            include: ['tags', 'authors'],
+          })
+          .catch((err2) => {
+            console.warn(
+              'Failed to fetch posts from second API:',
+              err2.message
+            );
+            return []; // Return empty array if both APIs fail
+          });
       });
   } catch (err) {
-    throw new Error(err instanceof Error ? err.message : String(err));
+    console.warn(
+      'getPosts error:',
+      err instanceof Error ? err.message : String(err)
+    );
+    return []; // Return empty array to prevent build failure
   }
 }
 
@@ -225,14 +248,24 @@ export async function getSinglePost(postSlug: string) {
         { slug: postSlug },
         { include: ['tags', 'authors'] }
       );
-    } catch {
+    } catch (error) {
+      console.warn(`Post not found in first API: ${postSlug}`, error);
       // If not found, try second API
-      return await api2.posts.read(
-        { slug: postSlug },
-        { include: ['tags', 'authors'] }
-      );
+      try {
+        return await api2.posts.read(
+          { slug: postSlug },
+          { include: ['tags', 'authors'] }
+        );
+      } catch (error2) {
+        console.warn(`Post not found in second API: ${postSlug}`, error2);
+        return null; // Return null if post not found in either API
+      }
     }
   } catch (err) {
-    throw new Error(err instanceof Error ? err.message : String(err));
+    console.warn(
+      'getSinglePost error:',
+      err instanceof Error ? err.message : String(err)
+    );
+    return null; // Return null to prevent build failure
   }
 }
