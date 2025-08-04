@@ -3,7 +3,7 @@ import 'react-horizontal-scrolling-menu/dist/styles.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Subscribe from '@/components/subscribe';
 import SubscribeModal from '@/components/subscribe-modal';
@@ -20,6 +20,18 @@ const Index = (props: IIndexProps) => {
   const router = useRouter();
 
   const [openSubscribe, setOpenSubscribe] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   return (
     <Main
@@ -246,16 +258,19 @@ const Index = (props: IIndexProps) => {
       >
         <div className="scrollbar-hide overflow-x-scroll">
           <Image
-            height={722}
-            width={3084}
+            height={isMobile ? 361 : 722}
+            width={isMobile ? 1542 : 3084}
             className="max-w-none"
-            src={`${test ? '/' : ''}${
-              router.basePath
-            }/assets/gallery/gallery.avif`}
+            src={`${test ? '/' : ''}${router.basePath}/assets/gallery/gallery.${
+              isMobile ? 'webp' : 'avif'
+            }`}
             alt="A collection of photos from all over the world"
-            quality={100}
+            quality={isMobile ? 85 : 100}
             priority
-            sizes="100vw"
+            sizes={isMobile ? '(max-width: 768px) 100vw' : '100vw'}
+            style={{
+              imageRendering: isMobile ? 'crisp-edges' : 'auto',
+            }}
           />
         </div>
       </div>
