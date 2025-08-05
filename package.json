@@ -138,5 +138,8 @@
   "author": "Chris Ozgo",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "@swc/helpers": "0.5.17"
   }
 }
