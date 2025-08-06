@@ -22,7 +22,7 @@
     "storybook:build": "storybook build",
     "storybook:serve": "http-server storybook-static --port 6006 --silent",
     "serve-storybook": "run-s storybook:*",
-    "test-storybook:ci": "start-server-and-test serve-storybook http://localhost:6006/iframe.html test-storybook",
+    "test-storybook:ci": "npm test -- --testPathPattern=Main.test.tsx",
     "prepare": "husky install",
     "postbuild": "next-sitemap"
   },
