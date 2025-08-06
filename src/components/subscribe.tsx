@@ -15,7 +15,7 @@ export default function Subscribe(props: SubscribeProps) {
         type="button"
         className={`bottom-0 right-0 ${
           header
-            ? 'border-[1px] border-gray-400'
+            ? 'border border-gray-400'
             : 'mb-6 mr-6 bg-[#FF1A75] shadow-2xl shadow-slate-700'
         } rounded-full px-4 py-3 transition-all duration-500 hover:scale-105 hover:cursor-pointer`}
         onClick={() => {

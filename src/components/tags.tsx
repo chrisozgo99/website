@@ -105,7 +105,7 @@ export function Tags({
                       setShowDropdown(false);
                       setDropdownTag(undefined);
                     }}
-                    className="absolute z-50 mx-[-100px] border-[1px] border-gray-400 sm:absolute sm:mx-[-20px]"
+                    className="absolute z-50 mx-[-100px] border border-gray-400 sm:absolute sm:mx-[-20px]"
                   >
                     <DropdownMenu
                       dropdownItems={tagHierarchy[tag]}

@@ -18,6 +18,7 @@
         // Configuration for TypeScript files
         {
             "files": ["**/*.ts", "**/*.tsx"],
+            "parser": "@typescript-eslint/parser",
             "plugins": [
                 "@typescript-eslint",
                 "unused-imports",
@@ -33,6 +34,11 @@
                 "plugin:prettier/recommended"
             ],
             "parserOptions": {
+                "ecmaVersion": 2020,
+                "sourceType": "module",
+                "ecmaFeatures": {
+                    "jsx": true
+                },
                 "project": "./tsconfig.json"
             },
             "rules": {
@@ -91,6 +97,8 @@
             "plugins": ["cypress"],
             "extends": ["plugin:cypress/recommended"],
             "parserOptions": {
+                "ecmaVersion": 2020,
+                "sourceType": "module",
                 "project": "./cypress/tsconfig.json"
             }
         },

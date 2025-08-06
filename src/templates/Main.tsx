@@ -15,7 +15,7 @@ const Main = (props: IMainProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="m-auto max-w-5xl overflow-x-clip antialiased">
+    <div className="m-auto max-w-5xl antialiased">
       {props.meta}
       <div>
         <header className="pb-2 sm:mt-11 sm:pb-6">

@@ -11,7 +11,7 @@ export default function SubscribeModal(props: SubscribeModalProps) {
   return (
     <div>
       {open && (
-        <div className="m-auto h-full w-full">
+        <div className="m-auto size-full">
           <div className="fixed inset-0 m-auto w-full justify-center overflow-y-auto shadow-2xl shadow-slate-700 sm:h-3/4 sm:w-1/2 sm:rounded-3xl 2xl:h-1/2 2xl:w-1/4">
             <button
               type="button"
@@ -19,6 +19,7 @@ export default function SubscribeModal(props: SubscribeModalProps) {
               onClick={() => {
                 setOpen(!open);
               }}
+              aria-label="Close modal"
             >
               <svg
                 width="23"
@@ -39,7 +40,7 @@ export default function SubscribeModal(props: SubscribeModalProps) {
                 />
               </svg>
             </button>
-            <div className="flex h-full w-full flex-col items-center justify-center bg-white">
+            <div className="flex size-full flex-col items-center justify-center bg-white">
               <iframe
                 src="https://embeds.beehiiv.com/6d734579-85cc-4d58-855a-cd8e7adc8497"
                 data-test-id="beehiiv-embed"
