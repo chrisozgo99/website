@@ -180,7 +180,7 @@ const Index = (props: IIndexProps) => {
                 </Link>
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
-                Completed 9 marathons, 2 half-Ironmans and 1 Ironman
+                Completed 10 marathons, 2 half-Ironmans and 1 Ironman
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Conquered challenges like{' '}
@@ -230,7 +230,7 @@ const Index = (props: IIndexProps) => {
                 >
                   few mobile apps
                 </Link>{' '}
-                that made some money
+                with some paying customers
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Worked for some{' '}
