@@ -75,6 +75,15 @@ jobs:
           NEXT_PUBLIC_GHOST_ADMIN_KEY_2: ${{ secrets.NEXT_PUBLIC_GHOST_ADMIN_KEY_2 }}
           NEXT_PUBLIC_DISQUS_SHORTNAME: ${{ secrets.NEXT_PUBLIC_DISQUS_SHORTNAME }}
 
+      # The storybook test-runner drives a real browser via Playwright, and
+      # `npm ci` only installs the library - not the browser binary it needs.
+      # Without this the step dies with "Executable doesn't exist at
+      # .../chromium_headless_shell". `npx playwright install` resolves the
+      # build matching the locally installed playwright-core, so this stays
+      # correct when that version changes.
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
       - name: Run storybook tests
         run: npm run test-storybook:ci
 
