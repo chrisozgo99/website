@@ -6,20 +6,24 @@ on:
   pull_request:
     branches: [main]
 
+# Least privilege: no job here needs to write to the repo.
+permissions:
+  contents: read
+
 jobs:
   build:
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [20.x, 22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     name: Build with ${{ matrix.node-version }}
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
@@ -28,20 +32,26 @@ jobs:
   test:
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     name: Run all tests
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0 # Retrieve Git history, needed to verify commits
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+
+      # Runs before `npm ci` so a tampered config is caught before any
+      # install script or build step can execute it.
+      - name: Config integrity
+        run: npm run check-config
+
       - run: npm ci
 
       - if: github.event_name == 'pull_request'
