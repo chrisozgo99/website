@@ -12,6 +12,7 @@
     "lint": "next lint",
     "format": "next lint --fix && prettier '**/*.{json,yaml}' --write --ignore-path .gitignore",
     "check-types": "tsc --noEmit --pretty && tsc --project cypress --noEmit --pretty",
+    "check-config": "node scripts/check-config-integrity.js",
     "test": "jest",
     "commit": "cz",
     "cypress": "cypress open",
