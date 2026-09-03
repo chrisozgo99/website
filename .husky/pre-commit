@@ -1,5 +1,10 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+cd "$(dirname "$0")/.." || exit 1
+
+# Catch tampered build-time config files before they can be committed.
+node scripts/check-config-integrity.js || exit 1
+
 # Disable concurent to run `check-types` after ESLint in lint-staged
-cd "$(dirname "$0")/.." && npx lint-staged --concurrent false
+npx lint-staged --concurrent false

@@ -15,6 +15,11 @@ import { getPosts, getSinglePost } from '@/lib/ghost-client';
 import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
 
+// Ghost posts publish on a schedule, so a page may be requested before it
+// exists in the build. `fallback: 'blocking'` renders it on first request and
+// `revalidate` keeps it fresh without a redeploy.
+const REVALIDATE_SECONDS = 3600;
+
 type IBlogUrl = {
   tag: string;
   slug: string;
@@ -30,7 +35,7 @@ export const getStaticPaths: GetStaticPaths<IBlogUrl> = async () => {
       console.warn('No posts available for static path generation');
       return {
         paths: [],
-        fallback: false,
+        fallback: 'blocking',
       };
     }
 
@@ -41,14 +46,14 @@ export const getStaticPaths: GetStaticPaths<IBlogUrl> = async () => {
           slug: post.slug,
         },
       })),
-      fallback: false,
+      fallback: 'blocking',
     };
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn('Error in getStaticPaths:', error);
     return {
       paths: [],
-      fallback: false,
+      fallback: 'blocking',
     };
   }
 };
@@ -60,17 +65,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
     if (!post) {
       return {
         notFound: true,
+        revalidate: REVALIDATE_SECONDS,
       };
     }
 
     return {
       props: { post },
+      revalidate: REVALIDATE_SECONDS,
     };
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn('Error in getStaticProps:', error);
     return {
       notFound: true,
+      revalidate: REVALIDATE_SECONDS,
     };
   }
 };

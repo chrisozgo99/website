@@ -80,8 +80,14 @@ const Main = (props: IMainProps) => {
         </main>
 
         <footer className="border-t border-gray-300 py-8 text-center text-sm">
-          <div className="pb-3">hi@chrisozgo.com</div>©
-          {new Date().getFullYear()} {AppConfig.title}. Made with ❤️.
+          <div className="pb-3">hi@chrisozgo.com</div>
+          {/* Pages are statically generated, so the server renders the build
+              year while the browser renders the real current year. Suppressing
+              the warning lets visitors see the correct year without the
+              hydration mismatch this used to throw on every page load. */}
+          <span suppressHydrationWarning>
+            ©{new Date().getFullYear()} {AppConfig.title}. Made with ❤️.
+          </span>
           <div>
             <a
               className="text-blue-600"

@@ -1,3 +1,11 @@
 node_modules
 out
 !.storybook
+
+# build output & generated artifacts (linting these is pathologically slow:
+# a single minified storybook bundle takes >400s)
+.next
+.swc
+coverage
+storybook-static
+public
