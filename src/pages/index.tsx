@@ -210,7 +210,7 @@ const Index = (props: IIndexProps) => {
                 >
                   24-hour row
                 </Link>
-                , and{' '}
+                ,{' '}
                 <Link
                   href="https://sealfit.com/KOKORO/"
                   target="_blank"
@@ -219,6 +219,7 @@ const Index = (props: IIndexProps) => {
                 >
                   SEALFIT Kokoro
                 </Link>
+                , and a 200-mile ultramarathon
               </li>
               <li className="my-1 ml-4 list-outside sm:ml-8">
                 Built a{' '}
